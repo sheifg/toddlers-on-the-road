@@ -26,11 +26,23 @@ app.use(express.json());
 app.use(cors());
 
 
+
+// Pagination/Search/Sort:
+app.use(require('./middlewares/findSearchSortPage.js'))
+
 // App Routes
+
 // HomePath: Welcome page
 app.all("/", (req, res) => {
   res.send("Welcome to the API...");
 });
+
+// API Routes
+app.use('/api', require('./routes'));
+
+
+//middelware to send an Email 
+
 
 
 // Express Error Handler
