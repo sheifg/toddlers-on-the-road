@@ -1,5 +1,25 @@
 import { object, string } from "yup";
-import FormComponent from "../components/FormComponent";
+import AuthForm from "../components/AuthForm";
+import { AuthFormLink } from "../types/form";
+import { FcGoogle } from "react-icons/fc";
+
+const BOTTOM_LINKS: AuthFormLink[] = [
+    {
+        text: "Already have an account?",
+        link: {
+            text: "Sign In",
+            url: "/login"
+        },
+        
+    },
+    {
+        link: {
+            text: "Continue with Google",
+            url: "...."
+        },
+        icon: FcGoogle   
+    },
+]
 
 const Register = () => {
   const inputs = [
@@ -53,22 +73,18 @@ const Register = () => {
       .required("Password is required!"),
   });
 
-  const handleSubmit = (values, actions) => {};
+  const handleSubmit = () => {};
 
   return (
     <div className="flex items-center justify-center">
-      <FormComponent
+      <AuthForm
         initialValues={initialValues}
         validationSchema={registerSchema}
         handleSubmit={handleSubmit}
-        title="Welcome to our App"
+        title="Sign Up"
         inputs={inputs}
         buttonText="Sign Up"
-        bottomText1="Already have an account?"
-        bottomLink1="/login"
-        bottomText2="Sign In"
-        bottomText3="Continue with Google"
-        // bottomLink2= "Register with Google"
+        bottomLinks={BOTTOM_LINKS}
       />
     </div>
   );

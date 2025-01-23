@@ -12,7 +12,7 @@ interface InputProps<T> {
 
 const Input =  <T extends object>({name, label, inputType = "text", placeholder, errors, touched}: InputProps<T>) => {
   return (
-    <div>
+    <div className="font-Roboto">
       <label htmlFor={name as string} className="form-label" >
         {label}:
       </label>

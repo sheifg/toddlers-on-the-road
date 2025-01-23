@@ -1,5 +1,22 @@
 import { object, string } from "yup";
-import FormComponent from "../components/FormComponent";
+import AuthForm from "../components/AuthForm";
+import { AuthFormLink } from "../types/form";
+
+const BOTTOM_LINKS: AuthFormLink[] = [
+  {
+    text: "Don't have an account?",
+    link: {
+      text: "Sign Up",
+      url: "/register",
+    },
+  },
+  {
+    link: {
+      text: "Forgot your password?",
+      url: "....",
+    },
+  },
+];
 
 const Login = () => {
   const inputs = [
@@ -35,24 +52,19 @@ const Login = () => {
       .required("Password is required!"),
   });
 
-  const handleSubmit = (values, actions) => {};
+  const handleSubmit = () => {};
 
   return (
     <div className="flex items-center justify-center py-16">
-      <FormComponent
+      <AuthForm
         initialValues={initialValues}
         validationSchema={registerSchema}
         handleSubmit={handleSubmit}
-        title="Welcome back"
+        title="Sign In"
         inputs={inputs}
         buttonText="Sign In"
-        bottomText1="Don't have an account?"
-        bottomLink1="/register"
-        bottomText2="Sign Up"
-        bottomText3="Continue with Google"
-        // bottomLink2= "Login with Google"
-        bottomText4="Forget password"
-        // bottomLink3="Forget password"
+        bottomLinks={BOTTOM_LINKS}
+        isReminderShown
       />
     </div>
   );

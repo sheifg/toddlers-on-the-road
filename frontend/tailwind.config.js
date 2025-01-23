@@ -20,11 +20,11 @@ export default {
           100: "#E1E1E1",
           200: "#B5B5B5",
           300: "#495057",
-        }
-
+        },
     },
     fontFamily: {
-      'Mali': ["Mali", "serif"],
+      "Mali": ["Mali", "serif"],
+      "Roboto": ["Roboto", "serif"],
     }
     },
   },
