@@ -27,7 +27,7 @@ app.use(cors());
 
 
 
-// Pagination/Search/Sort:
+// Find/Pagination/Search/Sort:
 app.use(require('./middlewares/findSearchSortPage.js'))
 
 // App Routes
@@ -41,11 +41,11 @@ app.all("/", (req, res) => {
 app.use('/api', require('./routes'));
 
 
-//middelware to send an Email 
+// Middleware to send an email 
 
 
 
-// Express Error Handler
+// Express error handler
 const errorHandler = require('./middlewares/errorHandler');
 app.use(errorHandler);
 
