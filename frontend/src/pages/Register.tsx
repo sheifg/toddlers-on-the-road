@@ -81,7 +81,7 @@ const Register = () => {
         initialValues={initialValues}
         validationSchema={registerSchema}
         handleSubmit={handleSubmit}
-        title="Sign Up"
+        title="Register"
         inputs={inputs}
         buttonText="Sign Up"
         bottomLinks={BOTTOM_LINKS}
