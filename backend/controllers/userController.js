@@ -4,10 +4,10 @@ const User = require('../models/userModel')
 module.exports = {
 
     list: async (req, res) => {
-         //need to add permission in this case the user can list just his account ,cant see the other users
+         // It is necessary to add permission: the user can just list his account/data, the user can't list the other users
        
        
-        const customFilters = req.user?.isAdmin ? {} : { _id: req.user._id }  /* user can see just his data ,cant list all of them*/
+        const customFilters = req.user?.isAdmin ? {} : { _id: req.user._id }  
         const data = await res.getModelList(User, customFilters)
 
 
