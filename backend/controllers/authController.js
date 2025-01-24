@@ -27,9 +27,8 @@ module.exports = {
     // Make sure the user entered a valid email and password:
     const { email, password } = req.body;
     if (email && password) {
-      const user = await User.findOne({ email }).select("+password"); //i get pw from db
+      const user = await User.findOne({ email }).select("+password"); //we get pw from db
       // Check if user exists and password is correct
-      // Remember we can't ask mongoose to search for an encrypted value!
       // So we have to retrieve the data and then compare the values!!!
       if (user && user.password == pwEncrypt(password)) {
         // pw from db compare with pw from req.body
@@ -104,7 +103,6 @@ module.exports = {
                   process.env.ACCESS_KEY,
                   { expiresIn: "3d" }
                 );
-
                 res.send({
                   error: false,
                   bearer: {
@@ -133,7 +131,7 @@ module.exports = {
   // @URL     PUT /api/auth/details
   // This function will be used in profile page to change/edit the user data
   // @access  private (req.user)
-  updateDetails: async (req, res) => {
+ /*  updateDetails: async (req, res) => {
     const user = await User.findById(req.user._id).select("+password");
     const fieldsToUpdate = {
       first_name: req.body.first_name,
@@ -159,11 +157,11 @@ module.exports = {
       message: "User details updated successfully",
     });
   },
-
+ */
   // @URL     PUT /api/auth/password
   // This function will be used in the profile page btn reset password
   // @access  private (req.user)
-  updatePassword: async (req, res) => {
+  /* updatePassword: async (req, res) => {
     // Here the user is logged in, knowing the old password and wanting to reset or update it
     const user = await User.findById(req.user._id).select("+password");
     // Check the password
@@ -179,7 +177,7 @@ module.exports = {
       res.errorStatusCode = 401;
       throw new Error("Invalid credentials");
     }
-  },
+  }, */
   /* This function ensures that the user's current password is verified before allowing to update it to a new one, providing an additional layer of security */
 
   deleteAccount: async (req, res) => {
