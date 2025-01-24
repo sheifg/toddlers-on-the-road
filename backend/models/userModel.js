@@ -37,16 +37,6 @@ const UserSchema = new mongoose.Schema({
       select: false,
     },
 
-    //images: [],
-    isActive:{
-        type: Boolean,
-        default: true
-    },
-
-    isAdmin:{
-        type: Boolean,
-        default: false
-    }
 }, {timestamps: true, collection: 'users'})
 
 const pwEncrypt = require('../helpers/pwEncryption')
