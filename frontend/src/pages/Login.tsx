@@ -35,17 +35,11 @@ const Login = () => {
   ];
 
   const initialValues = {
-    firstName: "",
-    lastName: "",
-    username: "",
     email: "",
     password: "",
   };
 
-  const registerSchema = object().shape({
-    firstName: string().required("First name is required!"),
-    lastName: string().required("Last name is required!"),
-    username: string().required("Username is required!"),
+  const loginSchema = object().shape({
     email: string().email("Invalid Email").required("Email is required!"),
     password: string()
       .min(9, "Min 9 characters")
@@ -60,7 +54,7 @@ const Login = () => {
         initialValues={initialValues}
         validationSchema={registerSchema}
         handleSubmit={handleSubmit}
-        title="Sign In"
+        title="Login"
         inputs={inputs}
         buttonText="Sign In"
         bottomLinks={BOTTOM_LINKS}
