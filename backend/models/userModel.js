@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema({
   
     email:{
         type: String,
-        required: true,
+         required: [true, 'username is required'],
         trim: true,
         unique: true,
         
@@ -44,8 +44,8 @@ const pwEncrypt = require('../helpers/pwEncryption')
 UserSchema.pre(['save', 'updateOne'], function (next) {
     // if the password is modified, encrypt it!
 
-    // I need to start by getting the data that is being modified or saved.
-    // The way I do this is to reference the document as THIS
+    // we need to start by getting the data that is being modified or saved.
+    // The way we do this is to reference the document as THIS
     const data = this?._update || this
     // if we are performing an update operation the data we're trying to store
     // is this._update.  If we're saving, it's just this.
