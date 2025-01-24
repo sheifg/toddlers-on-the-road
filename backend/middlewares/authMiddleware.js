@@ -5,7 +5,7 @@ module.exports = async (req, res, next)=>{
     const tokenKey = auth ? auth.split(' ')[1] : null // remove the word 'Bearer' from the token
 
     if(tokenKey){
-        // We do have a JWT so it needs to be verified!
+        //  JWT musst be verified!
         jwt.verify(tokenKey, process.env.ACCESS_KEY, (err, data)=> req.user = data)
         console.log('User:', req.user)
     }else{
