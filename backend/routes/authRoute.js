@@ -8,7 +8,7 @@ router.post('/register', auth.register);//  /api/auth/register
 
 router.post('/login', auth.login); // /api/auth/login
 
-router.post('/refresh',authMw, auth.refresh);// /api/auth/refresh    (if btn remember me  selected )
+router.post('/refresh',authMw, auth.refresh);// /api/auth/refresh    (If the "Rememeber me" button is selected)
 
 router.all('/logout',authMw, auth.logout); //api/auth/logout 
 
