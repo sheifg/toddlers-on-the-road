@@ -1,16 +1,14 @@
 const router = require('express').Router()
 // Import controller:
 const User = require('../controllers/userController')
-//  Authentication middelware :
-const authMw = require('../middlewares/authMiddleware'); /* i protect the whole user route,without login i cant access user rout , */
+// Authentication middleware :
+const authMw = require('../middlewares/authMiddleware'); /* Protecting the user route: without log in is not possible to access the user route */
 
 const { isLogged ,isAdmin, isLoggedOrisAdmin } = require('../middlewares/permissions');
 
 router.route('/')
     .get( authMw ,isAdmin,User.list)
     .post(User.create)  
-
-
 
 router.route('/:id')
     .get( authMw ,isLoggedOrisAdmin ,User.read)
