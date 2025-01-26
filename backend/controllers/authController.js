@@ -12,16 +12,21 @@ const pwEncrypt = require("../helpers/pwEncryption");
 module.exports = {
   //POST  /api/auth/register
   register: async (req, res) => {
-    const user = await User.create(req.body);
-    res.status(201).json({
-      success: true,
-      user,
-      message: "User created successfully",
-      token: jwt.sign(user.toJSON(), process.env.ACCESS_KEY, {
-        expiresIn: "3d",
-      }),
-    });
+    try {
+      const user = await User.create(req.body);
+      res.status(201).json({
+        success: true,
+        user,
+        message: "User created successfully",
+        token: jwt.sign(user.toJSON(), process.env.ACCESS_KEY, {
+          expiresIn: "3d",
+        }),
+      });
+    } catch (err) {
+      console.log("error during registration", err);
+    }
   },
+
   // POST  /api/auth/login
   login: async (req, res) => {
     // Make sure the user entered a valid email and password:
@@ -60,15 +65,15 @@ module.exports = {
         });
       } else {
         res.errorStatusCode = 401;
-        throw new Error("Wrong username/email or password!");
+        throw new Error("Wrong email or password!");
       }
     } else {
       res.errorStatusCode = 401;
       throw new Error("Invalid login credentials!");
     }
   },
-  // ALL   /api/auth/logout
 
+  // ALL   /api/auth/logout
   logout: async (req, res) => {
     res.send({
       error: false,
@@ -128,10 +133,11 @@ module.exports = {
       throw new Error("No refresh token provided!");
     }
   },
+
   // @URL     PUT /api/auth/details
   // This function will be used in profile page to change/edit the user data
   // @access  private (req.user)
- /*  updateDetails: async (req, res) => {
+  /*  updateDetails: async (req, res) => {
     const user = await User.findById(req.user._id).select("+password");
     const fieldsToUpdate = {
       first_name: req.body.first_name,
