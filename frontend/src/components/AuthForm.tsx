@@ -44,7 +44,7 @@ const AuthForm = <T extends object>({
       >
         {({ errors, touched }) => (
           <Form className="space-y-4">
-            <h5 className="text-2xl text-center font-bold text-marine-blue font-Mali">
+            <h5 className="text-3xl pb-4 text-center font-bold text-marine-blue font-Mali">
               {title}
             </h5>
             {inputs.map((input) => (
@@ -79,7 +79,7 @@ const AuthForm = <T extends object>({
             )}
 
             <div className="flex flex-col justify-center items-center space-y-4 font-Roboto">
-              <button type="submit" className="btn-primary m-2">
+              <button type="submit" className="btn-primary m-2 font-Mali">
                 {buttonText}
               </button>
             </div>

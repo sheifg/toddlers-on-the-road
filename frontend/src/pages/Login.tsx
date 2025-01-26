@@ -1,8 +1,9 @@
 import { object, string } from "yup";
 import AuthForm from "../components/AuthForm";
 import { AuthFormLink } from "../types/form";
-import { useAuth } from "../context/Auth";
+import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { IUser } from "../types/context";
 
 const BOTTOM_LINKS: AuthFormLink[] = [
   {

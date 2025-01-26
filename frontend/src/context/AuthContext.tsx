@@ -22,7 +22,7 @@ interface AuthContextProps {
   ) => Promise<void>;
   userInfo: ICurrentUser | null;
   login: (userData: IUser, navigate: (path: string) => void) => Promise<void>;
-  // logout: (navigate: (path: string) => void) => Promise<void>;
+  logout: (navigate: (path: string) => void) => Promise<void>;
   // updateUser: (userData: IUser, message: string) => Promise<void>;
 }
 
@@ -114,8 +114,31 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const logout = async (navigate: (path: string) => void) => {
+    try {
+      await axios({
+        url: `${BASE_URL}/api/auth/logout/`,
+        method: "GET",
+        headers: {
+          Authorization: `Token ${userInfo?.token}`,
+        },
+      });
+      setUserInfo(null);
+      localStorage.removeItem("user");
+      navigate("/auth/login");
+      toast.success("Logged out successfully");
+    } catch (error) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ register, login, userInfo }}>
+    <AuthContext.Provider value={{ register, login, userInfo, logout }}>
       {children}
     </AuthContext.Provider>
   );
@@ -124,7 +147,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 export default AuthProvider;
 
 export const useAuth = (): AuthContextProps => {
-  // useContext(AuthContext);
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error("useAuth must be used within a AuthProvider");

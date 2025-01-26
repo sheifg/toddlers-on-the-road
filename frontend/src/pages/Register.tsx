@@ -2,7 +2,7 @@ import { object, string } from "yup";
 import AuthForm from "../components/AuthForm";
 import { AuthFormLink } from "../types/form";
 import { FcGoogle } from "react-icons/fc";
-import { useAuth } from "../context/Auth";
+import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const BOTTOM_LINKS: AuthFormLink[] = [
