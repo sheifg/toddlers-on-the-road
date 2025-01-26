@@ -125,7 +125,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       });
       setUserInfo(null);
       localStorage.removeItem("user");
-      navigate("/auth/login");
+      navigate("/login");
       toast.success("Logged out successfully");
     } catch (error) {
       console.log(error);
