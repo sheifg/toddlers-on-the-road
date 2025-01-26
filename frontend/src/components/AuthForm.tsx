@@ -84,8 +84,11 @@ const AuthForm = <T extends object>({
               </button>
             </div>
 
-            {bottomLinks.map((bottomLink) => (
-              <div className="container mx-auto flex items-center justify-center p-2 font-Roboto">
+            {bottomLinks.map((bottomLink, index) => (
+              <div
+                key={index}
+                className="container mx-auto flex items-center justify-center p-2 font-Roboto"
+              >
                 <div className="flex items-center space-x-1">
                   {bottomLink.text && (
                     <p className="text-sm font-medium text-marine-blue text-center font-Roboto">
@@ -104,62 +107,6 @@ const AuthForm = <T extends object>({
                 </div>
               </div>
             ))}
-
-            {/* <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 rounded ml-2 accent-blue-water checked:bg-white bg-gray-100 border-gray-100 cursor-pointer text-white-600"
-              />
-              <label
-                htmlFor="remember-me"
-                className="text-sm font-medium text-marine-blue pl-1 font-Roboto"
-              >
-                <p className="text-sm font-medium text-marine-blue pl-1">
-                {bottomText5}
-                </p>
-              </label>
-            </div>
-            <div className="flex flex-col justify-center items-center space-y-4 font-Roboto">
-              <button type="submit" className="btn-primary m-2">
-                {buttonText}
-              </button>
-            </div>
-            {bottomText1 && (
-              <p className="text-sm font-medium text-marine-blue text-center font-Roboto">
-                {bottomText1}{" "}
-                <Link
-                  to={bottomLink1 as string}
-                  className="text-marine-blue hover:underline"
-                >
-                  {bottomText2}
-                </Link>
-              </p>
-            )}
-            <div className="container mx-auto flex items-center justify-center p-2 font-Roboto">
-              <div className="flex items-center space-x-3">
-                <Link
-                  to={bottomLink2 as string}
-                  className="text-marine-blue hover:underline"
-                >
-                  <p className="text-sm font-medium text-marine-blue text-center">
-                    {bottomText3}
-                  </p>
-                </Link>
-                <FcGoogle />
-              </div>
-            </div>
-            <div>
-              <Link
-                to={bottomLink3 as string}
-                className="text-marine-blue hover:underline"
-              >
-                <p className="text-sm font-medium text-marine-blue text-center font-Roboto">
-                  {bottomText4}
-                </p>
-              </Link>
-            </div> */}
           </Form>
         )}
       </Formik>

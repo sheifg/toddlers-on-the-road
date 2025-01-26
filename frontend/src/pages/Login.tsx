@@ -1,6 +1,8 @@
 import { object, string } from "yup";
 import AuthForm from "../components/AuthForm";
 import { AuthFormLink } from "../types/form";
+import { useAuth } from "../context/Auth";
+import { useNavigate } from "react-router-dom";
 
 const BOTTOM_LINKS: AuthFormLink[] = [
   {
@@ -42,17 +44,23 @@ const Login = () => {
   const loginSchema = object().shape({
     email: string().email("Invalid Email").required("Email is required!"),
     password: string()
-      .min(9, "Min 9 characters")
+      .min(8, "Min 8 characters")
       .required("Password is required!"),
   });
 
-  const handleSubmit = () => {};
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = (values, actions) => {
+    login(values, navigate);
+    actions.setSubmitting(false);
+  };
 
   return (
     <div className="flex items-center justify-center py-16">
       <AuthForm
         initialValues={initialValues}
-        validationSchema={registerSchema}
+        validationSchema={loginSchema}
         handleSubmit={handleSubmit}
         title="Login"
         inputs={inputs}
