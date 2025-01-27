@@ -31,27 +31,19 @@ module.exports = {
 
   // POST  /api/auth/login
   login: async (req, res) => {
-    // Make sure the user entered a valid email and password:
-    const { email, password } = req.body;
+  
+    const { email, password, rememberMe } = req.body;
     if (email && password) {
       const user = await User.findOne({ email }).select("+password"); //we get pw from db
-      // Check if user exists and password is correct
-      // So we have to retrieve the data and then compare the values!!!
+   
       if (user && user.password == pwEncrypt(password)) {
         // pw from db compare with pw from req.body
-
-        // We could also check if the user is active here!
-        // the password is valid!
-        // create the tokens and SEND!
-        // toJson to return plain object from db wich is just user data
+        // toJson to return plain object from db wich is just user data,without any of the internal metadata or non-enumerable properties
         const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_KEY, {
           expiresIn: "120m",
         });
 
-        // So when we use `user.toJSON()`, we're explicitly telling Mongoose to "flatten" the document to a simple, plain object.
-        // This process essentially creates a version of the document that only includes the user data (like `username`, `email`),
-        // without any of the internal metadata or non-enumerable properties.(just _doc: obj wich includ all the data wich we need)
-
+        
         const refreshToken = jwt.sign(
           { _id: user._id, password: user.password },
           process.env.REFRESH_KEY,
@@ -98,8 +90,6 @@ module.exports = {
           res.errorStatusCode = 401;
           throw new Error("Invalid refresh token!");
         } else {
-          // TOKEN IS VALID AND HAS NOT EXPIRED!
-          // Now we need to get the _id and password from the token to find the user
           const { _id, password } = data;
 
           if (_id && password) {
@@ -107,7 +97,7 @@ module.exports = {
             // Remember we can't tell mongoose to query for encrypted values!
             if (user && user.password == password) {
               // Check if the user is active
-              if (user.isActive) {
+             
                 // SEND A NEW ACCESS TOKEN!!!
                 const accessToken = jwt.sign(
                   user.toJSON(),
@@ -120,10 +110,7 @@ module.exports = {
                     access: accessToken,
                   },
                 });
-              } else {
-                res.errorStatusCode = 401;
-                throw new Error("User is inactive!");
-              }
+              
             } else {
               res.errorStatusCode = 401;
               throw new Error("User not found - BAD TOKEN!");

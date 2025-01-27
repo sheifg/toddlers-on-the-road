@@ -16,6 +16,7 @@ router.post("/forgot-password", auth.forgotPassword) // /api/auth/forgot-passwor
 
 router.post("/reset-password/:resetToken", auth.resetPassword) // /api/auth/reset-password/{token}
 
+router.all("/deleteAccount", authMw, auth. deleteAccount); //api/auth/ deleteAccount
 //router.put('/details', authMw , auth.updateDetails);//api/auth/details
 
 //router.put('/password',  auth.forgetPassword);//api/auth/forgetPassword
