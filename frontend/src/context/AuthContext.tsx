@@ -38,20 +38,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
+  // Effect to update localStorage whenever userInfo changes
   useEffect(() => {
     if (userInfo) {
-      // localStorage.setItem("user", JSON.stringify(userInfo));
+      // Save user information in localStorage when available
       setStorageItem("user", userInfo);
     } else {
-      // localStorage.removeItem("user");
+      // Clear localStorage when userInfo is null (user logged out)
       removeStorageItem("user");
     }
   }, [userInfo]);
 
+  // Check authentication only once after the initial render of the functional component(when the component mounts)
   useEffect(() => {
-    // const storedUser = localStorage.getItem("user");
     const storedUser = getStorageItem("user");
 
+    // If a user is stored locally but not yet loaded into the component's state, restore the user information from local storage.
     if (storedUser && !userInfo) {
       setUserInfo(JSON.parse(storedUser));
     }
