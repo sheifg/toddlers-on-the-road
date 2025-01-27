@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const storedUser = getStorageItem("user");
 
-    // If a user is stored locally but not yet loaded into the component's state, restore the user information from local storage.
+    // If a user is stored locally but not yet loaded into the component's state, restore the user information from local storage
     if (storedUser && !userInfo) {
       setUserInfo(JSON.parse(storedUser));
     }
