@@ -12,6 +12,7 @@ router.post("/refresh", authMw, auth.refresh); // /api/auth/refresh    (If the "
 
 router.all("/logout", authMw, auth.logout); //api/auth/logout
 
+router.all("/deleteAccount", authMw, auth. deleteAccount); //api/auth/ deleteAccount
 //router.put('/details', authMw , auth.updateDetails);//api/auth/details
 
 //router.put('/password',  auth.forgetPassword);//api/auth/forgetPassword
