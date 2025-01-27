@@ -2,35 +2,36 @@ import { object, string } from "yup";
 import AuthForm from "../components/AuthForm";
 import { AuthFormLink } from "../types/form";
 import { FcGoogle } from "react-icons/fc";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const BOTTOM_LINKS: AuthFormLink[] = [
-    {
-        text: "Already have an account?",
-        link: {
-            text: "Sign In",
-            url: "/login"
-        },
-        
+  {
+    text: "Already have an account?",
+    link: {
+      text: "Sign In",
+      url: "/login",
     },
-    {
-        link: {
-            text: "Continue with Google",
-            url: "...."
-        },
-        icon: FcGoogle   
+  },
+  {
+    link: {
+      text: "Continue with Google",
+      url: "....",
     },
-]
+    icon: FcGoogle,
+  },
+];
 
 const Register = () => {
   const inputs = [
     {
-      name: "firstName",
+      name: "first_name",
       label: "First name",
       inputType: "text",
       placeholder: "Jane",
     },
     {
-      name: "lastName",
+      name: "last_name",
       label: "Last name",
       inputType: "text",
       placeholder: "Doe",
@@ -56,24 +57,30 @@ const Register = () => {
   ];
 
   const initialValues = {
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     username: "",
     email: "",
     password: "",
   };
 
   const registerSchema = object().shape({
-    firstName: string().required("First name is required!"),
-    lastName: string().required("Last name is required!"),
+    first_name: string().required("First name is required!"),
+    last_name: string().required("Last name is required!"),
     username: string().required("Username is required!"),
     email: string().email("Invalid Email").required("Email is required!"),
     password: string()
-      .min(9, "Min 9 characters")
+      .min(8, "Min 8 characters")
       .required("Password is required!"),
   });
 
-  const handleSubmit = () => {};
+  const { register } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = (values, actions) => {
+    register(values, navigate);
+    actions.setSubmitting(false);
+  };
 
   return (
     <div className="flex items-center justify-center">

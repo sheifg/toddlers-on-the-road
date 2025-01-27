@@ -5,10 +5,10 @@ const express = require("express");
 const app = express();
 
 // Import packages
-require('colors');
+require("colors");
 require("express-async-errors");
 require("dotenv").config();
-const cors = require('cors');
+const cors = require("cors");
 
 // Environment variables
 const PORT = process.env.PORT || 8080;
@@ -25,10 +25,8 @@ app.use(express.json());
 // Enable CORS
 app.use(cors());
 
-
-
 // Find/Pagination/Search/Sort:
-app.use(require('./middlewares/findSearchSortPage.js'))
+app.use(require("./middlewares/findSearchSortPage.js"));
 
 // App Routes
 
@@ -38,15 +36,12 @@ app.all("/", (req, res) => {
 });
 
 // API Routes
-app.use('/api', require('./routes'));
+app.use("/api", require("./routes"));
 
-
-// Middleware to send an email 
-
-
+// Middleware to send an email
 
 // Express error handler
-const errorHandler = require('./middlewares/errorHandler');
+const errorHandler = require("./middlewares/errorHandler");
 app.use(errorHandler);
 
 // Run the server

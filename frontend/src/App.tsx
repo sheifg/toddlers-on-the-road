@@ -1,16 +1,13 @@
-import './App.css'
-import AppRoutes from './routes/AppRoutes'
+import "./App.css";
+import AppRoutes from "./routes/AppRoutes";
 import Layout from "./components/Layout";
 
-
 const App = () => {
-
-
   return (
     <Layout>
-     <AppRoutes/>
+      <AppRoutes />
     </Layout>
-  )
-}
+  );
+};
 
-export default App
+export default App;
