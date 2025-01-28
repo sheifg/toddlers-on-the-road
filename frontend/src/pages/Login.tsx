@@ -28,6 +28,7 @@ const BOTTOM_LINKS: AuthFormLink[] = [
   },
 ];
 
+
 const Login = () => {
   const inputs = [
     {
@@ -47,6 +48,7 @@ const Login = () => {
   const initialValues = {
     email: "",
     password: "",
+    rememberMe: false, // Explicitly add this field
   };
 
   const loginSchema = object().shape({
