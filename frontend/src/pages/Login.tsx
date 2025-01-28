@@ -3,7 +3,7 @@ import AuthForm from "../components/AuthForm";
 import { AuthFormLink } from "../types/form";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { IUser } from "../types/context";
+
 
 const BOTTOM_LINKS: AuthFormLink[] = [
   {
@@ -20,6 +20,7 @@ const BOTTOM_LINKS: AuthFormLink[] = [
     },
   },
 ];
+
 
 const Login = () => {
   const inputs = [
@@ -40,6 +41,7 @@ const Login = () => {
   const initialValues = {
     email: "",
     password: "",
+    rememberMe: false, // Explicitly add this field
   };
 
   const loginSchema = object().shape({
@@ -52,7 +54,7 @@ const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = (values , actions) => {
     login(values, navigate);
     actions.setSubmitting(false);
   };
