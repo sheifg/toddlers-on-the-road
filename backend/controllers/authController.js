@@ -8,6 +8,8 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 // pwEncrypt:
 const pwEncrypt = require("../helpers/pwEncryption");
+const { generateToken } = require("../helpers/token");
+const { sendEmail } = require("../helpers/sendEmail");
 
 module.exports = {
   //POST  /api/auth/register
@@ -58,10 +60,14 @@ module.exports = {
 
         res.send({
           error: false,
-          bearer: {
-            access: accessToken,
-            refresh: refreshToken,
-          },
+          // bearer: {
+          //   access: accessToken,
+          //   refresh: refreshToken,
+          // },
+          user : await User.findOne({ email }),
+          token:{
+            access: accessToken
+          }
         });
       } else {
         res.errorStatusCode = 401;
@@ -134,57 +140,134 @@ module.exports = {
     }
   },
 
-  // @URL     PUT /api/auth/details
-  // This function will be used in profile page to change/edit the user data
-  // @access  private (req.user)
-  /*  updateDetails: async (req, res) => {
-    const user = await User.findById(req.user._id).select("+password");
-    const fieldsToUpdate = {
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      email: req.body.email,
-      currentPassword: req.body.currentPassword,
-      newPassword: req.body.newPassword,
-    };
+  // Generate and send password reset email
+  // URL POST     /api/auth/forgot-password
+  forgotPassword: async (req, res) => {
+    try {
+      const { email } = req.body;
+      let user;
 
-    const updatedUser = await User.findByIdAndUpdate(
-      req.user._id,
-      fieldsToUpdate,
-      {
-        // We retrieve the user data after updated it, without changing the password
-        new: true,
-        runValidators: true,
+      try {
+        // Find user by email
+        user = await User.findOne({ email });
+
+        // If the user can't be found
+        if (!user) {
+          return res.status(200).json({
+            message: "An account with that email could not be found",
+          });
+        }
+      } catch (error) {
+        console.error("Find user by email error:", error);
+        return res.status(500).json({
+          message: "Error finding user",
+        });
       }
-    );
 
-    res.status(200).json({
-      success: true,
-      data: updatedUser,
-      message: "User details updated successfully",
-    });
-  },
- */
-  // @URL     PUT /api/auth/password
-  // This function will be used in the profile page btn reset password
-  // @access  private (req.user)
-  /* updatePassword: async (req, res) => {
-    // Here the user is logged in, knowing the old password and wanting to reset or update it
-    const user = await User.findById(req.user._id).select("+password");
-    // Check the password
-    if (user && user.password == pwEncrypt(req.body.currentPassword)) {
-      // User will enter the old password as currentPassword and the new one as newPassword
-      user.password = req.body.newPassword;
-      await user.save();
+      // Generate reset token
+      const resetToken = generateToken();
+
+      try {
+        user.resetPasswordToken = resetToken;
+        user.resetPasswordExpires = new Date(Date.now() + 3600000); // 1 hour from now
+        await user.save();
+      } catch (error) {
+        console.error("Update reset token:", error);
+        return res.status(500).json({
+          message: "Error updating reset token",
+        });
+      }
+
+      // Create the reset URL
+      const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+
+      // Email content
+      const message = `
+        Hi ${user.first_name},
+
+        You recently requested to rest your password. Please click the link below to proceed:
+
+        ${resetUrl}
+
+        If you did not request a password reset, please ignore this email :)
+        This password reset link is only valid for the next 60 minutes.
+
+        Sincerely,
+        Your Toddlers on the Road team
+      `;
+
+      try {
+        // Send email
+        await sendEmail({
+          email: user.email,
+          subject: "Request to reset you password",
+          message,
+        });
+      } catch (error) {
+        console.error("Sending email error:", error);
+        return res.status(500).json({
+          message: "Error sending email",
+        });
+      }
+
       res.status(200).json({
-        success: true,
-        message: "User password updated successfully",
+        message:
+          "If an account exists with this email, you will receive password reset instructions.",
       });
-    } else {
-      res.errorStatusCode = 401;
-      throw new Error("Invalid credentials");
+    } catch (error) {
+      console.error("Password reset error:", error);
+      res
+        .status(500)
+        .json({ message: "Error processing password reset request" });
     }
-  }, */
-  /* This function ensures that the user's current password is verified before allowing to update it to a new one, providing an additional layer of security */
+  },
+
+  resetPassword: async (req, res) => {
+    try {
+      const { resetToken } = req.params;
+      const { new_password } = req.body;
+      let user;
+
+      try {
+        // Find user with valid reset token
+        user = await User.findOne({
+          resetPasswordToken: resetToken,
+        });
+      } catch (error) {
+        console.error("Find user with valid reset token:", error);
+        return res.status(500).json({
+          message: "Error finding user",
+        });
+      }
+
+      const currentTime = Date.now();
+      const expiryTime = user.resetPasswordExpires.getTime();
+
+      // Check if user exists and token hasn't expired
+      if (!user || expiryTime < currentTime) {
+        return res.status(400).json({
+          message: "Password reset token is invalid or has expired",
+        });
+      }
+
+      user.password = new_password;
+      user.resetPasswordToken = null;
+      user.resetPasswordExpires = null;
+
+      try {
+        // Update password and clear reset token fields
+        await user.save();
+      } catch (error) {
+        console.error("Update password error:", error);
+        res.status(500).json({ message: "Error updating password" });
+      }
+
+      res.status(200).json({ message: "Password successfully reset" });
+    } catch (error) {
+      console.error("Reset password error:", error);
+      res.status(500).json({ message: "Error resetting password" });
+    }
+  },
 
   deleteAccount: async (req, res) => {
     const user = await User.findById(req.user._id).select("+password");

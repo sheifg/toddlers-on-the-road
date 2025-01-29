@@ -1,4 +1,5 @@
 const { mongoose } = require("../config/dbConnection");
+const pwEncrypt = require("../helpers/pwEncryption");
 
 // User Schema:
 const UserSchema = new mongoose.Schema(
@@ -31,11 +32,19 @@ const UserSchema = new mongoose.Schema(
       // Make password field not selectable by default
       select: false,
     },
+    resetPasswordToken: {
+      type: String,
+      default: null,
+    },
+    resetPasswordExpires: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true, collection: "users" }
 );
 
-const pwEncrypt = require("../helpers/pwEncryption");
+
 
 UserSchema.pre(["save", "updateOne"], function (next) {
   // if the password is modified, encrypt it!
@@ -100,14 +109,4 @@ UserSchema.pre(["save", "updateOne"], function (next) {
 
 module.exports = mongoose.model("User", UserSchema);
 
-// example json data for req.body:
 
-/*
-{
-    "username": "admin",
-    "password": "admin",
-    "email": "admin@site.com",
-    "isAdmin": true,
-    "isActive": true
-}
-*/
