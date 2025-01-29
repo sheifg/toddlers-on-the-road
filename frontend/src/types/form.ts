@@ -9,4 +9,10 @@ export interface AuthFormLink {
   icon?: IconType;
 }
 
+export interface InputProps {
+  name: string;
+  label: string;
+  inputType?: string;
+  placeholder?: string;
+}
 

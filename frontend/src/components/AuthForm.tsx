@@ -2,14 +2,7 @@ import { Formik, FormikHelpers, Form } from "formik";
 import * as Yup from "yup";
 import Input from "./Input";
 import { Link } from "react-router-dom";
-import { AuthFormLink } from "../types/form";
-
-interface InputProps {
-  name: string;
-  label: string;
-  inputType?: string;
-  placeholder?: string;
-}
+import { AuthFormLink, InputProps } from "../types/form";
 
 interface AuthFormProps<T> {
   initialValues: T;
