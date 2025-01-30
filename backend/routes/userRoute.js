@@ -8,7 +8,7 @@ const { isLogged } = require("../middlewares/permissions");
 
 router
   .route("/")
-  // .get(authMw, isAdmin, User.list)
+   .get( User.list)
   .post(User.create);
 
 router

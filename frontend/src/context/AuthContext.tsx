@@ -19,7 +19,7 @@ import {
   removeStorageItem,
   setStorageItem,
 } from "../utils/storage";
-
+axios.defaults.withCredentials = true;
 interface AuthContextProps {
   register: (
     userData: IUser,
@@ -86,6 +86,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         url: `${BASE_URL}/api/auth/register/`,
         method: "POST",
         data: userData,
+        withCredentials: true  
+      
       });
       const user = {
         token: data.token,
@@ -116,12 +118,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         url: `${BASE_URL}/api/auth/login/`,
         method: "POST",
         data: userData,
+        withCredentials: true,// Make sure credentials (cookies) are included
       });
+     /*  const user = {
+        token: data.token,
+        ...data.user,
+      }; */
       const user = {
         token: data.token,
         ...data.user,
       };
-      console.log("User:", user);
       setUserInfo(user);
       localStorage.setItem("user", JSON.stringify(user));
       toast.success("Login successful!");
@@ -141,9 +147,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       await axios({
         url: `${BASE_URL}/api/auth/logout/`,
         method: "GET",
-        headers: {
+        /*  headers: {
           Authorization: `Token ${userInfo?.token}`,
-        },
+        },  */
+         withCredentials: true, 
       });
       setUserInfo(null);
       localStorage.removeItem("user");

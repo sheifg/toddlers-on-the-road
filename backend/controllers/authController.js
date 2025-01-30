@@ -1,18 +1,10 @@
-// Login
-// Logout
-// Refresh Token!
-
-// User model:
 const User = require("../models/userModel");
-// JWT:
 const jwt = require("jsonwebtoken");
-// pwEncrypt:
 const pwEncrypt = require("../helpers/pwEncryption");
 const { generateToken } = require("../helpers/token");
 const { sendEmail } = require("../helpers/sendEmail");
 
 module.exports = {
-  //POST  /api/auth/register
   register: async (req, res) => {
     try {
       const user = await User.create(req.body);
@@ -21,7 +13,7 @@ module.exports = {
         user,
         message: "User created successfully",
         token: jwt.sign(user.toJSON(), process.env.ACCESS_KEY, {
-          expiresIn: "3d",
+          expiresIn: "120min",
         }),
       });
     } catch (err) {
@@ -29,37 +21,36 @@ module.exports = {
     }
   },
 
-  // POST  /api/auth/login
   login: async (req, res) => {
-  
     const { email, password, rememberMe } = req.body;
     if (email && password) {
-      const user = await User.findOne({ email }).select("+password"); //we get pw from db
-   
-      if (user && user.password == pwEncrypt(password)) {
-        // pw from db compare with pw from req.body
-        // toJson to return plain object from db wich is just user data,without any of the internal metadata or non-enumerable properties
-        const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_KEY, {
-          expiresIn: "120m",
-        });
+      const user = await User.findOne({ email }).select("+password");
 
-        
-        const refreshToken = jwt.sign(
-          { _id: user._id, password: user.password },
-          process.env.REFRESH_KEY,
-          { expiresIn: "7d" }
-        );
+      if (user && user.password == pwEncrypt(password)) {
+        const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_KEY, {
+          expiresIn: "120m"});
+
+        if (rememberMe) {
+          const refreshToken = jwt.sign(
+            { _id: user._id, password: user.password },
+            process.env.REFRESH_KEY,
+            { expiresIn: "7d" }
+          );
+
+          // Fixed cookie setting
+          res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV,
+            sameSite: "strict",
+            path: "/",  // Added path
+            maxAge: 7 * 24 * 60 * 60 * 1000
+          });
+        }
 
         res.send({
           error: false,
-          // bearer: {
-          //   access: accessToken,
-          //   refresh: refreshToken,
-          // },
-          user : await User.findOne({ email }),
-          token:{
-            access: accessToken
-          }
+          user: await User.findOne({ email }),
+          token: accessToken
         });
       } else {
         res.errorStatusCode = 401;
@@ -71,20 +62,26 @@ module.exports = {
     }
   },
 
-  // ALL   /api/auth/logout
   logout: async (req, res) => {
+    // Fixed cookie clearing
+    res.cookie("refreshToken", "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV,
+      sameSite: "strict",
+      path: "/",  // Added path
+      maxAge: 0
+    });
+
     res.send({
       error: false,
-      message: "Logged out when you delete your tokens!!!",
+      message: "Logged out successfully!",
     });
   },
 
-  // URL POST     /api/auth/refresh
   refresh: async (req, res) => {
-    const refreshToken = req.body?.bearer?.refresh;
+    const refreshToken = req.cookies.refreshToken;
 
     if (refreshToken) {
-      // VERIFY TOKEN:
       jwt.verify(refreshToken, process.env.REFRESH_KEY, async (err, data) => {
         if (err) {
           res.errorStatusCode = 401;
@@ -93,24 +90,19 @@ module.exports = {
           const { _id, password } = data;
 
           if (_id && password) {
-            const user = await User.findOne({ _id }).select("+password"); // here we can't make query for get the user and compare the encrypted pw at the same time. So we have to get the user and then compare
-            // Remember we can't tell mongoose to query for encrypted values!
+            const user = await User.findOne({ _id }).select("+password");
             if (user && user.password == password) {
-              // Check if the user is active
-             
-                // SEND A NEW ACCESS TOKEN!!!
-                const accessToken = jwt.sign(
-                  user.toJSON(),
-                  process.env.ACCESS_KEY,
-                  { expiresIn: "3d" }
-                );
-                res.send({
-                  error: false,
-                  bearer: {
-                    access: accessToken,
-                  },
-                });
-              
+              const accessToken = jwt.sign(
+                user.toJSON(),
+                process.env.ACCESS_KEY,
+                { expiresIn: "120min" }
+              );
+              res.send({
+                error: false,
+                bearer: {
+                  access: accessToken,
+                },
+              });
             } else {
               res.errorStatusCode = 401;
               throw new Error("User not found - BAD TOKEN!");
@@ -258,7 +250,15 @@ module.exports = {
   },
 
   deleteAccount: async (req, res) => {
-    const user = await User.findById(req.user._id).select("+password");
+    // Fixed cookie clearing
+    res.cookie("refreshToken", "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV,
+      sameSite: "strict",
+      path: "/",  // Added path
+      maxAge: 0
+    });
+
     const data = await User.deleteOne({ _id: req.user.id });
 
     res.status(204).send({
