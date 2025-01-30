@@ -25,7 +25,7 @@ interface AuthFormProps<T> {
   isReminderShown?: boolean;
 }
 
-const AuthForm = <T extends object>({
+const AuthForm = <T extends object & { rememberMe?: boolean }>({
   initialValues,
   validationSchema,
   handleSubmit,
@@ -34,6 +34,7 @@ const AuthForm = <T extends object>({
   buttonText,
   bottomLinks,
   isReminderShown = false,
+  
 }: AuthFormProps<T>) => {
   return (
     <div className="w-full max-w-sm p-8 mx-auto rounded-lg ">
@@ -42,8 +43,10 @@ const AuthForm = <T extends object>({
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched,values, handleChange ,handleBlur }) => (
+          
           <Form className="space-y-4">
+           {/*  <pre>{JSON.stringify(values, null, 2)}</pre>  */}{/* Debug log ,just to see if rememberme toggle*/}
             <h5 className="text-3xl pb-4 text-center font-bold text-marine-blue font-Mali">
               {title}
             </h5>
@@ -62,13 +65,16 @@ const AuthForm = <T extends object>({
             {isReminderShown && (
               <div className="flex items-center">
                 <input
-                  id="remember-me"
-                  name="remember-me"
+                  id="rememberMe"
+                  name="rememberMe"//should match with the initialValues 
                   type="checkbox"
+                  onChange={handleChange} // Formik's onChange handler
+                  onBlur={handleBlur} // Formik's onBlur handler
+                  checked={values.rememberMe} // Controlled by Formik's state
                   className="h-4 w-4 rounded ml-2 accent-blue-water checked:bg-white bg-gray-100 border-gray-100 cursor-pointer text-white-600"
                 />
                 <label
-                  htmlFor="remember-me"
+                  htmlFor="rememberMe"
                   className="text-sm font-medium text-marine-blue pl-1 font-Roboto"
                 >
                   <p className="text-sm font-medium text-marine-blue pl-1">

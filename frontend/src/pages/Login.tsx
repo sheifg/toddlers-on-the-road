@@ -41,7 +41,7 @@ const Login = () => {
   const initialValues = {
     email: "",
     password: "",
-    rememberMe: false, // Explicitly add this field
+   rememberMe: false, // Explicitly add this field
   };
 
   const loginSchema = object().shape({
@@ -55,6 +55,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (values , actions) => {
+    console.log(values);
     login(values, navigate);
     actions.setSubmitting(false);
   };

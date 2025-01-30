@@ -10,7 +10,7 @@ router.post("/login", auth.login); // /api/auth/login
 
 router.post("/refresh", authMw, auth.refresh); // /api/auth/refresh    (If the "Rememeber me" button is selected)
 
-router.all("/logout", authMw, auth.logout); //api/auth/logout
+router.all("/logout", auth.logout); //api/auth/logout
 
 router.all("/deleteAccount", authMw, auth. deleteAccount); //api/auth/ deleteAccount
 //router.put('/details', authMw , auth.updateDetails);//api/auth/details
