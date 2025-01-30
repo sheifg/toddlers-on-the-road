@@ -2,8 +2,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { object, ref, string } from "yup";
 import ResetPasswordForm from "../components/ResetPasswordForm";
 import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
 
 const ResetPassword = () => {
+
+  const [passwordMatch, setPasswordMatch] = useState(true);
+
   const inputs = [
     {
       name: "new_password",
@@ -33,17 +37,32 @@ const ResetPassword = () => {
       .oneOf([ref("new_password")], "Password does not match"),
   });
 
+
   const { resetPassword } = useAuth();
   const navigate = useNavigate();
   const { resetToken } = useParams();
-  console.log("Reset token:", resetToken);
+
 
   if (!resetToken) {
     navigate("/login");
     return;
   }
 
+  
+  const checkPasswordMatch = (values: { new_password: string; confirm_password: string }) => {
+    if (values.new_password && values.confirm_password) {
+      const match = values.new_password === values.confirm_password;
+      setPasswordMatch(match);
+      return match;
+    }
+    return true; // Return true if either password field is empty
+  };
+  
   const handleSubmit = (values, actions) => {
+     // Check password match before submitting
+     if (!checkPasswordMatch(values)) {
+      return;
+    }
     resetPassword(values, resetToken, navigate);
     actions.setSubmitting(false);
   };
