@@ -45,7 +45,7 @@ module.exports = {
         // create the tokens and SEND!
         // toJson to return plain object from db wich is just user data
         const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_KEY, {
-          expiresIn: "120min",
+          expiresIn: "120m",
         });
 
         // So when we use `user.toJSON()`, we're explicitly telling Mongoose to "flatten" the document to a simple, plain object.

@@ -26,7 +26,11 @@ interface AuthContextProps {
     navigate: (path: string) => void
   ) => Promise<void>;
   userInfo: ICurrentUser | null;
-  login: (userData: IUser, navigate: (path: string) => void) => Promise<void>;
+  login: (
+    userData: IUser,
+    navigate: (path: string) => void,
+    redirectionPath?: string
+  ) => Promise<void>;
   logout: (navigate: (path: string) => void) => Promise<void>;
   forgotPassword: (
     forgotPasswordData: IForgotPassword,
@@ -91,7 +95,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       localStorage.setItem("user", JSON.stringify(user));
       toast.success("User registered successfully!");
       navigate("/");
-      //TODO: check to navigate previous click and try to implement it!
     } catch (error) {
       console.log(error);
       if (axios.isAxiosError(error)) {
@@ -103,7 +106,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   // Login function
-  const login = async (userData: IUser, navigate: (path: string) => void) => {
+  const login = async (
+    userData: IUser,
+    navigate: (path: string) => void,
+    redirectionPath?: string
+  ) => {
     try {
       const { data } = await axios({
         url: `${BASE_URL}/api/auth/login/`,
@@ -114,12 +121,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         token: data.token,
         ...data.user,
       };
-      console.log("User:",user)
+      console.log("User:", user);
       setUserInfo(user);
       localStorage.setItem("user", JSON.stringify(user));
       toast.success("Login successful!");
-      navigate("/");
-      //TODO: check to navigate previous click and try to implement it!
+      navigate(redirectionPath ? redirectionPath : "/");
     } catch (error) {
       console.log(error);
       if (axios.isAxiosError(error)) {

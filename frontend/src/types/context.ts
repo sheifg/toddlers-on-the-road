@@ -17,3 +17,4 @@ export interface IResetPassword {
 export interface IForgotPassword {
   email: string;
 }
+

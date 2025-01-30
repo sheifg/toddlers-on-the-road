@@ -2,7 +2,7 @@ import { object, string } from "yup";
 import AuthForm from "../components/AuthForm";
 import { AuthFormLink } from "../types/form";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 
 const BOTTOM_LINKS: AuthFormLink[] = [
@@ -59,9 +59,17 @@ const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  const { state: locationState } = useLocation();
+
+  let redirectionPath: any;
+
+  if (locationState) {
+    const { redirectTo } = locationState;
+    redirectionPath = `${redirectTo.pathname}${redirectTo.search}`;
+  }
+
   const handleSubmit = (values, actions) => {
-    console.log("Values:", values);
-    login(values, navigate);
+    login(values, navigate, redirectionPath);
     actions.setSubmitting(false);
   };
 
