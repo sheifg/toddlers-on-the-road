@@ -187,13 +187,14 @@ module.exports = {
 
         You recently requested to rest your password. Please click the link below to proceed:
 
-        ${resetUrl}
+        <a href="${resetUrl}">${resetUrl}</a>
 
-        If you did not request a password reset, please ignore this email :)
         This password reset link is only valid for the next 60 minutes.
+        
+        If you did not request a password reset, please ignore this email :)
 
         Sincerely,
-        Your Toddlers on the Road team
+        Your <i>Toddlers on the Road</i> team
       `;
 
       try {
