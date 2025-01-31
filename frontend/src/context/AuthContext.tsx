@@ -5,7 +5,12 @@ import {
   useEffect,
   useState,
 } from "react";
-import { ICurrentUser, IUser } from "../types/context";
+import {
+  ICurrentUser,
+  IForgotPassword,
+  IResetPassword,
+  IUser,
+} from "../types/context";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../constants";
@@ -23,7 +28,15 @@ interface AuthContextProps {
   userInfo: ICurrentUser | null;
   login: (userData: IUser, navigate: (path: string) => void) => Promise<void>;
   logout: (navigate: (path: string) => void) => Promise<void>;
-  // updateUser: (userData: IUser, message: string) => Promise<void>;
+  forgotPassword: (
+    forgotPasswordData: IForgotPassword,
+    navigate: (path: string) => void
+  ) => Promise<void>;
+  resetPassword: (
+    resetPasswordData: IResetPassword,
+    resetToken: string,
+    navigate: (path: string) => void
+  ) => Promise<void>;
 }
 
 interface AuthProviderProps {
@@ -101,6 +114,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         token: data.token,
         ...data.user,
       };
+      console.log("User:",user)
       setUserInfo(user);
       localStorage.setItem("user", JSON.stringify(user));
       toast.success("Login successful!");
@@ -139,8 +153,62 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const forgotPassword = async (
+    forgotPasswordData: IForgotPassword,
+    navigate: (path: string) => void
+  ) => {
+    try {
+      await axios({
+        url: `${BASE_URL}/api/auth/forgot-password`,
+        method: "POST",
+        data: forgotPasswordData,
+      });
+      toast.success("Reset password email sent successfully!");
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
+  };
+
+  const resetPassword = async (
+    resetPasswordData: IResetPassword,
+    resetToken: string,
+    navigate: (path: string) => void
+  ) => {
+    try {
+      await axios({
+        url: `${BASE_URL}/api/auth/reset-password/${resetToken}`,
+        method: "POST",
+        data: resetPasswordData,
+      });
+      toast.success("Reset password successfully!");
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ register, login, userInfo, logout }}>
+    <AuthContext.Provider
+      value={{
+        register,
+        login,
+        userInfo,
+        logout,
+        resetPassword,
+        forgotPassword,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

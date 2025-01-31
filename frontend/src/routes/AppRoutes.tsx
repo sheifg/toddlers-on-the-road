@@ -7,6 +7,8 @@ import Contact from "../pages/Contact";
 import { PrivateRoute } from "./PrivateRoute";
 import Details from "../pages/Details";
 import Profile from "../pages/Profile";
+import ResetPassword from "../pages/ResetPassword";
+import ForgotPassword from "../pages/ForgotPassword";
 
 const AppRoutes = () => {
   return (
@@ -16,6 +18,8 @@ const AppRoutes = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
       {/* <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/details/:id" element={<Details />} />

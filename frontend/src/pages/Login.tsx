@@ -3,7 +3,7 @@ import AuthForm from "../components/AuthForm";
 import { AuthFormLink } from "../types/form";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { IUser } from "../types/context";
+import { FcGoogle } from "react-icons/fc";
 
 const BOTTOM_LINKS: AuthFormLink[] = [
   {
@@ -15,8 +15,15 @@ const BOTTOM_LINKS: AuthFormLink[] = [
   },
   {
     link: {
-      text: "Forgot your password?",
+      text: "Continue with Google",
       url: "....",
+    },
+    icon: FcGoogle,
+  },
+  {
+    link: {
+      text: "Forgot your password?",
+      url: "/forgot-password",
     },
   },
 ];
@@ -53,6 +60,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (values, actions) => {
+    console.log("Values:", values);
     login(values, navigate);
     actions.setSubmitting(false);
   };

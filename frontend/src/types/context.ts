@@ -9,3 +9,11 @@ export interface IUser {
 export interface ICurrentUser extends IUser {
   token: string;
 }
+
+export interface IResetPassword {
+  new_password: string;
+}
+
+export interface IForgotPassword {
+  email: string;
+}
