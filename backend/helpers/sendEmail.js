@@ -15,7 +15,7 @@ const sendEmail = async ({ email, subject, message }) => {
     const info = await transporter.sendMail({
       from:
         process.env.EMAIL_FROM ||
-        '"Toddlers on the Road" <noreply@toddlersontheroad.com>',
+        '"Toddlers on the Road" <toddlersontheroad@gmail.com>',
       to: email,
       subject: subject,
       text: message,
