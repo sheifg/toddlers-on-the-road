@@ -94,7 +94,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         ...data.user,
       };
       setUserInfo(user);
-      localStorage.setItem("user", JSON.stringify(user));
+      sessionStorage.setItem("user", JSON.stringify(user));
       toast.success("User registered successfully!");
       navigate("/");
     } catch (error) {
@@ -129,7 +129,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         ...data.user,
       };
       setUserInfo(user);
-      localStorage.setItem("user", JSON.stringify(user));
+      sessionStorage.setItem("user", JSON.stringify(user));
       toast.success("Login successful!");
       navigate(redirectionPath ? redirectionPath : "/");
     } catch (error) {
@@ -153,7 +153,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          withCredentials: true, 
       });
       setUserInfo(null);
-      localStorage.removeItem("user");
+      sessionStorage.removeItem("user");
       navigate("/login");
       toast.success("Logged out successfully");
     } catch (error) {
