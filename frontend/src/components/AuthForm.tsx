@@ -8,7 +8,7 @@ interface AuthFormProps<T> {
   initialValues: T;
   validationSchema: Yup.ObjectSchema<any>;
   handleSubmit: (
-    values: T, 
+    values: T,
     formikHelpers: FormikHelpers<T>
   ) => void | Promise<void>;
   title: string;
