@@ -1,10 +1,10 @@
 export const getStorageItem = (key: string) => {
   if (typeof window !== "undefined") {
     try {
-      const item = window.localStorage.getItem(key);
+      const item = window.sessionStorage.getItem(key);
       return item ? JSON.parse(item) : null;
     } catch (error) {
-      console.error("Error accessing localStorage:", error);
+      console.error("Error accessing sessionStorage:", error);
       return null;
     }
   }
@@ -14,9 +14,9 @@ export const getStorageItem = (key: string) => {
 export const setStorageItem = (key: string, value: unknown) => {
   if (typeof window !== "undefined") {
     try {
-      window.localStorage.setItem(key, JSON.stringify(value));
+      window.sessionStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
-      console.error("Error setting localStorage:", error);
+      console.error("Error setting sessionStorage:", error);
     }
   }
 };
@@ -24,9 +24,9 @@ export const setStorageItem = (key: string, value: unknown) => {
 export const removeStorageItem = (key: string) => {
   if (typeof window !== "undefined") {
     try {
-      window.localStorage.removeItem(key);
+      window.sessionStorage.removeItem(key);
     } catch (error) {
-      console.error("Error removing localStorage item:", error);
+      console.error("Error removing sessionStorage item:", error);
     }
   }
 };

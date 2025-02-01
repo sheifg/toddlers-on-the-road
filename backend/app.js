@@ -8,7 +8,7 @@ const app = express();
 require("colors");
 require("express-async-errors");
 require("dotenv").config();
-const cors = require("cors");
+
 
 // Environment variables
 const PORT = process.env.PORT || 8080;
@@ -22,8 +22,33 @@ dbConnection();
 // Middlewares
 // Parse JSON
 app.use(express.json());
+// parse form data:
+app.use(express.urlencoded({extended: true}))
+app.use('/uploads', express.static('./uploads'))
+
+app.use((req, res, next)=>{
+    console.log(req.body)
+    next()
+})
+
 // Enable CORS
-app.use(cors());
+const cors = require('cors');
+const corsOptions = {
+  origin: "http://localhost:5173", // Allow your frontend's URL
+  methods: ["GET", "POST", "PUT", "DELETE"], // Allow methods you need
+  credentials: true, // Allow cookies/credentials
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+
+//cookie-parser middleware
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
+app.use((req, res, next) => {
+  console.log("Cookies:", req.cookies);
+  next();
+});
 
 // Find/Pagination/Search/Sort:
 app.use(require("./middlewares/findSearchSortPage.js"));

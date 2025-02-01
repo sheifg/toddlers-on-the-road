@@ -8,6 +8,7 @@ export interface IUser {
 
 export interface ICurrentUser extends IUser {
   token: string;
+  refreshToken?: string;
 }
 
 export interface IResetPassword {

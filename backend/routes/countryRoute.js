@@ -1,21 +1,24 @@
 const router = require("express").Router();
 // Import controller:
-const User = require("../controllers/userController");
+const Country = require("../controllers/countryController");
 // Authentication middleware :
 const authMw = require("../middlewares/authMiddleware"); /* Protecting the user route: without log in is not possible to access the user route */
 
 const { isLogged } = require("../middlewares/permissions");
 
+// upload middleware:
+const upload = require('../middlewares/upload')
+
 router
   .route("/")
-   .get( User.list)
-  .post(User.create);
+  .get(Country.list)
+  .post(upload.array('images'),Country.create);
 
 router
   .route("/:id")
-  .get(authMw, isLogged, User.read)
-  .put(authMw, isLogged, User.update)
-  .patch(authMw, isLogged, User.update)
-  .delete(authMw, isLogged, User.delete);
+  .get(authMw, isLogged, Country.read)
+  .put(authMw, isLogged, Country.update)
+  .patch(authMw, isLogged, Country.update)
+  .delete(authMw, isLogged, Country.delete);
 
 module.exports = router;
