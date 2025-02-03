@@ -9,7 +9,7 @@ const Layout = ({ children }: React.PropsWithChildren) => {
   return (
     <div className="flex flex-col min-h-screen bg-beige bg-opacity-50">
       <Header />
-      <main className="flex-1 max-auto px-4">{children}</main>
+      <main className="flex-1 max-auto">{children}</main>
       <footer className="bg-beige bg-opacity-100 text-marine-blue font-Mali">
         <div className="container mx-auto flex items-center justify-between p-3.5">
           <div className="flex items-center space-x-6">
