@@ -7,12 +7,12 @@ const UserSchema = new mongoose.Schema(
     first_name: {
       type: String,
       trim: true,
-      required: [true, "First name is required"],
+
     },
     last_name: {
       type: String,
       trim: true,
-      required: [true, "Last name is required"],
+    
     },
     username: {
       type: String,
@@ -32,6 +32,12 @@ const UserSchema = new mongoose.Schema(
       // Make password field not selectable by default
       select: false,
     },
+    provider: {
+      type: String,
+      trim: true,
+      enum: ['email', 'firebase'],
+      default: "email",
+    },
     resetPasswordToken: {
       type: String,
       default: null,
@@ -48,7 +54,11 @@ const UserSchema = new mongoose.Schema(
 
 UserSchema.pre(["save", "updateOne"], function (next) {
   // if the password is modified, encrypt it!
-
+  // Skip validation if provider is firebase
+  // Skip hashing for Firebase users
+  if (this.provider === 'firebase') {
+    return next();
+}
   // we need to start by getting the data that is being modified or saved.
   // The way we do this is to reference the document as THIS
   const data = this?._update || this;

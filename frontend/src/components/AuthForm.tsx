@@ -83,34 +83,47 @@ const AuthForm = <T extends object & { rememberMe?: boolean }>({
               </button>
             </div>
 
+            {/* CHANGES: Modified the bottomLinks rendering to handle onClick */}
             {bottomLinks.map((bottomLink, index) => (
-              <div
-                key={index}
-                className="container mx-auto flex items-center justify-center p-2 font-Roboto"
-              >
-                <div className="flex items-center space-x-1">
-                  {bottomLink.text && (
-                    <p className="text-sm font-medium text-marine-blue text-center font-Roboto">
-                      {`${bottomLink.text}`}
-                    </p>
-                  )}
-                  <Link
-                    to={bottomLink.link.url}
-                    className="text-marine-blue hover:underline"
-                  >
-                    <p className="text-sm font-medium text-marine-blue text-center">
-                      {bottomLink.link.text}
-                    </p>
-                  </Link>
-                  {bottomLink.icon && <bottomLink.icon />}
-                </div>
-              </div>
-            ))}
-          </Form>
-        )}
-      </Formik>
-    </div>
-  );
+                            <div
+                                key={index}
+                                className="container mx-auto flex items-center justify-center p-2 font-Roboto"
+                            >
+                                <div className="flex items-center space-x-1">
+                                    {bottomLink.text && (
+                                        <p className="text-sm font-medium text-marine-blue text-center font-Roboto">
+                                            {bottomLink.text}
+                                        </p>
+                                    )}
+                                    {bottomLink.link.url ? (
+                                        <Link
+                                            to={bottomLink.link.url}
+                                            className="text-marine-blue hover:underline"
+                                        >
+                                            <p className="text-sm font-medium text-marine-blue text-center">
+                                                {bottomLink.link.text}
+                                            </p>
+                                        </Link>
+                                    ) : (
+                                        <button
+                                            type="button" // Important to prevent form submission
+                                            onClick={bottomLink.link.onClick}
+                                            className="text-marine-blue hover:underline"
+                                        >
+                                            <p className="text-sm font-medium text-marine-blue text-center">
+                                                {bottomLink.link.text}
+                                            </p>
+                                        </button>
+                                    )}
+                                    {bottomLink.icon && <bottomLink.icon className="ml-2" />}
+                                </div>
+                            </div>
+                        ))}
+                    </Form>
+                )}
+            </Formik>
+        </div>
+    );
 };
 
 export default AuthForm;

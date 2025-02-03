@@ -2,7 +2,7 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const pwEncrypt = require("../helpers/pwEncryption");
 const { generateToken } = require("../helpers/token");
-const { sendEmail } = require("../helpers/sendEmail");
+//const { sendEmail } = require("../helpers/sendEmail");
 
 module.exports = {
   register: async (req, res) => {
@@ -25,6 +25,12 @@ module.exports = {
     const { email, password, rememberMe } = req.body;
     if (email && password) {
       const user = await User.findOne({ email }).select("+password");
+
+      // If user registered with Google, prevent password login
+      if (user && user.provider === "firebase") {
+          res.errorStatusCode = 401;
+          throw new Error("Please sign in with Google !")
+      }
 
       if (user && user.password == pwEncrypt(password)) {
         const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_KEY, {

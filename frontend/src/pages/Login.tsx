@@ -4,32 +4,45 @@ import { AuthFormLink } from "../types/form";
 import { useAuth } from "../context/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import {signUpProvider} from "../config/firebase"
 
-const BOTTOM_LINKS: AuthFormLink[] = [
-  {
-    text: "Don't have an account?",
-    link: {
-      text: "Sign Up",
-      url: "/register",
+const Login = () => {
+  const navigate = useNavigate();
+  const { state: locationState } = useLocation();
+
+  // CHANGES: Added navigate and proper async handling
+  const BOTTOM_LINKS: AuthFormLink[] = [
+    {
+        text: "Don't have an account?",
+        link: {
+            text: "Sign Up",
+            url: "/register",
+        },
     },
-  },
-  {
-    link: {
-      text: "Continue with Google",
-      url: "....",
+    {
+        link: {
+            text: "Continue with Google",
+            onClick: async () => {
+                try {
+                    await signUpProvider(navigate);
+                    const redirectTo = locationState?.redirectTo;
+                    navigate(redirectTo ? `${redirectTo.pathname}${redirectTo.search}` : '/');
+                } catch (error) {
+                    console.error('Google sign-in error:', error);
+                }
+            },
+        },
+        icon: FcGoogle,
     },
-    icon: FcGoogle,
-  },
-  {
-    link: {
-      text: "Forgot your password?",
-      url: "/forgot-password",
+    {
+        link: {
+            text: "Forgot your password?",
+            url: "/forgot-password",
+        },
     },
-  },
 ];
 
 
-const Login = () => {
   const inputs = [
     {
       name: "email",
@@ -59,9 +72,9 @@ const Login = () => {
   });
 
   const { login } = useAuth();
-  const navigate = useNavigate();
+  
 
-  const { state: locationState } = useLocation();
+ 
 
   let redirectionPath: any;
 
