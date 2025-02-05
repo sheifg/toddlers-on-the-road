@@ -38,11 +38,11 @@ const UserSchema = new mongoose.Schema(
       enum: ['email', 'firebase'],
       default: "email",
     },
-    resetPasswordToken: {
+    reset_password_token: {
       type: String,
       default: null,
     },
-    resetPasswordExpires: {
+    reset_password_expires: {
       type: Date,
       default: null,
     },

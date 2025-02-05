@@ -4,12 +4,20 @@ const Country= require("../models/countryModel");
 module.exports = {
 
   list: async (req, res) => {
-    const data = await res.getModelList(Country);
-    res.status(200).send({
-      error: false,
-      details: await res.getModelListDetails(Country),
-      data,
-    });
+    try{
+      const data = await res.getModelList(Country);
+      res.status(200).send({
+        error: false,
+        details: await res.getModelListDetails(Country),
+        data,
+      });
+    } catch(error){
+      console.error("Authorization Error:", error);
+      res.status(401).send({
+          error: true,
+          message: "Unauthorized: " + error.message,
+      });
+    }
   },
 
   create: async (req, res) => {
