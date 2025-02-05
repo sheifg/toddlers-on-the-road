@@ -4,32 +4,48 @@ import { AuthFormLink } from "../types/form";
 import { useAuth } from "../context/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-
-const BOTTOM_LINKS: AuthFormLink[] = [
-  {
-    text: "Don't have an account?",
-    link: {
-      text: "Sign Up",
-      url: "/register",
-    },
-  },
-  {
-    link: {
-      text: "Continue with Google",
-      url: "....",
-    },
-    icon: FcGoogle,
-  },
-  {
-    link: {
-      text: "Forgot your password?",
-      url: "/forgot-password",
-    },
-  },
-];
-
+import { signUpProvider } from "../config/firebase";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { state: locationState } = useLocation();
+  const toastMessage = "Login successful!";
+  const { login } = useAuth();
+  let redirectionPath: any;
+
+  const BOTTOM_LINKS: AuthFormLink[] = [
+    {
+      text: "Don't have an account?",
+      link: {
+        text: "Sign Up",
+        url: "/register",
+      },
+    },
+    {
+      link: {
+        text: "Continue with Google",
+        onClick: async () => {
+          try {
+            await signUpProvider(navigate, toastMessage);
+            const redirectTo = locationState?.redirectTo;
+            navigate(
+              redirectTo ? `${redirectTo.pathname}${redirectTo.search}` : "/"
+            );
+          } catch (error) {
+            console.error("Google sign-in error:", error);
+          }
+        },
+      },
+      icon: FcGoogle,
+    },
+    {
+      link: {
+        text: "Forgot your password?",
+        url: "/forgot-password",
+      },
+    },
+  ];
+
   const inputs = [
     {
       name: "email",
@@ -48,7 +64,7 @@ const Login = () => {
   const initialValues = {
     email: "",
     password: "",
-   rememberMe: false, // Explicitly add this field
+    rememberMe: false, 
   };
 
   const loginSchema = object().shape({
@@ -57,13 +73,6 @@ const Login = () => {
       .min(8, "Min 8 characters")
       .required("Password is required!"),
   });
-
-  const { login } = useAuth();
-  const navigate = useNavigate();
-
-  const { state: locationState } = useLocation();
-
-  let redirectionPath: any;
 
   if (locationState) {
     const { redirectTo } = locationState;

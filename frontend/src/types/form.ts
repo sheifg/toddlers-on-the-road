@@ -4,7 +4,8 @@ export interface AuthFormLink {
   text?: string;
   link: {
     text: string;
-    url: string;
+    url?: string;
+    onClick?: () => Promise<void>;
   };
   icon?: IconType;
 }

@@ -153,7 +153,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          withCredentials: true, 
       });
       setUserInfo(null);
-      sessionStorage.removeItem("user");
+      //sessionStorage.removeItem("user");
+      sessionStorage.clear();
       navigate("/login");
       toast.success("Logged out successfully");
     } catch (error) {

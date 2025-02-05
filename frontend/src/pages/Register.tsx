@@ -4,25 +4,34 @@ import { AuthFormLink } from "../types/form";
 import { FcGoogle } from "react-icons/fc";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-
-const BOTTOM_LINKS: AuthFormLink[] = [
-  {
-    text: "Already have an account?",
-    link: {
-      text: "Sign In",
-      url: "/login",
-    },
-  },
-  {
-    link: {
-      text: "Continue with Google",
-      url: "....",
-    },
-    icon: FcGoogle,
-  },
-];
+import { signUpProvider } from "../config/firebase";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const toastMessage = "User registered successfully!";
+  const BOTTOM_LINKS: AuthFormLink[] = [
+    {
+      text: "Already have an account?",
+      link: {
+        text: "Sign In",
+        url: "/login",
+      },
+    },
+    {
+      link: {
+        text: "Continue with Google",
+        onClick: async () => {
+          try {
+            await signUpProvider(navigate, toastMessage); 
+          } catch (error) {
+            console.error("Google sign-up error:", error);
+          }
+        },
+      },
+      icon: FcGoogle,
+    },
+  ];
+
   const inputs = [
     {
       name: "first_name",
@@ -75,10 +84,9 @@ const Register = () => {
   });
 
   const { register } = useAuth();
-  const navigate = useNavigate();
 
-  const handleSubmit = (values, actions) => {
-    register(values, navigate);
+  const handleSubmit = async (values, actions) => {
+    await register(values, navigate);
     actions.setSubmitting(false);
   };
 

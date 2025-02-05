@@ -9,7 +9,10 @@ const { isLogged } = require("../middlewares/permissions");
 router
   .route("/")
    .get( User.list)
-  .post(User.create);
+  .post(User.create)
+ 
+ // Separate Firebase route
+router.post("/firebase", User.createWithfirebase);  // Specific endpoint for Firebase
 
 router
   .route("/:id")
