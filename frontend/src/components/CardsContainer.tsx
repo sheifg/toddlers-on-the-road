@@ -12,7 +12,7 @@ const CardsContainer = (
 
   return (
     <div className="justify-items-center">
-      <h2 className="font-Mali text-center mt-10 text-xl md:text-2xl font-bold text-marine-blue">
+      <h2 className="font-Mali text-center mt-10 text-xl md:text-2xl lg:text-3xl font-bold text-marine-blue">
         Travel destinations
       </h2>
       <div

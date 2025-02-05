@@ -40,7 +40,7 @@ const AuthForm = <T extends object & { rememberMe?: boolean }>({
           
           <Form className="space-y-4">
            {/*  <pre>{JSON.stringify(values, null, 2)}</pre>  */}{/* Debug log ,just to see if rememberme toggle*/}
-            <h5 className="text-3xl pb-4 text-center font-bold text-marine-blue font-Mali">
+            <h5 className="text-3xl pb-4 text-center font-bold text-marine-blue font-Mali md:text-4xl">
               {title}
             </h5>
             {inputs.map((input) => (

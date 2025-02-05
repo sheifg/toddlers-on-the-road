@@ -13,7 +13,7 @@ const Layout = ({ children }: React.PropsWithChildren) => {
       <footer className="bg-beige bg-opacity-100 text-marine-blue font-Mali">
         <div className="container mx-auto flex items-center justify-between p-3.5">
           <div className="flex items-center space-x-6">
-            <p className=" text-l text-center">
+            <p className="text-xs text-center md:text-lg">
               &copy; 2025 - Toddlers on the Road
             </p>
           </div>
