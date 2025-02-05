@@ -8,8 +8,6 @@ router.post("/register", auth.register); //  /api/auth/register
 
 router.post("/login", auth.login); // /api/auth/login
 
-
-
 router.post("/refresh", authMw, auth.refresh); // /api/auth/refresh    (If the "Rememeber me" button is selected)
 
 router.all("/logout", auth.logout); //api/auth/logout
@@ -20,7 +18,5 @@ router.post("/reset-password/:resetToken", auth.resetPassword) // /api/auth/rese
 
 router.all("/deleteAccount", authMw, auth. deleteAccount); //api/auth/ deleteAccount
 //router.put('/details', authMw , auth.updateDetails);//api/auth/details
-
-//router.put('/password',  auth.forgetPassword);//api/auth/forgetPassword
 
 module.exports = router;
