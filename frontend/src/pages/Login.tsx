@@ -7,9 +7,11 @@ import { FcGoogle } from "react-icons/fc";
 import {signUpProvider} from "../config/firebase"
 
 const Login = () => {
+  
   const navigate = useNavigate();
   const { state: locationState } = useLocation();
-
+   const toastmsg= " Sign in  Successful !";
+  
   // CHANGES: Added navigate and proper async handling
   const BOTTOM_LINKS: AuthFormLink[] = [
     {
@@ -24,7 +26,7 @@ const Login = () => {
             text: "Continue with Google",
             onClick: async () => {
                 try {
-                    await signUpProvider(navigate);
+                    await signUpProvider(navigate ,toastmsg);
                     const redirectTo = locationState?.redirectTo;
                     navigate(redirectTo ? `${redirectTo.pathname}${redirectTo.search}` : '/');
                 } catch (error) {
