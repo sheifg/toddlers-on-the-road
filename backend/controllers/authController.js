@@ -2,7 +2,7 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const pwEncrypt = require("../helpers/pwEncryption");
 const { generateToken } = require("../helpers/token");
-//const { sendEmail } = require("../helpers/sendEmail");
+const { sendEmail } = require("../helpers/sendEmail");
 
 module.exports = {
   register: async (req, res) => {
@@ -26,7 +26,7 @@ module.exports = {
     if (email && password) {
       const user = await User.findOne({ email }).select("+password");
 
-      // If user registered with Google, prevent password login
+      // If user is registered with Google, prevent password login
       if (user && user.provider === "firebase") {
           res.errorStatusCode = 401;
           throw new Error("Please sign in with Google !")
@@ -43,7 +43,7 @@ module.exports = {
             { expiresIn: "7d" }
           );
 
-          // Fixed cookie setting
+          // Fixing setting cookies
           res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV,
@@ -69,7 +69,7 @@ module.exports = {
   },
 
   logout: async (req, res) => {
-    // Fixed cookie clearing
+    // Fixing clearing cookies
     res.cookie("refreshToken", "", {
       httpOnly: true,
       secure: process.env.NODE_ENV,
@@ -125,8 +125,6 @@ module.exports = {
     }
   },
 
-  // Generate and send password reset email
-  // URL POST     /api/auth/forgot-password
   forgotPassword: async (req, res) => {
     try {
       const { email } = req.body;
@@ -256,7 +254,7 @@ module.exports = {
   },
 
   deleteAccount: async (req, res) => {
-    // Fixed cookie clearing
+    // Fixing clearing cookies
     res.cookie("refreshToken", "", {
       httpOnly: true,
       secure: process.env.NODE_ENV,
