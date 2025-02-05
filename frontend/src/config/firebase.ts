@@ -1,5 +1,10 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup , browserPopupRedirectResolver  } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  browserPopupRedirectResolver,
+} from "firebase/auth";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../constants";
 import { getStorageItem } from "../utils/storage";
@@ -17,66 +22,66 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 // Add proper configuration to handle popup issues
 provider.setCustomParameters({
-    prompt: 'select_account',
-    display: 'popup'
+  prompt: "select_account",
+  display: "popup",
 });
 
+const signUpProvider = async (
+  navigate: (path: string) => void,
+  toastMessage: string
+): Promise<void> => {
+  try {
+    const result = await signInWithPopup(
+      auth,
+      provider,
+      browserPopupRedirectResolver
+    );
+    const { displayName, email, uid } = result.user;
 
+    const firebaseToken = getStorageItem("firebaseToken");
 
+    const response = await fetch(`${BASE_URL}/api/users/firebase`, {
+      // Note the /firebase endpoint
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${firebaseToken}`,
+      },
+      body: JSON.stringify({
+        username: displayName, //|| email.split('@')[0], // Fallback if no displayName
+        email,
+        provider: "firebase",
+        password: uid,
+      }),
+      credentials: "include",
+    });
 
-     const signUpProvider = async (navigate: (path:string)=> void,toastmsg: string): Promise<void> => {
-        try {
-           
-            const result = await signInWithPopup(auth, provider, browserPopupRedirectResolver);
-            const { displayName, email, uid } = result.user;
-            
-         
-            const firebaseToken =getStorageItem("firebaseToken")
-           
-            const response = await fetch(`${BASE_URL}/api/users/firebase`, { // Note the /firebase endpoint
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${firebaseToken}`
-                },
-                body: JSON.stringify({
-                    username: displayName ,//|| email.split('@')[0], // Fallback if no displayName
-                    email,
-                    provider: "firebase",
-                    password: uid,
-                }),
-                credentials: 'include'
-            });
-    
-           
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Failed to create user');
-            }
-    
-            const userData = await response.json();
-            
-           /*  const token  =userData.token */
-            sessionStorage.setItem("firebaseUser",JSON.stringify(userData.user));
-            sessionStorage.setItem("firebaseToken",JSON.stringify(userData.token));
-            
-           
-            toast.success(`${toastmsg}`);
-            navigate('/');
-    
-        } catch (error) {
-            console.error('Firebase Auth Error:', error);
-            if(error instanceof Error){
-            if (  error.code === 'auth/popup-closed-by-user') {
-                toast.info('Sign-in cancelled');
-                return;
-            }
-            
-            toast.error(error.message);
-            }
-            sessionStorage.removeItem("token");
-            await auth.signOut();
-        }
-    };
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to create user");
+    }
+
+    const userData = await response.json();
+
+    /*  const token  = userData.token */
+    sessionStorage.setItem("firebaseUser", JSON.stringify(userData.user));
+    sessionStorage.setItem("firebaseToken", JSON.stringify(userData.token));
+
+    toast.success(`${toastMessage}`);
+    navigate("/");
+  } catch (error) {
+    console.error("Firebase Auth Error:", error);
+    if (error instanceof Error) {
+      if (error.code === "auth/popup-closed-by-user") {
+        toast.info("Sign-in cancelled");
+        return;
+      }
+
+      toast.error(error.message);
+    }
+    sessionStorage.removeItem("token");
+    await auth.signOut();
+  }
+};
 
 export { auth, provider, signUpProvider };
