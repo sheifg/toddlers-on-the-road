@@ -28,26 +28,18 @@ module.exports = {
 
         const { email, username, provider, password } = req.body;
 
-      /*   // 2. Validate required fields
-        if (!email || !username) {
-            return res.status(400).json({
-                error: true,
-                message: "Email and username are required"
-            });
-        }
- */
-        // 3. Check for existing user
+        // 2. Check for existing user
         let user = await User.findOne({ email });
         
         if (user) {
-            // 4. If user exists, update provider if needed
+            // 3. If user exists, update provider if needed
             if (provider !== 'firebase') {
                 user.provider = 'firebase';
                 user.password = password; // Firebase UID
                 await user.save();
             }
         } else {
-            // 5. Create new user
+            // 4. Create new user
             user = new User({
                 email,
                 username,
@@ -57,14 +49,14 @@ module.exports = {
             await user.save();
         }
 
-        // 6. Generate JWT token
+        // 5. Generate JWT token
         const token = jwt.sign(
               user.toJSON(),
             process.env.ACCESS_KEY,
-            { expiresIn: "120min" }
+            { expiresIn: "120m" }
         );
 
-        // 7. Send success response
+        // 6. Send success response
         res.status(201).json({
             error: false,
             user: user,
@@ -73,7 +65,7 @@ module.exports = {
         });
 
     } catch (error) {
-        // 8. Error handling
+        // 7. Error handling
         console.error('Firebase user creation error:', error);
         res.status(500).json({
             error: true,
