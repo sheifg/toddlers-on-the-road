@@ -21,22 +21,16 @@ provider.setCustomParameters({
     display: 'popup'
 });
 
-/* export interface IUserFirebase{
-    displayName: string;
-    email: string;
-     uid: string;
-    } */
 
 
 
-     const signUpProvider = async (navigate: (path:string)=> void): Promise<void> => {
+     const signUpProvider = async (navigate: (path:string)=> void,toastmsg: string): Promise<void> => {
         try {
            
             const result = await signInWithPopup(auth, provider, browserPopupRedirectResolver);
             const { displayName, email, uid } = result.user;
             
          
-            //const firebaseToken = await result.user.getIdToken();
             const firebaseToken =getStorageItem("firebaseToken")
            
             const response = await fetch(`${BASE_URL}/api/users/firebase`, { // Note the /firebase endpoint
@@ -61,13 +55,13 @@ provider.setCustomParameters({
             }
     
             const userData = await response.json();
-             console.log("userData:", userData);
+            
            /*  const token  =userData.token */
             sessionStorage.setItem("firebaseUser",JSON.stringify(userData.user));
             sessionStorage.setItem("firebaseToken",JSON.stringify(userData.token));
             
            
-            toast.success('Signed up successfully!');
+            toast.success(`${toastmsg}`);
             navigate('/');
     
         } catch (error) {
