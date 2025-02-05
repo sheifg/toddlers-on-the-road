@@ -10,6 +10,7 @@ import { signUpProvider } from "../config/firebase"
 const Register = () => {
    
     const navigate = useNavigate();
+    const toastmsg= " Sign up Successful !"
     const BOTTOM_LINKS: AuthFormLink[] = [
         {
             text: "Already have an account?",
@@ -23,7 +24,7 @@ const Register = () => {
                 text: "Continue with Google",
                 onClick: async () => {
                     try {
-                        await signUpProvider(navigate); // Pass navigate function
+                        await signUpProvider(navigate,toastmsg); // Pass navigate function
                     } catch (error) {
                         console.error('Google sign-up error:', error);
                     }
