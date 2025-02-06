@@ -16,7 +16,7 @@ import { BsFillTelephoneFill } from "react-icons/bs";const Layout = ({ children 
         <div className="container mx-auto grid grid-cols-1  gap-5 p-3.5">
           <div className=" grid grid-cols-1 text-s gap-1">
             <div className=" text-l font-semibold underline underline-offset-8 py-2">
-              <p >CONTACT </p>
+              <p>CONTACT</p>
             </div>
             <div className=" flex items-center justify-start gap-2 text-xs pt-1">
               <span><MdEmail /></span> 
@@ -33,8 +33,7 @@ import { BsFillTelephoneFill } from "react-icons/bs";const Layout = ({ children 
           </div>
           <div className=" grid grid-cols-1 gap-1 text-s">
             <div>
-              <p className=" text-l font-semibold underline underline-offset-8">
-                FOLLOW US</p>
+              <p className=" text-l font-semibold underline underline-offset-8">FOLLOW US</p>
             </div>
             <div className="grid grid-cols-12 gap-x-1 py-4">
                <Link to="/" >
@@ -50,7 +49,7 @@ import { BsFillTelephoneFill } from "react-icons/bs";const Layout = ({ children 
           </div>
           <div className=" grid grid-cols-1 gap-1 text-s">
             <div>
-               <p className=" text-l font-semibold underline underline-offset-8 ">PAGES</p>
+               <p className=" text-l font-semibold underline underline-offset-8">PAGES</p>
             </div>
             <div className=" grid grid-cols-1 gap-1 py-3">
                <Link to="/about" className="text-s px-1">
