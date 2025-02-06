@@ -13,7 +13,7 @@ import { BsFillTelephoneFill } from "react-icons/bs";const Layout = ({ children 
       <Header />
       <main className="flex-1 max-auto">{children}</main>
       <footer className="bg-beige bg-opacity-100 text-marine-blue font-Mali">
-        <div className="container mx-auto grid grid-cols-1  gap-5 p-3.5">
+        <div className="container mx-auto grid grid-cols-1 gap-5 p-3.5">
           <div className=" grid grid-cols-1 text-s gap-1">
             <div className=" text-l font-semibold underline underline-offset-8 py-2">
               <p>CONTACT</p>
@@ -30,7 +30,6 @@ import { BsFillTelephoneFill } from "react-icons/bs";const Layout = ({ children 
               <span><ImLocation2 /></span>
               <p className=" text-xs py-2">Königstr 8, 28491 Hanover</p>
             </div>
-          </div>
           <div className=" grid grid-cols-1 gap-1 text-s">
             <div>
               <p className=" text-l font-semibold underline underline-offset-8">FOLLOW US</p>

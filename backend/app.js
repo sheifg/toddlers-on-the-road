@@ -9,7 +9,6 @@ require("colors");
 require("express-async-errors");
 require("dotenv").config();
 
-
 // Environment variables
 const PORT = process.env.PORT || 8080;
 const HOST = process.env.HOST || "127.0.0.1";
@@ -23,21 +22,21 @@ dbConnection();
 // Parse JSON
 app.use(express.json());
 // parse form data:
-app.use(express.urlencoded({extended: true}))
-app.use('/uploads', express.static('./uploads'))
+app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static("./uploads"));
 
-app.use((req, res, next)=>{
-    console.log(req.body)
-    next()
-})
+app.use((req, res, next) => {
+  console.log(req.body);
+  next();
+});
 
 // Enable CORS
-const cors = require('cors');
+const cors = require("cors");
 const corsOptions = {
   origin: "http://localhost:5173", // Allow your frontend's URL
   methods: ["GET", "POST", "PUT", "DELETE"], // Allow methods you need
   credentials: true, // Allow cookies/credentials
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
 
