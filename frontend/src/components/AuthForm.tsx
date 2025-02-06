@@ -83,7 +83,6 @@ const AuthForm = <T extends object & { rememberMe?: boolean }>({
               </button>
             </div>
 
-            {/* CHANGES: Modified the bottomLinks rendering to handle onClick */}
             {bottomLinks.map((bottomLink, index) => (
                             <div
                                 key={index}

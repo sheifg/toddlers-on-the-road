@@ -14,7 +14,7 @@ const CountrySchema = new mongoose.Schema(
       trim: true,
       required: true,
     },
-    capital_City: {
+    capital_city: {
       type: String,
       trim: true,
       required: true,
@@ -29,17 +29,17 @@ const CountrySchema = new mongoose.Schema(
       trim: true,
       required: true,
     },
-    cultural_Info: {
+    cultural_info: {
       type: String,
       trim: true,
       required: true,
     },
-    food_Specialties: {
+    food_specialties: {
       type: String,
       trim: true,
       required: true,
     },
-    emergency_Contacts: {
+    emergency_contacts: {
       type: String,
       trim: true,
       required: true,

@@ -151,8 +151,8 @@ module.exports = {
       const resetToken = generateToken();
 
       try {
-        user.resetPasswordToken = resetToken;
-        user.resetPasswordExpires = new Date(Date.now() + 3600000); // 1 hour from now
+        user.reset_password_token = resetToken;
+        user.reset_password_expires = new Date(Date.now() + 3600000); // 1 hour from now
         await user.save();
       } catch (error) {
         console.error("Update reset token:", error);
@@ -215,7 +215,7 @@ module.exports = {
       try {
         // Find user with valid reset token
         user = await User.findOne({
-          resetPasswordToken: resetToken,
+          reset_password_token: resetToken,
         });
       } catch (error) {
         console.error("Find user with valid reset token:", error);
@@ -225,7 +225,7 @@ module.exports = {
       }
 
       const currentTime = Date.now();
-      const expiryTime = user.resetPasswordExpires.getTime();
+      const expiryTime = user.reset_password_expires.getTime();
 
       // Check if user exists and token hasn't expired
       if (!user || expiryTime < currentTime) {
@@ -235,8 +235,8 @@ module.exports = {
       }
 
       user.password = new_password;
-      user.resetPasswordToken = null;
-      user.resetPasswordExpires = null;
+      user.reset_password_token = null;
+      user.reset_password_expires = null;
 
       try {
         // Update password and clear reset token fields

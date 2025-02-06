@@ -4,12 +4,15 @@ import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import { ToastContainer } from "react-toastify";
+import { CountryProvider } from "./context/CountryContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <CountryProvider>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </CountryProvider>
     <ToastContainer />
   </BrowserRouter>
 );
