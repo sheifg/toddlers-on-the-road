@@ -11,22 +11,26 @@ export default function Header() {
   const firebaseToken =getStorageItem("firebaseToken")
   return (
     <nav className="font-Mali text-marine-blue">
-      <div className="container mx-auto flex items-center justify-between p-4">
+      <div className="container mx-auto flex flex-wrap items-center justify-between p-4">
         <div className="flex items-center space-x-6">
-          <Link to="/" className="text-xl font-semibold px-3">
+          <Link to="/" className="text-xl font-semibold px-1 md:px-3">
             <img className="h-auto" src="../lor-logo.svg" alt="LoR logo" />
           </Link>
-          <Link to="/about" className="text-xl font-semibold px-3">
+          <Link
+            to="/about"
+            className="text-lg font-semibold md:text-xl md:px-3"
+          >
             About
           </Link>
-          <Link to="/contact" className="text-xl font-semibold px-3">
+          <Link
+            to="/contact"
+            className="text-lg font-semibold md:text-xl md:px-3"
+          >
             Contact
           </Link>
-        </div>
-        <div className="flex items-center space-x-6">
           {/* Hamburger button */}
           <button
-            className="sm:hidden p-2 text-marine-blue rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-100"
+            className="absolute right-2 top-6.5 p-2 text-marine-blue rounded-lg focus:outline-none focus:ring-1 md:hidden "
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -62,14 +66,17 @@ export default function Header() {
               </svg>
             )}
           </button>
-
+        </div>
+        <div className="flex items-center space-x-6 w-full md:w-fit">
           {/* Navigation links */}
           <div
-            className={`w-full sm:inline-block sm:w-auto 
+            className={`
+              w-full 
             ${isOpen ? "block" : "hidden"}
-             sm:block`}
+             md:block md:w-auto`}
           >
-            <ul className="flex flex-col items-center space-y-4 font-medium mt-4 sm:flex-row sm:space-x-9 sm:space-y-0 sm:mt-0">
+            {/* <ul className="flex flex-col items-center space-y-4 font-medium mt-4 sm:flex-row sm:space-x-9 sm:space-y-0 sm:mt-0"> */}
+            <ul className="flex flex-col items-center space-y-4 font-medium mt-4 md:flex-row md:space-x-9 md:space-y-0 md:mt-0">
               {(userInfo || firebaseToken ) ? (
                 <>
                   <li>
@@ -85,12 +92,18 @@ export default function Header() {
               ) : (
                 <>
                   <li>
-                    <Link to="/login" className="text-xl font-semibold px-3">
+                  <Link
+                      to="/login"
+                      className="text-lg text-center font-semibold px-3 md:text-xl "
+                    >
                       Login
                     </Link>
                   </li>
                   <li>
-                    <Link to="/register" className="text-xl font-semibold px-3">
+                    <Link
+                      to="/register"
+                      className="text-lg text-center font-semibold px-3 md:text-xl"
+                    >
                       Register
                     </Link>
                   </li>
