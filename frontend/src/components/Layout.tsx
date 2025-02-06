@@ -8,7 +8,6 @@ import { MdEmail } from "react-icons/md";
 import { BsArrowUpCircleFill } from "react-icons/bs";
 import { ImLocation2 } from "react-icons/im";
 import { BsFillTelephoneFill } from "react-icons/bs";
-
 const Layout = ({ children }: React.PropsWithChildren) => {
   return (
     <div className="flex flex-col min-h-screen bg-beige bg-opacity-50">
