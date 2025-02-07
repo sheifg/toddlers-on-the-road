@@ -11,7 +11,7 @@ const { isLogged } = require("../middlewares/permissions");
 router
   .route("/")
   .get(PackList.list)
-  .post(PackList.create);
+  .post(authMw,isLogged,PackList.create);
 
 router
   .route("/:id")
