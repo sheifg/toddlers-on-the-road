@@ -11,7 +11,7 @@ const PackListSchema = new mongoose.Schema(
     description:{
         type: String,
         trim: true,
-      }, 
+      },
     items: [],
     
   },

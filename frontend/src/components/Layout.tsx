@@ -74,7 +74,7 @@ const Layout = ({ children }: React.PropsWithChildren) => {
           </div>
         </div>
         <div className="flex items-center justify-end px-7 mb-3 md:px-10" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <BsArrowUpCircleFill />
+        <BsArrowUpCircleFill className="text-2xl lg:text-4xl" />
         </div>
         <div className="text-center text-xs space-x-6">
             <p className="text-s text-center">
