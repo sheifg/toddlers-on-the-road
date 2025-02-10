@@ -6,11 +6,11 @@ module.exports = {
   list: async (req, res) => {
     
       const data = await res.getModelList(PackList);
-      const copiedPacklists=  [...data] ;
+      
       res.status(200).send({
         error: false,
         details: await res.getModelListDetails(PackList),
-        copiedPacklists,
+        data,
       
       });
   },
@@ -25,10 +25,9 @@ module.exports = {
 
   read: async (req, res) => {
     const data = await PackList.findOne({ _id: req.params.id });
-    const copiedPacklist= [...data];
     res.status(200).send({
       error: false,
-      copiedPacklist,
+      data,
     });
   },
 
