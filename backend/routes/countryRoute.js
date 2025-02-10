@@ -2,7 +2,7 @@ const router = require("express").Router();
 // Import controller:
 const Country = require("../controllers/countryController");
 // Authentication middleware :
-const authMw = require("../middlewares/authMiddleware"); /* Protecting the user route: without log in is not possible to access the user route */
+const authMw = require("../middlewares/authMiddleware"); /* Protecting the user route: without log in is not possible to access the country route */
 
 const { isLogged } = require("../middlewares/permissions");
 
