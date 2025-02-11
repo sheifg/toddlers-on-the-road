@@ -8,6 +8,10 @@ const CardsContainer = ({ countries }) => {
     navigate("/details");
   };
 
+  const handleBackToHome = () => {
+    navigate("/");
+  };
+
   return (
     <div className="justify-items-center">
       <h2 className="font-Mali text-center mt-10 text-xl md:text-2xl lg:text-3xl font-bold text-marine-blue">
@@ -24,6 +28,9 @@ const CardsContainer = ({ countries }) => {
           </div>
         ))}
       </div>
+      <button className="btn-primary mb-6 font-Mali" onClick={handleBackToHome}>
+        Back
+      </button>
     </div>
   );
 };

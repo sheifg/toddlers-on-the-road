@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Country } from "../types/countries";
 import CarouselCard from "./CarouselCard";
 
@@ -16,16 +16,22 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
     const updateCardsPerSlide = () => {
       setCardsPerSlide(window.innerWidth >= 768 ? 2 : 1);
     };
-    updateCardsPerSlide(); 
+    updateCardsPerSlide();
     window.addEventListener("resize", updateCardsPerSlide);
 
     return () => window.removeEventListener("resize", updateCardsPerSlide);
   }, []);
 
+  const sortedCountries = countries.sort(
+    (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+  );
+
+  const latestCountries = sortedCountries.slice(0, 8);
+
   // Group cards into slides
   const groupedSlides = [];
-  for (let i = 0; i < countries.length; i += cardsPerSlide) {
-    groupedSlides.push(countries.slice(i, i + cardsPerSlide));
+  for (let i = 0; i < latestCountries.length; i += cardsPerSlide) {
+    groupedSlides.push(latestCountries.slice(i, i + cardsPerSlide));
   }
 
   const totalSlides = groupedSlides.length;
@@ -43,13 +49,14 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
   };
 
   return (
-    <div className="justify-items-center mt-10 mb-10">
-      <h2 className="font-Mali text-center mb-3 md:mb-6 text-xl md:text-2xl lg:text-3xl font-bold text-marine-blue">
+    <div className="mt-10 mb-10">
+      <h2 className=" justify-items-center font-Mali text-center mb-3 md:mb-6 text-xl md:text-2xl lg:text-3xl font-bold text-marine-blue">
         Travel destinations
       </h2>
+      <div></div>
       <div className="relative overflow-hidden w-full">
         <div
-          className="flex transition-transform duration-1000 ease-in-1out"
+          className="flex transition-transform duration-700 ease-in-out"
           style={{
             transform: `translateX(-${currentIndex * 100}%)`,
           }}
@@ -60,7 +67,7 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
                 <CarouselCard
                   key={country._id}
                   country={country}
-                    handleClick={handleClick}
+                  handleClick={handleClick}
                   cardsPerSlide={cardsPerSlide}
                 />
               ))}
@@ -69,18 +76,42 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
         </div>
         {/* Navigation buttons */}
         <button
-          className="absolute left-2 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full"
+          className={`absolute left-2 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full ${
+            currentIndex === 0 ? "disabled-buttons" : ""
+          }`}
           onClick={prevSlide}
+          disabled={currentIndex === 0}
         >
           ❮
         </button>
         <button
-          className="absolute right-2 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full"
+          className={`absolute right-2 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full ${
+            currentIndex === totalSlides - 1 ? "disabled-buttons" : ""
+          }`}
           onClick={nextSlide}
+          disabled={currentIndex === totalSlides - 1}
         >
           ❯
         </button>
+
+        {/* Progress bar */}
+        <div className="flex justify-center md:mt-5 mb-4 space-x-2">
+          {groupedSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`h-2 w-2 md:h-3 md:w-3 rounded-full ${
+                currentIndex === index ? "bg-marine-blue" : "bg-gray-200"
+              } transition-all duration-500`}
+            ></button>
+          ))}
+        </div>
       </div>
+      <Link to={"/travel-destinations"}>
+        <p className="flex justify-end text-sm font-medium text-marine-blue text-center pt-4 hover:underline font-semibold text-lg mr-5 md:mr-12 lg:mr-14">
+          Explore all travel destinations→
+        </p>
+      </Link>
     </div>
   );
 };
