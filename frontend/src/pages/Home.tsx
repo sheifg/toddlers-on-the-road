@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useCountryContext } from "../context/CountryContext";
+import { CountryContextProps, useCountryContext } from "../context/CountryContext";
 import HeroSection from "../components/HeroSection";
-import CardsContainer from "../components/CardsContainer";
+// import CardsContainer from "../components/CardsContainer";
 import BlurbCtaSection from "../components/BlurbCtaSection";
+import Carousel from "../components/Carousel";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { countries = [], getCountries } = useCountryContext();
+  const { countries = [], getCountries } = useCountryContext() as CountryContextProps;
 
   const handleClick = () => {
     navigate("/about");
@@ -24,7 +25,8 @@ const Home = () => {
     <>
       <HeroSection handleClick={handleClick} />
       <BlurbCtaSection handleClickCtaButton={handleClickCtaButton} />
-      <CardsContainer countries={countries} />
+      {/* <CardsContainer countries={countries} /> */}
+      <Carousel countries={countries} />
     </>
   );
 };
