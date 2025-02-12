@@ -75,24 +75,26 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
           ))}
         </div>
         {/* Navigation buttons */}
-        <button
-          className={`absolute left-2 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full ${
-            currentIndex === 0 ? "disabled-buttons" : ""
-          }`}
-          onClick={prevSlide}
-          disabled={currentIndex === 0}
-        >
-          ❮
-        </button>
-        <button
-          className={`absolute right-2 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full ${
-            currentIndex === totalSlides - 1 ? "disabled-buttons" : ""
-          }`}
-          onClick={nextSlide}
-          disabled={currentIndex === totalSlides - 1}
-        >
-          ❯
-        </button>
+        {currentIndex > 0 && (
+          <button
+            className={`absolute left-2 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full ${
+              currentIndex === 0 ? "disabled-buttons" : ""
+            }`}
+            onClick={prevSlide}
+          >
+            ❮
+          </button>
+        )}
+        {currentIndex < totalSlides - 1 && (
+          <button
+            className={`absolute right-2 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full ${
+              currentIndex === totalSlides - 1 ? "disabled-buttons" : ""
+            }`}
+            onClick={nextSlide}
+          >
+            ❯
+          </button>
+        )}
 
         {/* Progress bar */}
         <div className="flex justify-center md:mt-5 mb-4 space-x-2">
@@ -108,7 +110,7 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
         </div>
       </div>
       <Link to={"/travel-destinations"}>
-        <p className="flex justify-end text-sm font-medium text-marine-blue text-center pt-4 hover:underline font-semibold text-lg mr-5 md:mr-12 lg:mr-14">
+        <p className="flex justify-end text-base text-marine-blue text-center pt-4 hover:underline font-semibold mr-5 md:mr-12 lg:mr-14">
           Explore all travel destinations→
         </p>
       </Link>

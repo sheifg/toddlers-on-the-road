@@ -28,7 +28,7 @@ const CardsContainer = ({ countries }) => {
           </div>
         ))}
       </div>
-      <button className="btn-primary mb-6 font-Mali" onClick={handleBackToHome}>
+      <button className="bg-marine-blue text-mustard px-4 md:px-5 py-2 text-center text-base md:text-lg rounded-lg font-medium hover:bg-mustard hover:text-marine-blue focus:ring-4 focus:ring-marine-blue mb-6 font-Mali" onClick={handleBackToHome}>
         Back
       </button>
     </div>
