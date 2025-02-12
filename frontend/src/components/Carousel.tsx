@@ -23,7 +23,7 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
   }, []);
 
   const sortedCountries = countries.sort(
-    (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+    (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
   );
 
   const latestCountries = sortedCountries.slice(0, 8);
@@ -44,8 +44,8 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
     setCurrentIndex((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
   };
 
-  const handleClick = () => {
-    navigate("/details");
+  const handleClick = (countryId: string) => {
+    navigate(`/details/${countryId}`);
   };
 
   return (

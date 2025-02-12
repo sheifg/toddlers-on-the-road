@@ -8,9 +8,9 @@ const TravelDestinations = () => {
   const { countries = [] } = useCountryContext() as CountryContextProps;
 
   return (
-    <div>
+    <>
       <CardsContainer countries={countries} />
-    </div>
+    </>
   );
 };
 

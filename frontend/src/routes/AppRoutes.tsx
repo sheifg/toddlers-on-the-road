@@ -24,7 +24,7 @@ const AppRoutes = () => {
       <Route path="/travel-destinations" element={<TravelDestinations />} />
       <Route element={<PrivateRoute />}>
         <Route path="/profile" element={<Profile />} />
-        <Route path="/details/:id" element={<Details />} />
+        <Route path="/details/:countryId" element={<Details />} />
       </Route>
     </Routes>
   );

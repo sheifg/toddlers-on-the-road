@@ -1,7 +1,7 @@
 import { Country } from "../types/countries";
 
 interface CountryCardProps {
-  handleClick: () => void;
+  handleClick: (countryId: string) => void;
   country: Country;
 }
 
@@ -20,7 +20,7 @@ const CountryCard = ({ country, handleClick }: CountryCardProps) => {
         </div>
         <button
           type="button"
-          onClick={handleClick}
+          onClick={() => handleClick(country._id)}
           className=" text-white px-2 py-2 mb-3 text-sm lg:text-md xl:text-lg lg:mt-4 bg-blue-water rounded-lg font-semibold hover:bg-light-pink hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
         >
           Details
