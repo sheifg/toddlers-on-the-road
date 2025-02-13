@@ -17,6 +17,3 @@
   @apply bg-blue-water text-white px-5 py-2 text-center text-lg rounded-lg font-medium hover:bg-light-pink hover:text-marine-blue focus:ring-4 focus:ring-marine-blue;
 }
 
-.disabled-buttons {
-  @apply bg-gray-100 text-gray-300 cursor-not-allowed;
-}

@@ -30,7 +30,7 @@ const Details = () => {
 
   if (!countryDetails) {
     return (
-      <p className="text-center font-Mali mt-20">Not country detals found</p>
+      <p className="text-center font-Mali mt-20">Not country details found</p>
     );
   }
 

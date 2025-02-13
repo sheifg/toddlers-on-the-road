@@ -17,7 +17,7 @@ const CountryCardDetails = ({
       <div className="container mx-auto max-w-[80vw] lg:w-[42rem] xl:w-[48rem] font-Mali pb-10">
         <div className="max-w rounded-lg overflow-hidden shadow-lg text-center bg-light-pink">
           <img
-            className="h-[200px] object-containt w-full"
+            className="h-[12.5rem] object-containt w-full"
             src={`http://127.0.0.1:8000` + countryDetails.images[0]}
             alt={countryDetails.name}
           />

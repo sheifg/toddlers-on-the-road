@@ -18,9 +18,9 @@ const CardsContainer = ({ countries }) => {
         Travel destinations
       </h2>
       <div className="container grid grid-cols-1 md:grid-cols-2 xl:grids-col-4 gap-y-8 mt-10 mb-8">
-        {countries.map((country, index) => (
+        {countries.map((country) => (
           <div
-            key={index}
+            key={country._id}
             className="mx-6 xl:mx-0 col-span-full md:col-span-1 lg:col-span-1"
           >
             <CountryCard country={country} handleClick={handleClick} />

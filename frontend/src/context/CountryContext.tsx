@@ -42,17 +42,15 @@ export const CountryProvider = ({ children }: { children: ReactNode }) => {
       const userString = sessionStorage.getItem("user");
 
       if (!userString) {
-        console.log("No user data found in either storage");
+        console.log("No user data found in session storage");
         toast.error("Please login first");
         return;
       }
 
       // Log the parsed user data
       const user = JSON.parse(userString);
-      console.log("Parsed user data:", user);
 
       const token = user.token;
-      console.log("Token found:", token ? "Yes" : "No");
 
       const { data } = await axios({
         url: `${BASE_URL}/api/country/${countryId}`,
@@ -96,4 +94,3 @@ export const useCountryContext = () => {
   return context;
 };
 
-// export const useCountryContext = () => useContext(CountryContext);

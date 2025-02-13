@@ -37,11 +37,11 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
   const totalSlides = groupedSlides.length;
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
+    setCurrentIndex((slideIndex) => slideIndex - 1);
   };
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
+    setCurrentIndex((slideIndex) => slideIndex + 1);
   };
 
   const handleClick = (countryId: string) => {
@@ -53,7 +53,6 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
       <h2 className=" justify-items-center font-Mali text-center mb-3 md:mb-6 text-xl md:text-2xl lg:text-3xl font-bold text-marine-blue">
         Travel destinations
       </h2>
-      <div></div>
       <div className="relative overflow-hidden w-full">
         <div
           className="flex transition-transform duration-700 ease-in-out"
@@ -77,9 +76,9 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
         {/* Navigation buttons */}
         {currentIndex > 0 && (
           <button
-            className={`absolute left-2 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full ${
-              currentIndex === 0 ? "disabled-buttons" : ""
-            }`}
+            className={
+              "absolute left-2 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full"
+            }
             onClick={prevSlide}
           >
             ❮
@@ -87,9 +86,9 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
         )}
         {currentIndex < totalSlides - 1 && (
           <button
-            className={`absolute right-2 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full ${
-              currentIndex === totalSlides - 1 ? "disabled-buttons" : ""
-            }`}
+            className={
+              "absolute right-2 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full"
+            }
             onClick={nextSlide}
           >
             ❯
