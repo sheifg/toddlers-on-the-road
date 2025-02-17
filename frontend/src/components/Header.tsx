@@ -14,7 +14,7 @@ export default function Header() {
       <div className="container mx-auto flex flex-wrap items-center justify-between p-4">
         <div className="flex items-center space-x-6">
           <Link to="/" className="text-xl font-semibold px-1 md:px-3">
-            <img className="h-auto" src="../lor-logo.svg" alt="LoR logo" />
+            <img className="h-auto" src="../tor-logo.svg" alt="ToR logo" />
           </Link>
           <Link
             to="/about"
@@ -30,7 +30,7 @@ export default function Header() {
           </Link>
           {/* Hamburger button */}
           <button
-            className="absolute right-2 top-6.5 p-2 text-marine-blue rounded-lg focus:outline-none focus:ring-1 md:hidden "
+            className="absolute right-2 top-6.5 p-2 text-marine-blue rounded-lg focus:outline-none focus:ring-1 md:hidden"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -75,12 +75,11 @@ export default function Header() {
             ${isOpen ? "block" : "hidden"}
              md:block md:w-auto`}
           >
-            {/* <ul className="flex flex-col items-center space-y-4 font-medium mt-4 sm:flex-row sm:space-x-9 sm:space-y-0 sm:mt-0"> */}
             <ul className="flex flex-col items-center space-y-4 font-medium mt-4 md:flex-row md:space-x-9 md:space-y-0 md:mt-0">
               {(userInfo || firebaseToken ) ? (
                 <>
                   <li>
-                    <Link to="/profile" className="text-xl font-semibold px-3">Profile</Link>
+                    <Link to="/profile" className="text-lg font-semibold md:text-xl md:px-3">Profile</Link>
                   </li>
                   <button
                     className="btn-primary"
@@ -94,7 +93,7 @@ export default function Header() {
                   <li>
                   <Link
                       to="/login"
-                      className="text-lg text-center font-semibold px-3 md:text-xl "
+                      className="text-lg text-center font-semibold px-3 md:text-xl"
                     >
                       Login
                     </Link>

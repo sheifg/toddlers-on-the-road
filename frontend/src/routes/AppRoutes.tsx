@@ -9,6 +9,7 @@ import Details from "../pages/Details";
 import Profile from "../pages/Profile";
 import ResetPassword from "../pages/ResetPassword";
 import ForgotPassword from "../pages/ForgotPassword";
+import TravelDestinations from "../pages/TravelDestinations";
 
 const AppRoutes = () => {
   return (
@@ -20,9 +21,10 @@ const AppRoutes = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
+      <Route path="/travel-destinations" element={<TravelDestinations />} />
       <Route element={<PrivateRoute />}>
         <Route path="/profile" element={<Profile />} />
-        <Route path="/details/:id" element={<Details />} />
+        <Route path="/details/:countryId" element={<Details />} />
       </Route>
     </Routes>
   );
