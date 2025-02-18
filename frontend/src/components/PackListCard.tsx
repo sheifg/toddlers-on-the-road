@@ -17,7 +17,7 @@ return (
         className="container grid grid-cols-1  gap-y-8 mt-4 mb-8 ml-2.5  lg:ml-1.5 xl:ml-4">
           <ul>
            {packList.items.map((item, index) => (
-              <li className="flex justify-start   gap-0.5 space-x-1 space-y-3 text-sm  md:ml-1 md:text-base md:flex md:space-x-1.5 lg:text-md lg:space-x-3 xl:text-2xl xl:ml-4 xl:space-x-5 2xl:gap-4 2xl:text-3xl" key={index}>
+              <li className="flex justify-start   gap-0.5 space-x-1 space-y-3 text-sm  md:ml-1 md:text-base md:flex md:space-x-1.5 lg:text-md lg:space-x-3 xl:text-2xl xl:ml-4 xl:space-x-5 2xl:gap-1.75 2xl:text-3xl" key={index}>
                   <img className="w-4 md:w-6  2xl:w-9" src="../../public/checkbox.svg"  /> 
                   <p className="pb-3">{item}</p>
               </li>

@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
  export interface PackListContextProps {
-    getPackLists : () => Promise<void>;
+    getPackLists: () => Promise<void>;
     handleAdd: () => void;
     handleEdit: () => void;
     packLists:  PackList[],

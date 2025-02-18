@@ -51,7 +51,7 @@ const PackListContainer = ({ packLists, handleAdd, handleEdit, handleAddNewList 
           {/* Left Button */}
          {currentIndex > 0 && ( 
           <button 
-            className="w-8 h-8 md:w-10 md:h-10 bg-blue-water rounded-full flex items-center justify-center hover:bg-gray-400 transition-colors"
+            className="w-8 h-8 md:w-10 md:h-10 text-white bg-blue-water rounded-full flex items-center justify-center transition-colors"
             onClick={handlePrev}
           >
             &lt;
@@ -77,7 +77,7 @@ const PackListContainer = ({ packLists, handleAdd, handleEdit, handleAddNewList 
           {/* Right Button */}
           {currentIndex + cardsPerView < packLists.length && (
           <button 
-            className="w-8 h-8 md:w-10 md:h-10 bg-blue-water rounded-full flex items-center justify-center hover:bg-gray-400 transition-colors"
+            className="w-8 h-8 md:w-10 md:h-10 text-white bg-blue-water rounded-full flex items-center justify-center transition-colors"
             onClick={handleNext}
           >
             &gt;

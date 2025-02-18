@@ -77,7 +77,7 @@ const Layout = ({ children }: React.PropsWithChildren) => {
         <BsArrowUpCircleFill className="text-2xl lg:text-4xl" />
         </div>
         <div className="text-center text-xs space-x-6">
-            <p className="text-s text-center">
+            <p className="text-s text-center mb-1">
               &copy; 2025 - Toddlers on the Road
             </p>
         </div>
