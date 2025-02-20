@@ -19,7 +19,7 @@ const About = () => {
           </h2>
         </div>
 
-        <p className="p-about lg:ml-20">
+        <p className="p-about ml-9 md:ml-14 lg:ml-20">
           <div className="bg-mustard bg-opacity-80 p-3 rounded-l-xl md:p-4 lg:p-5 xl:p-6">
             Traveling with toddlers can be both exciting and challenging. As
             mothers who have experienced the joys and struggles of traveling
@@ -84,16 +84,14 @@ const About = () => {
               <div className="card-container-about max-w">
                 <img
                   className="object-containt w-full"
-                  src="sheila.jpg"
+                  src="sara.jpeg"
                   alt="sara"
                 />
                 <div className="text-card-about">
                   <h4 className="h4-about">Sara</h4>
                   <p className="p-about">
                     {" "}
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus porro beatae nulla similique sint. Nostrum dolore nemo, corporis magni ab vitae velit modi ad, eos, rem atque ea rerum. Sunt!
-                    Fugiat labore officiis voluptate velit expedita excepturi molestiae et natus commodi! Consectetur vero distinctio rerum? Voluptatum voluptatibus tempore adipisci id atque, ex nobis, iste eaque sint facere cumque omnis voluptas.
-                    Temporibus fugiat ullam, suscipit facilis explicabo cumque saepe inventore aliquam cum sed autem nihil molestiae placeat laudantium voluptates nisi incidunt debitis atque itaque rerum quas. Doloribus voluptatem minima debitis dolor.
+                    Sara is a mother of two children, a 6-year-old girl and a 4-year-old boy. She loves traveling, but now even more because it is an opportunity to spend quality time with her children, to practice new and fun activities in different places and to get to know other cultures. This photo is from the island of Malta. It was one of her most beautiful memories of traveling with her children.
                   </p>
                 </div>
               </div>
@@ -107,7 +105,7 @@ const About = () => {
             Need help? Get in touch!
           </h2>
         </div>
-        <p className="p-about lg:ml-20">
+        <p className="p-about ml-9 md:ml-14 lg:ml-20">
           <div className="bg-light-pink bg-opacity-70 p-3 rounded-l-xl md:p-4 lg:p-5 xl:p-6">
             Have questions? Need assistance with your trip? Have suggestions
             or feedback? Our team is here to support you every step of the way.

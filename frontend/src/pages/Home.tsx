@@ -4,35 +4,36 @@ import {
   CountryContextProps,
   useCountryContext,
 } from "../context/CountryContext";
-import {usePackListContext} from "../context/PackListContext";
-import {PackListContextProps} from "../context/PackListContext"  ;
+import { usePackListContext } from "../context/PackListContext";
+import { PackListContextProps } from "../context/PackListContext";
 import HeroSection from "../components/HeroSection";
 import BlurbCtaSection from "../components/BlurbCtaSection";
 import Carousel from "../components/Carousel";
 import PackListContainer from "../components/PackListContainer";
 
-
-
 const Home = () => {
-
-
   const navigate = useNavigate();
   const { countries = [], getCountries } =
     useCountryContext() as CountryContextProps;
-
-  const { packLists = [], getPackLists , handleAdd ,handleEdit ,handleAddNewList }=
-    usePackListContext() as PackListContextProps ;
+  const {
+    packLists = [],
+    getPackLists,
+    handleAdd,
+    handleEdit,
+    handleAddNewList,
+  } = usePackListContext() as PackListContextProps;
 
   const handleClick = () => {
     navigate("/about");
   };
+  
   const handleClickCtaButton = () => {
     navigate("/register");
   };
 
   useEffect(() => {
     getCountries();
-     getPackLists(); 
+    getPackLists();
   }, []);
 
   return (
@@ -40,9 +41,12 @@ const Home = () => {
       <HeroSection handleClick={handleClick} />
       <BlurbCtaSection handleClickCtaButton={handleClickCtaButton} />
       <Carousel countries={countries} />
-     
-      <PackListContainer packLists={packLists} handleAdd={handleAdd} handleEdit={handleEdit} handleAddNewList={handleAddNewList}/>
-
+      <PackListContainer
+        packLists={packLists}
+        handleAdd={handleAdd}
+        handleEdit={handleEdit}
+        handleAddNewList={handleAddNewList}
+      />
     </>
   );
 };
