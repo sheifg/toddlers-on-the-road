@@ -15,10 +15,9 @@ const About = () => {
       <div className="flex flex-col">
         <div className="flex justify-end">
           <h2 className="h2-about text-2xl rounded-tl-xl -mt-5 md:-mt-8 lg:-mt-10 xl:-mt-16 z-10 bg-mustard bg-opacity-50">
-            Our mission{" "}
+            Our mission
           </h2>
         </div>
-
         <p className="p-about ml-9 md:ml-14 lg:ml-20">
           <div className="bg-mustard bg-opacity-80 p-3 rounded-l-xl md:p-4 lg:p-5 xl:p-6">
             Traveling with toddlers can be both exciting and challenging. As
@@ -90,7 +89,6 @@ const About = () => {
                 <div className="text-card-about">
                   <h4 className="h4-about">Sara</h4>
                   <p className="p-about">
-                    {" "}
                     Sara is a mother of two children, a 6-year-old girl and a 4-year-old boy. She loves traveling, but now even more because it is an opportunity to spend quality time with her children, to practice new and fun activities in different places and to get to know other cultures. This photo is from the island of Malta. It was one of her most beautiful memories of traveling with her children.
                   </p>
                 </div>
