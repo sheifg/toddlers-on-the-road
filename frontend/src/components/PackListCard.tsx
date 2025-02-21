@@ -19,7 +19,7 @@ const PackListCard = ({
             {packList.name}
           </h4>
         </div>
-        <div className="container grid grid-cols-1  gap-y-8 mt-4 mb-8 ml-2.5  lg:ml-1.5 xl:ml-4">
+        <div className="container grid grid-cols-1 gap-y-8 mt-4 mb-8 ml-2.5 lg:ml-0.5">
           <ul>
             {packList.items.map((item, index) => (
               <li

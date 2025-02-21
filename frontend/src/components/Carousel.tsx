@@ -77,7 +77,7 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
         {currentIndex > 0 && (
           <button
             className={
-              "absolute left-2 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full"
+              "absolute left-2 md:left-1 lg:left-7 xl:left-14 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full"
             }
             onClick={prevSlide}
           >
@@ -87,7 +87,7 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
         {currentIndex < totalSlides - 1 && (
           <button
             className={
-              "absolute right-2 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full"
+              "absolute right-2 md:right-1 lg:right-7 xl:right-14 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full"
             }
             onClick={nextSlide}
           >

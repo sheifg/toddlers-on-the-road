@@ -1,13 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      colors: { 
+      colors: {
         "blue-water": "#60D3D6",
         "marine-blue": "#205D76",
         "mustard": "#FFC751",
@@ -22,13 +19,12 @@ export default {
           200: "#B5B5B5",
           300: "#495057",
         },
-    },
-    fontFamily: {
-      "Mali": ["Mali", "serif"],
-      "Roboto": ["Roboto", "serif"],
-    }
+      },
+      fontFamily: {
+        Mali: ["Mali", "serif"],
+        Roboto: ["Roboto", "serif"],
+      },
     },
   },
   plugins: [],
-}
-
+};
