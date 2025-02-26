@@ -14,22 +14,17 @@ import { IUser } from "../types/context";
 import { useAuth } from "../context/AuthContext";
 import { AuthContextProps } from "../context/AuthContext";
 
-
 const Home = () => {
-
-  const [userData,setUserData]=useState< IUser| null>(null)//that holds the currently logged-in user's information.
-
+  const [userData,setUserData]=useState< IUser| null>(null) // It holds the currently logged-in user's information
   const navigate = useNavigate();
-  const { countries = [], getCountries } =
-    useCountryContext() as CountryContextProps;
-
-  const { packLists = [], getPackLists }=
-    usePackListContext() as PackListContextProps ;
-  const {userInfo} =useAuth()as AuthContextProps
+  const { countries = [], getCountries } = useCountryContext() as CountryContextProps;
+  const { packLists = [], getPackLists } = usePackListContext() as PackListContextProps;
+  const {userInfo} = useAuth()as AuthContextProps;
 
   const handleClick = () => {
     navigate("/about");
   };
+  
   const handleClickCtaButton = () => {
     navigate("/register");
   };
@@ -39,25 +34,23 @@ const Home = () => {
     getPackLists(); 
   }, []);
 
-  //get firebaseToken from sessionstorage:
-   const firebaseToken =sessionStorage.getItem("firebaseToken");
+  // Get firebaseToken from sessionstorage
+  const firebaseToken =sessionStorage.getItem("firebaseToken");
   
   useEffect(() => {
     const userstring = sessionStorage.getItem("user");
     if (userstring) {
       const user = JSON.parse(userstring);
-    
       setUserData(user);
     }
-  }, [userInfo,firebaseToken]); //everytime user change the state userData will change
-  console.log(userInfo);
+  }, [userInfo,firebaseToken]); // Everytime user changes, the state userData will change
+
   return (
     <>
       <HeroSection handleClick={handleClick} />
       <BlurbCtaSection handleClickCtaButton={handleClickCtaButton} />
       <Carousel countries={countries} />
       <PackListContainer packLists={packLists} userData={userData} setUserData={setUserData}/>
-
     </>
   );
 };
