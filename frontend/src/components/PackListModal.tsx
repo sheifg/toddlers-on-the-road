@@ -3,7 +3,6 @@ import { PackList } from "../types/packlist";
 import { Field, Form, Formik } from "formik";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { IUser } from "../types/context";
-/* import { Profile } from '../types/profile'; */
 
 interface PackListModalProps {
   open: boolean;
@@ -33,7 +32,7 @@ export default function PackListModal({
 
   const [modalItems, setModalItems] = useState<string[]>([
     ...selectedPackList.items,
-  ]); //to collecte all the updated items,at first no change ,just the same data of the copedpacklist
+  ]); // to collect all the updated items, at first there is no change, just the same data of the copiedpacklist
 
   const [checkedItems, setCheckedItems] = useState<Record<number, boolean>>({}); // Manage checkbox states
 
@@ -42,7 +41,7 @@ export default function PackListModal({
   const [title, setTitle] = useState<string>(selectedPackList.name);
 
   useEffect(() => {
-    // to be sure each time we open the modal we will have packList data with same data as the card (without changing , maybe i change it and close it befor save it,and i open it again )
+    // To be sure each time the modal is opened, it will be had the packList data with the same data as the card(without any changes, in case that some data is being changed, then teh modal is closed before save it and it is opened again)
     setModalItems([...selectedPackList.items]);
   }, [selectedPackList]);
 
@@ -51,7 +50,7 @@ export default function PackListModal({
   };
 
   const handleCheckboxChange = (index: number) => {
-    // to collecte all the update checked input in obj (toggle between true and false)
+    // To collect all the update checked input in object(toggle between true and false)
     setCheckedItems((prev) => ({
       ...prev,
       [index]: !prev[index],
@@ -59,8 +58,7 @@ export default function PackListModal({
   };
 
   const handleItemChange = (index: number, newValue: string) => {
-    //this func will copy everything in modalItems array and put it in another array updatedItem than update one item and return the updatedItems array in modalItems
-
+    // This function will copy everything from modalItems array and put it in another array updatedItem. Then one item will be updated and the updatedItems array in modalItems will be returned
     const updatedItems = [...modalItems];
     updatedItems[index] = newValue;
     setModalItems(updatedItems);
@@ -68,7 +66,7 @@ export default function PackListModal({
 
   const handleDeleteItem = (index: number) => {
     setModalItems((prevItems) => prevItems.filter((_, i) => i !== index));
-     //to be sure it will removed just from the state not from selected packlist
+     // To be sure it will removed just from the state, not from selected packlist
   };
 
   const handleSubmit = () => {
@@ -85,13 +83,13 @@ export default function PackListModal({
       console.error("User Data is missing");
       return;
     }
-    // assign it to variable with same name (title,items) as mongoDB to have the matching (not add empty array )
-    const name = title; // Use the state title here ,
+    // Assigning the variable with the same name (title, items) as in mongoDB to match, avoiding getting an empty array
+    const name = title; // Using the state title
     const items = modalItems;
     const copiedPackList = { name, items };
    
     updateUser(userId, copiedPackList, token, userData);
-    // we can just see the privouse one not the latest version of userData
+    // It can only be seen the previous version, noit the latest version of userData
     closeModal();
   };
  
@@ -101,7 +99,7 @@ export default function PackListModal({
 
   const handleDeleteAll = () => {
     setModalItems([]);
-    //to be sure it will removed just from the state not from selected packlist
+    // To be sure it will removed just from the state, not from selected packlist
   };
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 font-Mali ">
@@ -124,7 +122,6 @@ export default function PackListModal({
           />
         ) : (
           <h3 className="text-2xl font-bold text-marine-blue text-center mt-4">
-            {/*  {selectedPackList.name} */}
             {title}
           </h3>
         )}
