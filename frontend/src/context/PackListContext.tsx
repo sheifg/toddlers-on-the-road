@@ -6,10 +6,10 @@ import { toast } from "react-toastify";
 
  export interface PackListContextProps {
     getPackLists: () => Promise<void>;
-    handleAdd: () => void;
-    handleEdit: () => void;
+ /*    handleAdd: () => void; */
+  
     packLists:  PackList[],
-    handleAddNewList: () => void;
+  /*   handleAddNewList: () => void; */
 }
 
 const PackListContext = createContext<PackListContextProps | undefined>(undefined)
@@ -17,7 +17,7 @@ const PackListContext = createContext<PackListContextProps | undefined>(undefine
 
 export const PackListProvider = ({children}: {children: ReactNode}) => {
 
- const [ packLists, setPackLists]= useState<PackList[]>([]);
+ const [ packLists, setPackLists]= useState<PackList[]>([]);//hold just the original packList in home 
 
  const getPackLists = async() => {
     try {
@@ -36,21 +36,12 @@ export const PackListProvider = ({children}: {children: ReactNode}) => {
       }
 };
 
-  const handleAdd = () => {
-     
-  }
-  const handleEdit = () => {
-
-  } ;
-
-  const handleAddNewList= () => {
-
-  } ;
+ 
 const value: PackListContextProps = {
     getPackLists,
-    handleAdd,
-    handleEdit,
-    handleAddNewList,
+   /*  handleAdd,
+   
+    handleAddNewList, */
     packLists
   };
 

@@ -46,6 +46,20 @@ const UserSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    userPackLists: [
+      /* we need this part to let M DB to create a _id for each packList in the userData */
+        {
+        name: {
+          type: String,
+          trim: true,
+          
+        },
+      
+        items: [],
+        
+      },  
+      
+    ]
   },
   { timestamps: true, collection: "users" }
 );

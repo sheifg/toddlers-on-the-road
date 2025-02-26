@@ -61,12 +61,17 @@ const signUpProvider = async (
       throw new Error(errorData.message || "Failed to create user");
     }
 
-    const userData = await response.json();
+    const data = await response.json();
 
     /*  const token  = userData.token */
-    sessionStorage.setItem("firebaseUser", JSON.stringify(userData.user));
-    sessionStorage.setItem("firebaseToken", JSON.stringify(userData.token));
+    sessionStorage.setItem("firebaseUser", JSON.stringify(data.user));
+    sessionStorage.setItem("firebaseToken", JSON.stringify(data.token));
 
+    const user= {
+      token: data.token,
+      ...data.user,
+    };
+    sessionStorage.setItem("user", JSON.stringify(user));
     toast.success(`${toastMessage}`);
     navigate("/");
   } catch (error) {

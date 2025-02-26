@@ -1,4 +1,5 @@
 export interface PackList {
-    name: string;
-    items: string[];
-  }
+  _id?: string;
+  name: string;
+  items: string[];
+}
