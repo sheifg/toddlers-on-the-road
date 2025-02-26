@@ -22,8 +22,7 @@ const PackListCard = ({
             {packList.name}
           </h4>
         </div>
-
-        <div className="container grid grid-cols-1  gap-y-8 mt-4 mb-8 ml-2.5  lg:ml-0.5">
+        <div className="container grid grid-cols-1 gap-y-8 mt-4 mb-8 ml-2.5 lg:ml-0.5">
           <ul>
             {packList.items.map((item, index) => (
               <li
@@ -39,7 +38,6 @@ const PackListCard = ({
             ))}
           </ul>
         </div>
-
         <div className="container flex justify-center items-center gap-4 pb-3 md:gap-8 md:pb-5 lg:pb-7 lg:gap-10">
           <button
             type="button"

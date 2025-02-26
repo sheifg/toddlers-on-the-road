@@ -4,8 +4,8 @@ import {
   CountryContextProps,
   useCountryContext,
 } from "../context/CountryContext";
-import {usePackListContext} from "../context/PackListContext";
-import {PackListContextProps} from "../context/PackListContext"  ;
+import { usePackListContext } from "../context/PackListContext";
+import { PackListContextProps } from "../context/PackListContext";
 import HeroSection from "../components/HeroSection";
 import BlurbCtaSection from "../components/BlurbCtaSection";
 import Carousel from "../components/Carousel";
