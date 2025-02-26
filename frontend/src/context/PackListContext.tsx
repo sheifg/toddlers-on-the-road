@@ -5,19 +5,15 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
  export interface PackListContextProps {
-    getPackLists: () => Promise<void>;
- /*    handleAdd: () => void; */
-  
+    getPackLists: () => Promise<void>;  
     packLists:  PackList[],
-  /*   handleAddNewList: () => void; */
-}
+};
 
-const PackListContext = createContext<PackListContextProps | undefined>(undefined)
-
+const PackListContext = createContext<PackListContextProps | undefined>(undefined);
 
 export const PackListProvider = ({children}: {children: ReactNode}) => {
 
- const [ packLists, setPackLists]= useState<PackList[]>([]);//hold just the original packList in home 
+ const [ packLists, setPackLists]= useState<PackList[]>([]);// it holds just the original packList in home 
 
  const getPackLists = async() => {
     try {
@@ -35,13 +31,9 @@ export const PackListProvider = ({children}: {children: ReactNode}) => {
         }
       }
 };
-
  
 const value: PackListContextProps = {
     getPackLists,
-   /*  handleAdd,
-   
-    handleAddNewList, */
     packLists
   };
 
