@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
 import PackListCard from "./PackListCard";
 import { PackListContextProps } from "../context/PackListContext";
-<<<<<<< HEAD
 import PackListModal from "./PackListModal";
 import { PackList } from "../types/packlist";
 import axios from "axios";
 import { BASE_URL } from "../constants";
 import { IUser } from "../types/context";
 import { toast } from "react-toastify";
-/* import { useProfileContext } from '../context/profileContext'; 
-import{ ProfileContextProps} from "../context/profileContext" */
 interface PackListContainerProps {
   packLists: PackListContextProps;
   userData: IUser | null;
@@ -26,17 +23,7 @@ const PackListContainer = ({
   userData,
   setUserData,
 }: PackListContainerProps) => {
-  /*     
-  const { createProfile } = useProfileContext() as ProfileContextProps; */
-=======
 
-const PackListContainer = ({
-  packLists,
-  handleAdd,
-  handleEdit,
-  handleAddNewList,
-}: PackListContextProps) => {
->>>>>>> c5ebf302418294fa98dc6280a7c2bbd5434c2d71
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(1);
 
@@ -45,7 +32,7 @@ const PackListContainer = ({
     null
   );
 
-  const [addNew, setAddNew] = useState<boolean>(false); //this tell if it is added new list (update the default packList)
+  const [addNew, setAddNew] = useState<boolean>(false); // This state shows if it is added a new list (update the default packList)
 
   const closeModal = () => {
     setOpen(false);
@@ -55,11 +42,9 @@ const PackListContainer = ({
     setOpen(true);
     const copiedPackList = { ...packList, items: [...packList.items] };
      const { _id, ...copyWithoutId } =  copiedPackList 
-    setSelectedPackList(copyWithoutId); //copied packList shallow copy
+    setSelectedPackList(copyWithoutId); // Copied packList (shallow copy)
   };
   
-  
-
   // Move updateUser outside submit
   const updateUser = async (
     userId: string,
@@ -68,7 +53,7 @@ const PackListContainer = ({
     userData: IUser | null
   ) => {
     try {
-      // Merge new pack list with existing ones
+      // Merge new packlist with existing ones
       const updatedPackLists = [...userData.userPackLists, selectedPackList];
 
       const { data } = await axios.put(
@@ -89,9 +74,9 @@ const PackListContainer = ({
   const handleAdd = (packList: PackList) => {
     const copiedPackList = { ...packList, items: [...packList.items] };
     
-    //this shallow copy, some how copy also the _id from the original packList here, so i need to distructure the data and send the packList to the user without _id
+    // This shallow copy, some how copy also the _id from the original packList here, so it ios necessary to destructure the data and send the packList to the user without _id
     const { _id, ...copyWithoutId } = copiedPackList ;
-    setSelectedPackList(copyWithoutId); //this func update the state after finish this func
+    setSelectedPackList(copyWithoutId); // This function updates the state after this function finishes
    
     const userstring = sessionStorage.getItem("user");
     if (!userstring) {
@@ -107,14 +92,13 @@ const PackListContainer = ({
       return;
     } 
 
-    updateUser(userId, copyWithoutId, token, userData); //not the state selectedPackList because the state will update after the func run
+    updateUser(userId, copyWithoutId, token, userData); 
+    // copyWithoutId is included instead of selectedPackList, because the state will update after the function runs
   };
 
   const handleAddNewList = ([]) => {
-
     setAddNew(true);
    
-    //get the user from sessionStorage
   const userstring = sessionStorage.getItem("user");
   if (!userstring) {
     console.error("you have to login");
@@ -129,7 +113,7 @@ const PackListContainer = ({
     return;
   }
 
-    /* get default packList from the backend getdefaultPackList()*/
+    /* get the default packList from the backend getdefaultPackList()*/
     const defaultPackListId = "67bc61f1d52d552624756648";
     const getDefaultPackList = async (packListId: string) => {
       try {
@@ -201,7 +185,6 @@ const PackListContainer = ({
           )}
 
           {/* Cards Display */}
-<<<<<<< HEAD
           <div className=" mx-auto grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  lg:text-lg 2xl:gap-10">
             {packLists
               .slice(0, packLists.length - 1) //it is  used length just in case to add new packList in the future
@@ -213,17 +196,6 @@ const PackListContainer = ({
                     handleAdd={() => handleAdd(packList)}
                     openModal={() => openModal(packList)}
                     userData={userData}
-=======
-          <div className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full lg:text-lg 2xl:gap-10">
-            {packLists
-              .slice(currentIndex, currentIndex + cardsPerView)
-              .map((packList, index) => (
-                <div key={index} className="rounded-lg lg:text-lg">
-                  <PackListCard
-                    packList={packList}
-                    handleAdd={handleAdd}
-                    handleEdit={handleEdit}
->>>>>>> c5ebf302418294fa98dc6280a7c2bbd5434c2d71
                   />
                 </div>
               ))}
