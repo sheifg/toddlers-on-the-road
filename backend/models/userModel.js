@@ -76,7 +76,7 @@ UserSchema.pre(["save", "updateOne"], function (next) {
   // It is necessary to start by getting the data that is being modified or saved.
   // Doing this way is to reference the document as THIS
   const data = this?._update || this;
-  // If we are performing an update operation, this._update is the data it is being tried to store. 
+  // If an update operation is performing, this._update is the data it is being tried to store. 
   // If it is being saved, it's just this.
 
   // email@domain.com
