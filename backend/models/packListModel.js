@@ -1,6 +1,6 @@
 const { mongoose } = require("../config/dbConnection");
 
-// Country Schema:
+
 const PackListSchema = new mongoose.Schema(
   {
     name: {
@@ -8,10 +8,7 @@ const PackListSchema = new mongoose.Schema(
       trim: true,
       required: true,
     },
-    description:{
-        type: String,
-        trim: true,
-      },
+  
     items: [],
     
   },

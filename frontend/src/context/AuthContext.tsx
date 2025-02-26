@@ -20,7 +20,7 @@ import {
   setStorageItem,
 } from "../utils/storage";
 axios.defaults.withCredentials = true;
-interface AuthContextProps {
+ export interface AuthContextProps {
   register: (
     userData: IUser,
     navigate: (path: string) => void

@@ -1,19 +1,22 @@
+import { IUser } from "../types/context";
 import { PackList } from "../types/packlist";
 
 interface PackListCardProps {
-  handleAdd: () => void;
-  handleEdit: () => void;
+  handleAdd: (packList: PackList) => void;
+  openModal: (packList: PackList) => void;
   packList: PackList;
+  userData: IUser | null;
 }
 
 const PackListCard = ({
   packList,
   handleAdd,
-  handleEdit,
+  openModal,
+  userData,
 }: PackListCardProps) => {
   return (
-    <div className="container mx-auto mustard font-Mali">
-      <div className="container mx-auto w-full rounded-lg overflow-hidden shadow-lg text-center bg-mustard bg-opacity-60 lg:gap-x-5">
+    <div className="container mx-auto mustard font-Mali ">
+      <div className="container mx-auto  w-full rounded-lg overflow-hidden shadow-lg text-center bg-mustard bg-opacity-60 lg:gap-x-5">
         <div className="px-6 pt-4 pb-2 lg:pb-0 text-marine-blue">
           <h4 className="font-bold text-xl mb-1 md:text-2xl 2xl:text-3xl">
             {packList.name}
@@ -38,15 +41,25 @@ const PackListCard = ({
         <div className="container flex justify-center items-center gap-4 pb-3 md:gap-8 md:pb-5 lg:pb-7 lg:gap-10">
           <button
             type="button"
-            onClick={handleAdd}
-            className="text-white px-2 py-2 mb-3 text-sm md:py-4 md:px-4 lg:text-md xl:text-lg lg:mt-4 2xl:py-5 2xl:px-5 bg-blue-water rounded-lg font-semibold hover:bg-light-pink hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
+            onClick={() => handleAdd(packList)}
+            disabled={!userData}
+            className={` ${
+              !userData
+                ? "bg-gray-200 px-2 py-2 rounded-lg text-black cursor-not-allowed"
+                : "text-white px-2 py-2 mb-3 text-sm md:py-4 md:px-4 lg:text-md xl:text-lg lg:mt-4 2xl:py-5 2xl:px-5 bg-blue-water rounded-lg font-semibold hover:bg-light-pink hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
+            } `}
           >
             Add
           </button>
           <button
             type="button"
-            onClick={handleEdit}
-            className="text-white px-2 py-2 mb-3 text-sm md:py-4 md:px-4 lg:text-md xl:text-lg lg:mt-4 2xl:py-5 2xl:px-5 bg-blue-water rounded-lg font-semibold hover:bg-light-pink hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
+            onClick={() => openModal(packList)}
+            disabled={!userData}
+            className={` ${
+              !userData
+                ? "bg-gray-200 px-2 py-2 rounded-lg text-black cursor-not-allowed"
+                : "text-white px-2 py-2 mb-3 text-sm md:py-4 md:px-4 lg:text-md xl:text-lg lg:mt-4 2xl:py-5 2xl:px-5 bg-blue-water rounded-lg font-semibold hover:bg-light-pink hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
+            } `}
           >
             Edit
           </button>
@@ -57,12 +70,3 @@ const PackListCard = ({
 };
 
 export default PackListCard;
-
-
-
-
-
-
-
-
-

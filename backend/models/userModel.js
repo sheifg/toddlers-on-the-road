@@ -46,6 +46,20 @@ const UserSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    userPackLists: [
+      /* This part is necessary so that Mongodb can create an id for each packlist */
+        {
+        name: {
+          type: String,
+          trim: true,
+          
+        },
+      
+        items: [],
+        
+      },  
+      
+    ]
   },
   { timestamps: true, collection: "users" }
 );
@@ -53,27 +67,25 @@ const UserSchema = new mongoose.Schema(
 
 
 UserSchema.pre(["save", "updateOne"], function (next) {
-  // if the password is modified, encrypt it!
+  // If the password is modified, encrypt it!
   // Skip validation if provider is firebase
   // Skip hashing for Firebase users
   if (this.provider === 'firebase') {
     return next();
 }
-  // we need to start by getting the data that is being modified or saved.
-  // The way we do this is to reference the document as THIS
+  // It is necessary to start by getting the data that is being modified or saved.
+  // Doing this way is to reference the document as THIS
   const data = this?._update || this;
-  // if we are performing an update operation the data we're trying to store
-  // is this._update.  If we're saving, it's just this.
+  // If an update operation is performing, this._update is the data it is being tried to store. 
+  // If it is being saved, it's just this.
 
   // email@domain.com
   const isEmailValidated = data.email
     ? /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email)
     : true;
-  // IF we actually wanted to validate email, we would put false as the OR value!
+  // If it is actually wanted to validate email, it would put false as the OR value!
 
   if (isEmailValidated) {
-    // console.log('Email OK')
-
     if (data?.password) {
       const isPasswordValidated =
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(
@@ -87,21 +99,17 @@ UserSchema.pre(["save", "updateOne"], function (next) {
       // At least 8 characters
 
       if (isPasswordValidated) {
-        // console.log('Password OK')
         data.password = pwEncrypt(data.password);
-
         if (this?._update) {
           this._update = data;
-          // this._update.password = data.password
         } else {
-          // this = data // izin vermiyor.
           this.password = data.password;
         }
 
         //? ShortHand:
-        // // save:
+        // save:
         // this.password = data.password = passwordEncrypt(data.password)
-        // // update:
+        // update:
         // this._update = data
       } else {
         next(
