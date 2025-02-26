@@ -4,21 +4,19 @@ import { BASE_URL } from "../constants";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-
 export interface ProfileContextProps {
   profile: Profile | null;
   createProfile: (data: Profile) => Promise<void>;
   getProfile: (profileId: string) => Promise<void>;
   updateProfile: (data: Profile, profileId: string) => Promise<void>;
   deleteProfile: (profileId: string) => Promise<void>;
-}
+};
 
 const ProfileContext = createContext<ProfileContextProps | null>(null);
 
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const [profile, setProfile] = useState<Profile | null>(null);
 
- 
   const getToken = (): string | null => {
     const userString = sessionStorage.getItem("user");
     if (!userString) return null;
@@ -30,10 +28,6 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-
-  
-
- 
   const getUserProfile = async (profileId: string) => {
     try {
       const token = getToken();
@@ -41,11 +35,9 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         toast.error("Please login first");
         return;
       }
-
       const { data } = await axios.get(`${BASE_URL}/api/users/${profileId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
       setProfile(data.data);
     } catch (error) {
       console.error("Get Profile Error:", error);
@@ -60,11 +52,9 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         toast.error("Please login first");
         return;
       }
-
       const response = await axios.put(`${BASE_URL}/api/users/${profileId}`, data, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
       setProfile(response.data.data);
       toast.success("Profile updated successfully!");
     } catch (error) {
@@ -73,7 +63,6 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  
   const deleteUserAccount = async (profileId: string) => {
     try {
       const token = getToken();
@@ -81,11 +70,9 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         toast.error("Please login first");
         return;
       }
-
       await axios.delete(`${BASE_URL}/api/users/${profileId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
       setProfile(null);
       toast.success("Profile deleted successfully!");
     } catch (error) {
@@ -94,7 +81,6 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
- 
   const value: ProfileContextProps = {
     profile,
     getUserProfile,
