@@ -46,7 +46,7 @@ const UserSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
-    userPackLists: [
+    packLists: [
       /* This part is necessary so that Mongodb can create an id for each packlist */
         {
         name: {

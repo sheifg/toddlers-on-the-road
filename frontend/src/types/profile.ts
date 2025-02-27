@@ -1,9 +1,5 @@
+import { PackList } from "./packlist";
+
 export interface Profile {
-    userId: string | null;
-    packLists:{ 
-        packList:{
-            name: string;
-            items: string[];
-        }
-    }
-  }
+  packLists: PackList[]
+}
