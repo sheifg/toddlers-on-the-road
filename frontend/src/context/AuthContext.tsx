@@ -55,6 +55,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
+  // const firebaseToken =sessionStorage.getItem("firebaseToken");
+
   // Effect to update localStorage whenever userInfo changes
   useEffect(() => {
     if (userInfo) {
@@ -64,7 +66,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       // Clear localStorage when userInfo is null (user logged out)
       removeStorageItem("user");
     }
-  }, [userInfo]);
+  }, [userInfo]); // TODO Check firebase [userInfo,firebaseToken]
 
   // Check authentication only once after the initial render of the functional component(when the component mounts)
   useEffect(() => {
