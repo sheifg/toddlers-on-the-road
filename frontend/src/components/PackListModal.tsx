@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PackList } from "../types/packlist";
+import { PackList } from "../types/profile";
 import { Field, Form, Formik } from "formik";
 import { MdEdit, MdDelete } from "react-icons/md";
 

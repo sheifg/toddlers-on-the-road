@@ -5,7 +5,7 @@ export interface IUser {
   username: string;
   email: string;
   password: string;
-  userPackLists:[];
+  packLists:[];
 }
 
 export interface ICurrentUser extends IUser {

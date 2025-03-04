@@ -1,5 +1,5 @@
-import { PackList } from "./packlist";
-
-export interface Profile {
-  packLists: PackList[]
+export interface PackList {
+  _id?: string;
+  name: string;
+  items: string[];
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import PackListCard from "./PackListCard";
 import PackListModal from "./PackListModal";
-import { PackList } from "../types/packlist";
+import { PackList } from "../types/profile";
 import axios from "axios";
 import { BASE_URL } from "../constants";
 import { toast } from "react-toastify";
@@ -18,7 +18,7 @@ import {
 const PackListContainer = () => {
   const { userInfo } = useAuth();
   const { predefinedPackLists } = usePackListContext() as PackListContextProps;
-  const { profile, updateProfile } = useProfileContext() as ProfileContextProps;
+  const { packLists, updateProfile } = useProfileContext() as ProfileContextProps;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(1);
@@ -46,11 +46,11 @@ const PackListContainer = () => {
   const updateUserPackLists = async (selectedPackList: PackList) => {
     try {
       // Merge new packlist with existing ones
-      const updatedPackLists = profile?.packLists
-        ? [...profile.packLists, selectedPackList]
+      const updatedPackLists = packLists
+        ? [...packLists, selectedPackList]
         : [selectedPackList];
 
-      updateProfile({ ...profile, packLists: updatedPackLists });
+      updateProfile(updatedPackLists);
       toast.success("packList is updated!");
     } catch (error) {
       if (axios.isAxiosError(error)) {
