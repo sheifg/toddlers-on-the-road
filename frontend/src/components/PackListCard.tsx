@@ -1,19 +1,19 @@
-import { IUser } from "../types/context";
+import { useAuth } from "../context/AuthContext";
 import { PackList } from "../types/packlist";
 
 interface PackListCardProps {
   handleAdd: (packList: PackList) => void;
   openModal: (packList: PackList) => void;
   packList: PackList;
-  userData: IUser | null;
 }
 
 const PackListCard = ({
   packList,
   handleAdd,
   openModal,
-  userData,
 }: PackListCardProps) => {
+  const { userInfo } = useAuth();
+
   return (
     <div className="container mx-auto mustard font-Mali ">
       <div className="container mx-auto  w-full rounded-lg overflow-hidden shadow-lg text-center bg-mustard bg-opacity-60 lg:gap-x-5">
@@ -42,9 +42,9 @@ const PackListCard = ({
           <button
             type="button"
             onClick={() => handleAdd(packList)}
-            disabled={!userData}
+            disabled={!userInfo}
             className={` ${
-              !userData
+              !userInfo
                 ? "bg-gray-200 px-2 py-2 rounded-lg text-black cursor-not-allowed"
                 : "text-white px-2 py-2 mb-3 text-sm md:py-4 md:px-4 lg:text-md xl:text-lg lg:mt-4 2xl:py-5 2xl:px-5 bg-blue-water rounded-lg font-semibold hover:bg-light-pink hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
             } `}
@@ -54,9 +54,9 @@ const PackListCard = ({
           <button
             type="button"
             onClick={() => openModal(packList)}
-            disabled={!userData}
+            disabled={!userInfo}
             className={` ${
-              !userData
+              !userInfo
                 ? "bg-gray-200 px-2 py-2 rounded-lg text-black cursor-not-allowed"
                 : "text-white px-2 py-2 mb-3 text-sm md:py-4 md:px-4 lg:text-md xl:text-lg lg:mt-4 2xl:py-5 2xl:px-5 bg-blue-water rounded-lg font-semibold hover:bg-light-pink hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
             } `}

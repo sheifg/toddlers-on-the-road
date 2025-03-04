@@ -1,95 +1,64 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import { Profile } from "../types/profile";
+import { PackList } from "../types/profile";
 import { BASE_URL } from "../constants";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useAuth } from "./AuthContext";
 
 export interface ProfileContextProps {
-  profile: Profile | null;
-  createProfile: (data: Profile) => Promise<void>;
-  getProfile: (profileId: string) => Promise<void>;
-  updateProfile: (data: Profile, profileId: string) => Promise<void>;
-  deleteProfile: (profileId: string) => Promise<void>;
-};
+  packLists: PackList[] | null;
+  loadProfile: () => Promise<void>;
+  updateProfile: (updatedPackLists: PackList[]) => Promise<void>;
+}
 
 const ProfileContext = createContext<ProfileContextProps | null>(null);
 
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [packLists, setPackLists] = useState<PackList[] | null>(null);
 
-  const getToken = (): string | null => {
-    const userString = sessionStorage.getItem("user");
-    if (!userString) return null;
-    try {
-      const user = JSON.parse(userString);
-      return user.token;
-    } catch {
-      return null;
-    }
-  };
+  const { userInfo } = useAuth();
 
-  const getUserProfile = async (profileId: string) => {
+  const loadProfile = async () => {
     try {
-      const token = getToken();
-      if (!token) {
-        toast.error("Please login first");
-        return;
-      }
-      const { data } = await axios.get(`${BASE_URL}/api/users/${profileId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setProfile(data.data);
+      const { data } = await axios.get(
+        `${BASE_URL}/api/profiles/${userInfo?._id}`,
+        {
+          headers: { Authorization: `Bearer ${userInfo?.token}` },
+        }
+      );
+      setPackLists( data.data.packLists );
     } catch (error) {
       console.error("Get Profile Error:", error);
       toast.error("Failed to fetch profile");
     }
   };
 
-  const updateProfile = async (data: Profile, profileId: string) => {
+  const updateProfile = async (updatedPackLists: PackList[]) => {
     try {
-      const token = getToken();
-      if (!token) {
-        toast.error("Please login first");
-        return;
-      }
-      const response = await axios.put(`${BASE_URL}/api/users/${profileId}`, data, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setProfile(response.data.data);
-      toast.success("Profile updated successfully!");
+      await axios.put(
+        `${BASE_URL}/api/profiles/${userInfo?._id}`,
+        { packLists: updatedPackLists},
+        {
+          headers: { Authorization: `Bearer ${userInfo?.token}` },
+        }
+      );
+      setPackLists(updatedPackLists);
+      toast.success("Profile updated successfully!"); // TODO Toast here makes no sense
     } catch (error) {
       console.error("Update Profile Error:", error);
       toast.error("Failed to update profile");
     }
   };
 
-  const deleteUserAccount = async (profileId: string) => {
-    try {
-      const token = getToken();
-      if (!token) {
-        toast.error("Please login first");
-        return;
-      }
-      await axios.delete(`${BASE_URL}/api/users/${profileId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setProfile(null);
-      toast.success("Profile deleted successfully!");
-    } catch (error) {
-      console.error("Delete Profile Error:", error);
-      toast.error("Failed to delete profile");
-    }
-  };
-
   const value: ProfileContextProps = {
-    profile,
-    getUserProfile,
+    packLists,
+    loadProfile,
     updateProfile,
-    deleteUserAccount,
   };
 
-  return <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>;
+  return (
+    <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>
+  );
 };
 
-
-export const useProfileContext  = () => useContext(ProfileContext );
+export const useProfileContext = () => useContext(ProfileContext);

@@ -1,34 +1,22 @@
 import { useEffect, useState } from "react";
-import { PackList } from "../types/packlist";
+import { PackList } from "../types/profile";
 import { Field, Form, Formik } from "formik";
 import { MdEdit, MdDelete } from "react-icons/md";
-import { IUser } from "../types/context";
 
 interface PackListModalProps {
-  open: boolean;
   closeModal: () => void;
-  selectedPackList: PackList | null;
-  userData: IUser | null;
-  updateUser: (
-    userId: string,
-    selectedPackList: PackList,
-    token: string,
-    userData: IUser | null
-  ) => Promise<void>;
-  addNew: boolean;
+  selectedPackList: PackList;
+  onSubmit: (packList: PackList) => Promise<void>;
+  isCreation: boolean;
 }
 
 export default function PackListModal({
-  open,
   closeModal,
   selectedPackList,
-  userData,
-  updateUser,
-  addNew,
+  onSubmit,
+  isCreation,
 }: PackListModalProps) {
-  console.log(selectedPackList);
-
-  if (!open || !selectedPackList) return null;
+  // console.log(selectedPackList);
 
   const [modalItems, setModalItems] = useState<string[]>([
     ...selectedPackList.items,
@@ -66,33 +54,20 @@ export default function PackListModal({
 
   const handleDeleteItem = (index: number) => {
     setModalItems((prevItems) => prevItems.filter((_, i) => i !== index));
-     // To be sure it will removed just from the state, not from selected packlist
+    // To be sure it will removed just from the state, not from selected packlist
   };
 
   const handleSubmit = () => {
-    const userstring = sessionStorage.getItem("user");
-    if (!userstring) {
-      console.error("you have to login");
-      return;
-    }
-    const user = JSON.parse(userstring);
-    const userId = user._id;
-    const token = user.token;
-  
-    if (!userData) {
-      console.error("User Data is missing");
-      return;
-    }
     // Assigning the variable with the same name (title, items) as in mongoDB to match, avoiding getting an empty array
     const name = title; // Using the state title
     const items = modalItems;
     const copiedPackList = { name, items };
-   
-    updateUser(userId, copiedPackList, token, userData);
+
+    onSubmit(copiedPackList);
     // It can only be seen the previous version, noit the latest version of userData
     closeModal();
   };
- 
+
   const handleAddItem = () => {
     setModalItems((prevItems) => [...prevItems, ""]);
   };
@@ -113,7 +88,7 @@ export default function PackListModal({
         <h2 className="text-3xl font-bold text-start text-marine-blue">
           Create your PackList
         </h2>
-        {addNew ? (
+        {isCreation ? (
           <input
             type="text"
             value={title}
