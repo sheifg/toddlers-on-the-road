@@ -1,23 +1,13 @@
-export interface IUser {
-  _id:string;
-  first_name: string;
-  last_name: string;
-  username: string;
-  email: string;
-  password: string;
-  packLists:[];
-}
-
-export interface ICurrentUser extends IUser {
-  token: string;
-  refreshToken?: string;
-}
+import { IUser } from "./user";
 
 export interface IResetPassword {
   new_password: string;
+  confirm_password: string
 }
 
-export interface IForgotPassword {
-  email: string;
-}
+export type IForgotPassword = Pick<IUser, 'email' >
+
+
+
+
 

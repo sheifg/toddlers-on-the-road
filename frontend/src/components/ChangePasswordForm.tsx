@@ -2,9 +2,9 @@ import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { InputProps } from "../types/form";
 import Input from "./Input";
-import { IResetPassword } from "../types/context";
+import { IChangePassword } from "../types/user";
 
-interface ResetPasswordFormProps<T> {
+interface ChangePasswordFormProps<T> {
   initialValues: T;
   validationSchema: Yup.ObjectSchema<any>;
   handleSubmit: (
@@ -16,14 +16,14 @@ interface ResetPasswordFormProps<T> {
   buttonText: string;
 }
 
-const ResetPasswordForm = <T extends IResetPassword>({
+const ChangePasswordForm = <T extends IChangePassword>({
   initialValues,
   validationSchema,
   handleSubmit,
   title,
   inputs,
   buttonText,
-}: ResetPasswordFormProps<T>) => {
+}: ChangePasswordFormProps<T>) => {
   return (
     <div className="w-full max-w-sm p-8 mx-auto rounded-lg ">
       <Formik
@@ -47,7 +47,6 @@ const ResetPasswordForm = <T extends IResetPassword>({
                 touched={touched}
               />
             ))}
-
             <div className="flex flex-col justify-center items-center space-y-4 font-Roboto">
               <button
                 type="submit"
@@ -71,4 +70,4 @@ const ResetPasswordForm = <T extends IResetPassword>({
   );
 };
 
-export default ResetPasswordForm;
+export default ChangePasswordForm;

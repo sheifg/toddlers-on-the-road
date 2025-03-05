@@ -52,17 +52,8 @@ app.use((req, res, next) => {
 // Find/Pagination/Search/Sort:
 app.use(require("./middlewares/findSearchSortPage.js"));
 
-// App Routes
-
-// HomePath: Welcome page
-app.all("/", (req, res) => {
-  res.send("Welcome to the API...");
-});
-
 // API Routes
 app.use("/api", require("./routes"));
-
-// Middleware to send an email
 
 // Express error handler
 const errorHandler = require("./middlewares/errorHandler");

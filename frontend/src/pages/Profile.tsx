@@ -1,9 +1,11 @@
-import { useAuth } from "../context/AuthContext";
+import PersonalDetails from "../components/PersonalDetails";
 
 const Profile = () => {
-  const {userInfo} = useAuth();
-  console.log("User:", userInfo)
-  return <div>Profile</div>;
+  return (
+    <>
+      <PersonalDetails />
+    </>
+  );
 };
 
 export default Profile;

@@ -1,5 +1,5 @@
-import { useAuth } from "../context/AuthContext";
-import { PackList } from "../types/packlist";
+import { useAuthContext } from "../context/AuthContext";
+import { PackList } from "../types/profile";
 
 interface PackListCardProps {
   handleAdd: (packList: PackList) => void;
@@ -12,7 +12,7 @@ const PackListCard = ({
   handleAdd,
   openModal,
 }: PackListCardProps) => {
-  const { userInfo } = useAuth();
+  const { userInfo } = useAuthContext();
 
   return (
     <div className="container mx-auto mustard font-Mali ">

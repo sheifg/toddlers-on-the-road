@@ -14,7 +14,7 @@ import {
   ProfileContextProps,
   useProfileContext,
 } from "../context/ProfileContext";
-import { useAuth } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const Home = () => {
   const { loadPredefinedPackLists } =
     usePackListContext() as PackListContextProps;
   const { loadProfile } = useProfileContext() as ProfileContextProps;
-  const { userInfo } = useAuth();
+  const { userInfo } = useAuthContext();
 
   const handleClick = () => {
     navigate("/about");

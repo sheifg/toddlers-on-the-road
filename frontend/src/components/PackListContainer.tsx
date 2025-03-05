@@ -5,7 +5,7 @@ import { PackList } from "../types/profile";
 import axios from "axios";
 import { BASE_URL } from "../constants";
 import { toast } from "react-toastify";
-import { useAuth } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 import {
   PackListContextProps,
   usePackListContext,
@@ -16,9 +16,10 @@ import {
 } from "../context/ProfileContext";
 
 const PackListContainer = () => {
-  const { userInfo } = useAuth();
+  const { userInfo } = useAuthContext();
   const { predefinedPackLists } = usePackListContext() as PackListContextProps;
-  const { packLists, updateProfile } = useProfileContext() as ProfileContextProps;
+  const { packLists, updateProfile } =
+    useProfileContext() as ProfileContextProps;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(1);

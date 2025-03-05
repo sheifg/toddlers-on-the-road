@@ -1,16 +1,17 @@
 import { object, string } from "yup";
 import AuthForm from "../components/AuthForm";
 import { AuthFormLink } from "../types/form";
-import { useAuth } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { signUpProvider } from "../config/firebase";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
   const { state: locationState } = useLocation();
   const toastMessage = "Login successful!";
-  const { login } = useAuth();
+  const { login } = useAuthContext();
   let redirectionPath: any;
 
   const BOTTOM_LINKS: AuthFormLink[] = [
@@ -64,7 +65,7 @@ const Login = () => {
   const initialValues = {
     email: "",
     password: "",
-    rememberMe: false, 
+    rememberMe: false,
   };
 
   const loginSchema = object().shape({
@@ -79,9 +80,11 @@ const Login = () => {
     redirectionPath = `${redirectTo.pathname}${redirectTo.search}`;
   }
 
-  const handleSubmit = (values, actions) => {
-    login(values, navigate, redirectionPath);
+  const handleSubmit = async (values, actions: any) => {
+    await login(values);
     actions.setSubmitting(false);
+    toast.success("Login successful!");
+    navigate(redirectionPath ? redirectionPath : "/");
   };
 
   return (

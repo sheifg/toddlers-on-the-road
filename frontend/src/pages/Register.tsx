@@ -2,9 +2,10 @@ import { object, string } from "yup";
 import AuthForm from "../components/AuthForm";
 import { AuthFormLink } from "../types/form";
 import { FcGoogle } from "react-icons/fc";
-import { useAuth } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { signUpProvider } from "../config/firebase";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const Register = () => {
         text: "Continue with Google",
         onClick: async () => {
           try {
-            await signUpProvider(navigate, toastMessage); 
+            await signUpProvider(navigate, toastMessage);
           } catch (error) {
             console.error("Google sign-up error:", error);
           }
@@ -83,11 +84,13 @@ const Register = () => {
       .required("Password is required!"),
   });
 
-  const { register } = useAuth();
+  const { register } = useAuthContext();
 
-  const handleSubmit = async (values, actions) => {
-    await register(values, navigate);
+  const handleSubmit = async (values, actions: any) => {
+    await register(values);
     actions.setSubmitting(false);
+    toast.success("User registered successfully!");
+    navigate("/");
   };
 
   return (
