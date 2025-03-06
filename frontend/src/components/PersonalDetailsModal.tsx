@@ -43,11 +43,7 @@ const PersonalDetailsModal = ({ closeModal }: PersonalDetailsModalProps) => {
 
   return (
     <>
-      <div
-        className="fixed inset-0 flex items-center justify-center
-   bg-black bg-opacity-80
-       font-Mali z-[100]"
-      >
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 font-Mali z-[100]">
         <div className="bg-beige max-w rounded-lg overflow-hidden shadow-lg p-6 max-w-md w-[80vw] relative">
           <button
             className="text-marine-blue top-2 right-2 w-8 h-8 rounded-lg mb-2 absolute"
