@@ -33,10 +33,8 @@ const PackListContainer = () => {
 
   const openModal = (packList: PackList) => {
     setIsModalOpen(true);
-    // TODO This below has nothing to do with the method name Move outside
-    const copiedPackList = { ...packList, items: [...packList.items] };
-    const { _id, ...copyWithoutId } = copiedPackList; // eslint-disable-line @typescript-eslint/no-unused-vars
-    setSelectedPackList(copyWithoutId); // Copied packList (shallow copy)
+    const copiedPackList = { name: packList.name, items: [...packList.items] };
+    setSelectedPackList(copiedPackList); // Copied packList (shallow copy)
   };
 
   const closeModal = () => {
