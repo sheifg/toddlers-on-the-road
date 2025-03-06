@@ -24,7 +24,7 @@ const ForgotPasswordForm = <T extends object>({
   buttonText,
 }: ForgotPasswordFormProps<T>) => {
   return (
-    <div className="w-full max-w-sm p-8 mx-auto rounded-lg ">
+    <div className="w-full max-w-sm p-8 mx-auto rounded-lg">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

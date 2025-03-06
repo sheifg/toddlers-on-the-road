@@ -25,7 +25,7 @@ const ChangePasswordForm = <T extends IChangePassword>({
   buttonText,
 }: ChangePasswordFormProps<T>) => {
   return (
-    <div className="w-full max-w-sm p-8 mx-auto rounded-lg ">
+    <div className="w-full max-w-sm p-8 mx-auto rounded-lg">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

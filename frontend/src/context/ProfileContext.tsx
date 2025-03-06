@@ -43,7 +43,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         }
       );
       setPackLists(updatedPackLists);
-      toast.success("Profile updated successfully!"); // TODO Toast here makes no sense
+      toast.success("Profile updated successfully!"); 
     } catch (error) {
       console.error("Update Profile Error:", error);
       toast.error("Failed to update profile");

@@ -25,7 +25,7 @@ const ResetPasswordForm = <T extends IResetPassword>({
   buttonText,
 }: ResetPasswordFormProps<T>) => {
   return (
-    <div className="w-full max-w-sm p-8 mx-auto rounded-lg ">
+    <div className="w-full max-w-sm p-8 mx-auto rounded-lg">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
