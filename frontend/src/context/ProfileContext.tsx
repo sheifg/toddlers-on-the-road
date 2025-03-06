@@ -3,7 +3,7 @@ import { PackList } from "../types/profile";
 import { BASE_URL } from "../constants";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useAuth } from "./AuthContext";
+import { useAuthContext } from "./AuthContext";
 
 export interface ProfileContextProps {
   packLists: PackList[] | null;
@@ -16,7 +16,7 @@ const ProfileContext = createContext<ProfileContextProps | null>(null);
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const [packLists, setPackLists] = useState<PackList[] | null>(null);
 
-  const { userInfo } = useAuth();
+  const { userInfo } = useAuthContext();
 
   const loadProfile = async () => {
     try {
@@ -26,7 +26,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
           headers: { Authorization: `Bearer ${userInfo?.token}` },
         }
       );
-      setPackLists( data.data.packLists );
+      setPackLists(data.data.packLists);
     } catch (error) {
       console.error("Get Profile Error:", error);
       toast.error("Failed to fetch profile");
@@ -37,13 +37,13 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     try {
       await axios.put(
         `${BASE_URL}/api/profiles/${userInfo?._id}`,
-        { packLists: updatedPackLists},
+        { packLists: updatedPackLists },
         {
           headers: { Authorization: `Bearer ${userInfo?.token}` },
         }
       );
       setPackLists(updatedPackLists);
-      toast.success("Profile updated successfully!"); // TODO Toast here makes no sense
+      toast.success("Profile updated successfully!"); 
     } catch (error) {
       console.error("Update Profile Error:", error);
       toast.error("Failed to update profile");

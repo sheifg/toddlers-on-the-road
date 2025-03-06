@@ -5,7 +5,7 @@ import { PackList } from "../types/profile";
 import axios from "axios";
 import { BASE_URL } from "../constants";
 import { toast } from "react-toastify";
-import { useAuth } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 import {
   PackListContextProps,
   usePackListContext,
@@ -16,9 +16,10 @@ import {
 } from "../context/ProfileContext";
 
 const PackListContainer = () => {
-  const { userInfo } = useAuth();
+  const { userInfo } = useAuthContext();
   const { predefinedPackLists } = usePackListContext() as PackListContextProps;
-  const { packLists, updateProfile } = useProfileContext() as ProfileContextProps;
+  const { packLists, updateProfile } =
+    useProfileContext() as ProfileContextProps;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(1);
@@ -32,10 +33,8 @@ const PackListContainer = () => {
 
   const openModal = (packList: PackList) => {
     setIsModalOpen(true);
-    // TODO This below has nothing to do with the method name Move outside
-    const copiedPackList = { ...packList, items: [...packList.items] };
-    const { _id, ...copyWithoutId } = copiedPackList; // eslint-disable-line @typescript-eslint/no-unused-vars
-    setSelectedPackList(copyWithoutId); // Copied packList (shallow copy)
+    const copiedPackList = { name: packList.name, items: [...packList.items] };
+    setSelectedPackList(copiedPackList); // Copied packList (shallow copy)
   };
 
   const closeModal = () => {

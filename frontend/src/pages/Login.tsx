@@ -1,16 +1,18 @@
 import { object, string } from "yup";
 import AuthForm from "../components/AuthForm";
 import { AuthFormLink } from "../types/form";
-import { useAuth } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { signUpProvider } from "../config/firebase";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
   const { state: locationState } = useLocation();
   const toastMessage = "Login successful!";
-  const { login } = useAuth();
+  const { login, setUserInfo, userInfo } = useAuthContext();
   let redirectionPath: any;
 
   const BOTTOM_LINKS: AuthFormLink[] = [
@@ -64,7 +66,7 @@ const Login = () => {
   const initialValues = {
     email: "",
     password: "",
-    rememberMe: false, 
+    rememberMe: false,
   };
 
   const loginSchema = object().shape({
@@ -79,8 +81,20 @@ const Login = () => {
     redirectionPath = `${redirectTo.pathname}${redirectTo.search}`;
   }
 
-  const handleSubmit = (values, actions) => {
-    login(values, navigate, redirectionPath);
+  const handleSubmit = async (values, actions: any) => {
+    try {
+      const userDataLogin = await login(values);
+      setUserInfo(userDataLogin);
+      sessionStorage.setItem("user", JSON.stringify(userDataLogin));
+      toast.success("Login successful!");
+      navigate(redirectionPath ? redirectionPath : "/");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
     actions.setSubmitting(false);
   };
 

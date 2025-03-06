@@ -1,7 +1,10 @@
 import { object, string } from "yup";
 import ForgotPasswordForm from "../components/ForgotPasswordForm";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
+import { IForgotPassword } from "../types/context";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const ForgotPassword = () => {
   const inputs = [
@@ -22,12 +25,23 @@ const ForgotPassword = () => {
   });
 
   const navigate = useNavigate();
-  const { forgotPassword } = useAuth();
+  const { forgotPassword } = useAuthContext();
 
-  const handleSubmit = (values, actions) => {
-    forgotPassword(values, navigate);
+  const handleSubmit = (values: IForgotPassword, actions: any) => {
+    try {
+      forgotPassword(values);
+      toast.success("Reset password email sent successfully!");
+      navigate("/login");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
     actions.setSubmitting(false);
   };
+
   return (
     <div className="flex items-center justify-center py-16">
       <ForgotPasswordForm

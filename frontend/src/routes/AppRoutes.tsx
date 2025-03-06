@@ -11,7 +11,8 @@ import ResetPassword from "../pages/ResetPassword";
 import ForgotPassword from "../pages/ForgotPassword";
 import TravelDestinations from "../pages/TravelDestinations";
 import NotFound from "../pages/NotFound";
-
+import ChangePassword from "../pages/ChangePassword";
+import DeleteAccount from "../pages/DeleteAccount";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -27,6 +28,8 @@ const AppRoutes = () => {
       <Route element={<PrivateRoute />}>
         <Route path="/profile" element={<Profile />} />
         <Route path="/details/:countryId" element={<Details />} />
+        <Route path="/profile/change-password" element={<ChangePassword />} />
+        <Route path="/profile/delete-account" element={<DeleteAccount />} />
       </Route>
     </Routes>
   );

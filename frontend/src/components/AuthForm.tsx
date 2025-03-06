@@ -27,19 +27,16 @@ const AuthForm = <T extends object & { rememberMe?: boolean }>({
   buttonText,
   bottomLinks,
   isReminderShown = false,
-  
 }: AuthFormProps<T>) => {
   return (
-    <div className="w-full max-w-sm p-8 mx-auto rounded-lg ">
+    <div className="w-full max-w-sm p-8 mx-auto rounded-lg">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched,values, handleChange ,handleBlur }) => (
-          
+        {({ errors, touched, values, handleChange, handleBlur }) => (
           <Form className="space-y-4">
-           {/*  <pre>{JSON.stringify(values, null, 2)}</pre>  */}{/* Debug log ,just to see if rememberme toggle*/}
             <h5 className="text-3xl pb-4 text-center font-bold text-marine-blue font-Mali md:text-4xl">
               {title}
             </h5>
@@ -59,7 +56,7 @@ const AuthForm = <T extends object & { rememberMe?: boolean }>({
               <div className="flex items-center">
                 <input
                   id="rememberMe"
-                  name="rememberMe"//should match with the initialValues 
+                  name="rememberMe" // Should match with the initialValues
                   type="checkbox"
                   onChange={handleChange} // Formik's onChange handler
                   onBlur={handleBlur} // Formik's onBlur handler
@@ -84,45 +81,45 @@ const AuthForm = <T extends object & { rememberMe?: boolean }>({
             </div>
 
             {bottomLinks.map((bottomLink, index) => (
-                            <div
-                                key={index}
-                                className="container mx-auto flex items-center justify-center p-2 font-Roboto"
-                            >
-                                <div className="flex items-center space-x-1">
-                                    {bottomLink.text && (
-                                        <p className="text-sm font-medium text-marine-blue text-center font-Roboto">
-                                            {bottomLink.text}
-                                        </p>
-                                    )}
-                                    {bottomLink.link.url ? (
-                                        <Link
-                                            to={bottomLink.link.url}
-                                            className="text-marine-blue hover:underline"
-                                        >
-                                            <p className="text-sm font-medium text-marine-blue text-center">
-                                                {bottomLink.link.text}
-                                            </p>
-                                        </Link>
-                                    ) : (
-                                        <button
-                                            type="button" // Important to prevent form submission
-                                            onClick={bottomLink.link.onClick}
-                                            className="text-marine-blue hover:underline"
-                                        >
-                                            <p className="text-sm font-medium text-marine-blue text-center">
-                                                {bottomLink.link.text}
-                                            </p>
-                                        </button>
-                                    )}
-                                    {bottomLink.icon && <bottomLink.icon className="ml-2" />}
-                                </div>
-                            </div>
-                        ))}
-                    </Form>
-                )}
-            </Formik>
-        </div>
-    );
+              <div
+                key={index}
+                className="container mx-auto flex items-center justify-center p-2 font-Roboto"
+              >
+                <div className="flex items-center space-x-1">
+                  {bottomLink.text && (
+                    <p className="text-sm font-medium text-marine-blue text-center font-Roboto">
+                      {bottomLink.text}
+                    </p>
+                  )}
+                  {bottomLink.link.url ? (
+                    <Link
+                      to={bottomLink.link.url}
+                      className="text-marine-blue hover:underline"
+                    >
+                      <p className="text-sm font-medium text-marine-blue text-center">
+                        {bottomLink.link.text}
+                      </p>
+                    </Link>
+                  ) : (
+                    <button
+                      type="button" // Important to prevent form submission
+                      onClick={bottomLink.link.onClick}
+                      className="text-marine-blue hover:underline"
+                    >
+                      <p className="text-sm font-medium text-marine-blue text-center">
+                        {bottomLink.link.text}
+                      </p>
+                    </button>
+                  )}
+                  {bottomLink.icon && <bottomLink.icon className="ml-2" />}
+                </div>
+              </div>
+            ))}
+          </Form>
+        )}
+      </Formik>
+    </div>
+  );
 };
 
 export default AuthForm;

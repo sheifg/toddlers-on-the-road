@@ -2,6 +2,7 @@ import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { InputProps } from "../types/form";
 import Input from "./Input";
+import { IResetPassword } from "../types/context";
 
 interface ResetPasswordFormProps<T> {
   initialValues: T;
@@ -15,7 +16,7 @@ interface ResetPasswordFormProps<T> {
   buttonText: string;
 }
 
-const ResetPasswordForm = <T extends object>({
+const ResetPasswordForm = <T extends IResetPassword>({
   initialValues,
   validationSchema,
   handleSubmit,
@@ -24,7 +25,7 @@ const ResetPasswordForm = <T extends object>({
   buttonText,
 }: ResetPasswordFormProps<T>) => {
   return (
-    <div className="w-full max-w-sm p-8 mx-auto rounded-lg ">
+    <div className="w-full max-w-sm p-8 mx-auto rounded-lg">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -58,7 +59,7 @@ const ResetPasswordForm = <T extends object>({
                     : "bg-blue-water text-white hover:bg-light-pink hover:text-marine-blue focus:ring-4 focus:ring-marine-blue"
                 }"
                 } 
-                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-poppy-red`}
               >
                 {buttonText}
               </button>
