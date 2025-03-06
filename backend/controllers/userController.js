@@ -119,7 +119,11 @@ module.exports = {
         return res.status(500).json({ message: "Failed to update password" });
       }
 
-      res.status(200).json({ message: "Password changed successfully" });
+      res.status(200).json({
+        success: true,
+        message: "Password changed successfully",
+        data: updatedUser,
+      });
     } catch (error) {
       console.error("Reset password error:", error);
       res.status(500).json({ message: "Error changing password" });
@@ -165,7 +169,11 @@ module.exports = {
           .json({ message: "Failed to update personal details" });
       }
 
-      res.status(200).json({ message: "Password changed successfully" });
+      res.status(200).json({
+        success: true,
+        message: "Password changed successfully",
+        data: updatedUser,
+      });
     } catch (error) {
       console.error("Updating personal details error:", error);
       res.status(500).json({ message: "Error personal details" });
@@ -175,6 +183,15 @@ module.exports = {
   deleteAccount: async (req, res) => {
     try {
       const data = await User.findByIdAndDelete({ _id: req.params.id });
+
+      // Fixing clearing cookies
+      res.cookie("refreshToken", "", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV,
+        sameSite: "strict",
+        path: "/",
+        maxAge: 0,
+      });
 
       res.status(204).send({
         success: true,

@@ -1,12 +1,30 @@
 import { BsTrash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { UserContextProps, useUserContext } from "../context/UserContext";
+import { toast } from "react-toastify";
+import { useAuthContext } from "../context/AuthContext";
+import axios from "axios";
 
 const DeleteAccount = () => {
   const navigate = useNavigate();
+  const { setUserInfo } = useAuthContext();
   const { deleteAccount } = useUserContext() as UserContextProps;
   const handleGoBack = () => {
     navigate("/profile");
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      await deleteAccount();
+      setUserInfo(null);
+      toast.success("Delete user account successfully!");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
   };
 
   return (
@@ -39,7 +57,7 @@ const DeleteAccount = () => {
           </p>
           <button
             type="button"
-            onClick={deleteAccount}
+            onClick={handleDeleteAccount}
             className=" text-white px-2 py-2 mb-3 text-sm lg:text-md xl:text-lg lg:mt-4 bg-blue-water rounded-lg font-semibold hover:bg-light-pink hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
           >
             Delete my account
