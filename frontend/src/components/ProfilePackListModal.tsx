@@ -1,22 +1,26 @@
-import { useEffect, useState } from "react";
+import { MdDelete, MdEdit } from "react-icons/md";
 import { PackList } from "../types/profile";
+import { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
-import { MdEdit, MdDelete } from "react-icons/md";
+/* import { ProfileContextProps, useProfileContext } from "../context/ProfileContext";
+import { toast } from "react-toastify";
+import axios from "axios"; */
 
-interface PackListModalProps {
+interface ProfilePackListModalProps {
   closeModal: () => void;
   selectedPackList: PackList;
   isCreation: boolean;
-  onSubmit : (packList: PackList) => Promise<void>;
+  onSubmit: (selectedPackList: PackList) => Promise<void>;
+  setIsCreation: (isCreation: boolean) => void;
 }
-
-export default function PackListModal({
+export default function ProfilePackListModal({
   closeModal,
   selectedPackList,
-  onSubmit,
   isCreation,
-}: PackListModalProps) {
-   //console.log(selectedPackList);
+  onSubmit,
+  setIsCreation,
+}: ProfilePackListModalProps) {
+  console.log("selectedPackList", selectedPackList);
 
   const [modalItems, setModalItems] = useState<string[]>([
     ...selectedPackList.items,
@@ -57,14 +61,22 @@ export default function PackListModal({
     // To be sure it will removed just from the state, not from selected packlist
   };
 
-  const handleSubmit = () => {
+  console.log(modalItems);
+  const handleSubmit = async () => {
     // Assigning the variable with the same name (title, items) as in mongoDB to match, avoiding getting an empty array
     const name = title; // Using the state title
     const items = modalItems;
-    const copiedPackList = { name, items };
+    const updatedPackListWithoutId = { name, items };
+    if (isCreation) {
+      /* addUserPackList(userId,copiedPackList,token,userData) */
+      await onSubmit(updatedPackListWithoutId);
+    } else {
+      const _id = selectedPackList._id;
+      const updatedPackList = { _id, name, items };
+      await onSubmit(updatedPackList);
+    }
 
-   onSubmit(copiedPackList);  //onSubmit={updateUserPackLists} is a prop from the container take this func
-    // It can only be seen the previous version, noit the latest version of userData
+    setIsCreation(false);
     closeModal();
   };
 
@@ -129,7 +141,7 @@ export default function PackListModal({
                       />
                     ) : (
                       <span
-                        className={`bg-mustard p-1  text-nowrap w-1 ${
+                        className={`bg-mustard p-1 text-nowrap w-1${
                           checkedItems[index] ? "line-through" : ""
                         }`}
                       >

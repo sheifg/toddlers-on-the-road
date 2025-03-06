@@ -1,6 +1,5 @@
 import { useAuth } from "../context/AuthContext";
-import { PackList } from "../types/packlist";
-
+import { PackList } from "../types/profile";
 interface PackListCardProps {
   handleAdd: (packList: PackList) => void;
   openModal: (packList: PackList) => void;

@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import { PackList } from "../types/packlist";
+import { PackList } from "../types/profile";
 import { BASE_URL } from "../constants";
 import axios from "axios";
 import { toast } from "react-toastify";

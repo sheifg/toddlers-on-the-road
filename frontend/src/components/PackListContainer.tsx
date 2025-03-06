@@ -31,23 +31,22 @@ const PackListContainer = () => {
   const [isCreation, setIsCreation] = useState<boolean>(false); // This state shows if it is added a new list (update the default packList)
 
   const openModal = (packList: PackList) => {
+    //console.log(Object.getOwnPropertyDescriptors(packList));
     setIsModalOpen(true);
-    // TODO This below has nothing to do with the method name Move outside
-    const copiedPackList = { ...packList, items: [...packList.items] };
-    const { _id, ...copyWithoutId } = copiedPackList; // eslint-disable-line @typescript-eslint/no-unused-vars
-    setSelectedPackList(copyWithoutId); // Copied packList (shallow copy)
+    const copiedPackList = { name: packList.name, items: [...packList.items] };
+    setSelectedPackList(copiedPackList); // Copied packList (shallow copy)
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
-  // Move updateUser outside submit
+  // Move updateUser outside submit,it is here because i send  it as prop to the it in modal ,and i send it as prop to the card for btn add
   const updateUserPackLists = async (selectedPackList: PackList) => {
     try {
       // Merge new packlist with existing ones
       const updatedPackLists = packLists
-        ? [...packLists, selectedPackList]
+      ? [selectedPackList, ...packLists]
         : [selectedPackList];
 
       updateProfile(updatedPackLists);
@@ -64,14 +63,12 @@ const PackListContainer = () => {
   };
 
   const handleAdd = (packList: PackList) => {
-    const copiedPackList = { ...packList, items: [...packList.items] };
-
+    const copiedPackList = { name: packList.name, items: [...packList.items] };
     // This shallow copy, some how copy also the _id from the original packList here, so it ios necessary to destructure the data and send the packList to the user without _id
-    const { _id, ...copyWithoutId } = copiedPackList; // eslint-disable-line @typescript-eslint/no-unused-vars
-    setSelectedPackList(copyWithoutId); // This function updates the state after this function finishes
+    setSelectedPackList(copiedPackList ); // This function updates the state after this function finishes
 
-    updateUserPackLists(copyWithoutId);
-    // copyWithoutId is included instead of selectedPackList, because the state will update after the function runs
+    updateUserPackLists(copiedPackList );//this func will add new packList to the user wich will represent in profile page
+    
   };
 
   const getDefaultPackList = async (packListId: string) => {
