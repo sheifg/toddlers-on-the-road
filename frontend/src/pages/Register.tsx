@@ -6,9 +6,11 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { signUpProvider } from "../config/firebase";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { register, setUserInfo } = useAuth();
   const toastMessage = "User registered successfully!";
   const BOTTOM_LINKS: AuthFormLink[] = [
     {
@@ -84,15 +86,22 @@ const Register = () => {
       .required("Password is required!"),
   });
 
-  const { register } = useAuth();
-
   const handleSubmit = async (values, actions: any) => {
-    await register(values);
+    try {
+      const userDataRegister = await register(values);
+      setUserInfo(userDataRegister);
+      sessionStorage.setItem("user", JSON.stringify(userDataRegister));
+      toast.success("Register successful!");
+      navigate("/");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
     actions.setSubmitting(false);
-    toast.success("User registered successfully!");
-    navigate("/");
   };
-
   return (
     <div className="flex items-center justify-center">
       <AuthForm

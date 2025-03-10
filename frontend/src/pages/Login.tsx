@@ -6,12 +6,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { signUpProvider } from "../config/firebase";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
   const { state: locationState } = useLocation();
   const toastMessage = "Login successful!";
-  const { login } = useAuth();
+  const { login, setUserInfo } = useAuth();
   let redirectionPath: any;
 
   const BOTTOM_LINKS: AuthFormLink[] = [
@@ -81,10 +82,20 @@ const Login = () => {
   }
 
   const handleSubmit = async (values, actions: any) => {
-    await login(values);
+    try {
+      const userDataLogin = await login(values);
+      setUserInfo(userDataLogin);
+      sessionStorage.setItem("user", JSON.stringify(userDataLogin));
+      toast.success("Login successful!");
+      navigate(redirectionPath ? redirectionPath : "/");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
     actions.setSubmitting(false);
-    toast.success("Login successful!");
-    navigate(redirectionPath ? redirectionPath : "/");
   };
 
   return (

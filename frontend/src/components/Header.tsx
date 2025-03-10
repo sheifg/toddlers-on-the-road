@@ -3,18 +3,29 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { getStorageItem } from "../utils/storage";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function Header() {
   // State to track hamburger menu open/close
   const [isOpen, setIsOpen] = useState(false);
-  const { userInfo, logout } = useAuth();
+  const { userInfo, setUserInfo, logout } = useAuth();
   const navigate = useNavigate();
   const firebaseToken = getStorageItem("firebaseToken");
 
   const handleLogout = () => {
-    logout();
-    toast.success("Logged out successfully");
-    navigate("/");
+    try {
+      logout();
+      setUserInfo(null);
+      sessionStorage.clear();
+      toast.success("Logged out successfully");
+      navigate("/");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
   };
 
   return (

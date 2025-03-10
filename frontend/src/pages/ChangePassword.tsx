@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContextProps, useUserContext } from "../context/UserContext";
 import { IChangePassword } from "../types/user";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const ChangePassword = () => {
   const { userInfo } = useAuth();
@@ -66,9 +67,18 @@ const ChangePassword = () => {
     ) {
       return;
     }
-    changePassword(values);
-    toast.success("Change password successfully!");
-    navigate("/profile");
+    try {
+      changePassword(values);
+      toast.success("Change password successfully!");
+      navigate("/profile");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
+
     actions.setSubmitting(false);
   };
   return (

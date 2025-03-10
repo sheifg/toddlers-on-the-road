@@ -4,6 +4,7 @@ import ResetPasswordForm from "../components/ResetPasswordForm";
 import { useAuth } from "../context/AuthContext";
 import { IResetPassword } from "../types/context";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const ResetPassword = () => {
   const inputs = [
@@ -60,9 +61,17 @@ const ResetPassword = () => {
     if (!checkPasswordMatch(values)) {
       return;
     }
-    resetPassword(values, resetToken);
-    toast.success("Reset password successfully!");
-    navigate("/login");
+    try {
+      resetPassword(values, resetToken);
+      toast.success("Reset password successfully!");
+      navigate("/login");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
     actions.setSubmitting(false);
   };
 

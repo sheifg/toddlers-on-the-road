@@ -7,7 +7,6 @@ import {
 } from "react";
 import { IForgotPassword, IResetPassword } from "../types/context";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { BASE_URL } from "../constants";
 import {
   getStorageItem,
@@ -17,10 +16,10 @@ import {
 import { ICurrentUser, IUser } from "../types/user";
 axios.defaults.withCredentials = true;
 export interface AuthContextProps {
-  register: (userData: IUser) => Promise<void>;
+  register: (userData: IUser) => Promise<ICurrentUser>;
   userInfo: ICurrentUser | null;
   setUserInfo: React.Dispatch<React.SetStateAction<ICurrentUser | null>>;
-  login: (userData: IUser) => Promise<void>;
+  login: (userData: IUser) => Promise<ICurrentUser>;
   logout: () => Promise<void>;
   forgotPassword: (forgotPasswordData: IForgotPassword) => Promise<void>;
   resetPassword: (
@@ -75,15 +74,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         token: data.token,
         ...data.user,
       };
-      setUserInfo(user);
-      sessionStorage.setItem("user", JSON.stringify(user));
+      return Promise.resolve(user);
     } catch (error) {
       console.log(error);
-      if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data?.message);
-      } else if (error instanceof Error) {
-        toast.error(error.message);
-      }
+      return Promise.reject(error);
     }
   };
 
@@ -96,56 +90,42 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         data: userData,
         withCredentials: true, // Make sure credentials (cookies) are included
       });
-
       const user = {
         token: data.token,
         ...data.user,
       };
-      setUserInfo(user);
-      sessionStorage.setItem("user", JSON.stringify(user));
+      return Promise.resolve(user);
     } catch (error) {
       console.log(error);
-      if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data?.message);
-      } else if (error instanceof Error) {
-        toast.error(error.message);
-      }
+      return Promise.reject(error);
     }
   };
 
   const logout = async () => {
     try {
-      await axios({
+      const { data } = await axios({
         url: `${BASE_URL}/api/auth/logout/`,
         method: "GET",
         withCredentials: true,
       });
-      setUserInfo(null);
-      sessionStorage.clear();
+      return Promise.resolve(data.data);
     } catch (error) {
       console.log(error);
-      if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data?.message);
-      } else if (error instanceof Error) {
-        toast.error(error.message);
-      }
+      return Promise.reject(error);
     }
   };
 
   const forgotPassword = async (forgotPasswordData: IForgotPassword) => {
     try {
-      await axios({
+      const { data } = await axios({
         url: `${BASE_URL}/api/auth/forgot-password`,
         method: "POST",
         data: forgotPasswordData,
       });
+      return Promise.resolve(data.data);
     } catch (error) {
       console.log(error);
-      if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data?.message);
-      } else if (error instanceof Error) {
-        toast.error(error.message);
-      }
+      return Promise.reject(error);
     }
   };
 
@@ -154,18 +134,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     resetToken: string
   ) => {
     try {
-      await axios({
+      const { data } = await axios({
         url: `${BASE_URL}/api/auth/reset-password/${resetToken}`,
         method: "POST",
         data: resetPasswordData,
       });
+      return Promise.resolve(data.data);
     } catch (error) {
       console.log(error);
-      if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data?.message);
-      } else if (error instanceof Error) {
-        toast.error(error.message);
-      }
+      return Promise.reject(error);
     }
   };
 

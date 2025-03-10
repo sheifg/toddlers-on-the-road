@@ -3,12 +3,14 @@ import { useAuth } from "../context/AuthContext";
 import { object, string } from "yup";
 import { UserContextProps, useUserContext } from "../context/UserContext";
 import { IUpdatePersonalDetails } from "../types/user";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 interface PersonalDetailsModalProps {
   closeModal: () => void;
 }
 const PersonalDetailsModal = ({ closeModal }: PersonalDetailsModalProps) => {
-  const { userInfo } = useAuth();
+  const { userInfo, setUserInfo } = useAuth();
   const { updatePersonalDetails } = useUserContext() as UserContextProps;
 
   const initialValues = {
@@ -23,8 +25,18 @@ const PersonalDetailsModal = ({ closeModal }: PersonalDetailsModalProps) => {
     email: string().email("Invalid Email").required("Email is required!"),
   });
 
-  const handleSubmit = (values: IUpdatePersonalDetails, actions: any) => {
-    updatePersonalDetails(values);
+  const handleSubmit = async (values: IUpdatePersonalDetails, actions: any) => {
+    try {
+      const updatedPersonalDetails = await updatePersonalDetails(values);
+      setUserInfo(updatedPersonalDetails);
+      toast.success("Update personal details successfully!");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
     actions.setSubmitting(false);
     closeModal();
   };
@@ -34,9 +46,9 @@ const PersonalDetailsModal = ({ closeModal }: PersonalDetailsModalProps) => {
       <div
         className="fixed inset-0 flex items-center justify-center
    bg-black bg-opacity-80
-       font-Mali "
+       font-Mali z-[100]"
       >
-        <div className="bg-beige bg-opacity-80 max-w rounded-lg overflow-hidden shadow-lg p-6 max-w-md w-[80vw] relative">
+        <div className="bg-beige max-w rounded-lg overflow-hidden shadow-lg p-6 max-w-md w-[80vw] relative">
           <button
             className="text-marine-blue top-2 right-2 w-8 h-8 rounded-lg mb-2 absolute"
             onClick={closeModal}
