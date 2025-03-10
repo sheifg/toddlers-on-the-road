@@ -151,8 +151,6 @@ module.exports = {
         updatedUser = await User.findByIdAndUpdate(
           user._id,
           { first_name: first_name, last_name: last_name, email: email },
-          // { last_name: last_name },
-          // { email: email },
           { new: true }
         );
       } catch (error) {
