@@ -2,6 +2,8 @@ import { object, string } from "yup";
 import ForgotPasswordForm from "../components/ForgotPasswordForm";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { IForgotPassword } from "../types/context";
+import { toast } from "react-toastify";
 
 const ForgotPassword = () => {
   const inputs = [
@@ -24,8 +26,10 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   const { forgotPassword } = useAuth();
 
-  const handleSubmit = (values, actions) => {
-    forgotPassword(values, navigate);
+  const handleSubmit = (values: IForgotPassword, actions: any) => {
+    forgotPassword(values);
+    toast.success("Reset password email sent successfully!");
+    navigate("/login");
     actions.setSubmitting(false);
   };
   return (

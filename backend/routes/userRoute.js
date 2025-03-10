@@ -1,24 +1,16 @@
 const router = require("express").Router();
 // Import controller:
 const User = require("../controllers/userController");
-// Authentication middleware :
-const authMw = require("../middlewares/authMiddleware"); /* Protecting the user route: without log in is not possible to access the user route */
 
-const { isLogged } = require("../middlewares/permissions");
+router.route("/").post(User.create);
 
-router
-  .route("/")
-   .get( User.list)
-  .post(User.create)
- 
- // Separate Firebase route
-router.post("/firebase", User.createWithfirebase);  // Specific endpoint for Firebase
+// Separate Firebase route
+router.post("/firebase", User.createWithfirebase); // Specific endpoint for Firebase
 
-router
-  .route("/:id")
-  .get(authMw, isLogged, User.read)
-  .put(authMw, isLogged, User.update)
-  .patch(authMw, isLogged, User.update)
-  .delete(authMw, isLogged, User.delete);
+router.put("/change-password", User.changePassword); // /api/users/change-password
+
+router.put("/update-personal-details", User.updatePersonalDetails); // /api/users/update-personal-details
+
+router.delete("/delete-account/:id", User.deleteAccount); // /api/users/delete-account
 
 module.exports = router;

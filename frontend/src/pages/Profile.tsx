@@ -5,6 +5,7 @@ import {
   useProfileContext,
 } from "../context/ProfileContext";
 import ProfilePackListContainer from "../components/ProfilePackListContainer";
+import PersonalDetails from "../components/PersonalDetails";
 
 const Profile = () => {
   const { userInfo } = useAuth();
@@ -19,6 +20,7 @@ const Profile = () => {
 
   return (
     <>
+      <PersonalDetails />
       <ProfilePackListContainer />
     </>
   );

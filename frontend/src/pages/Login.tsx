@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { signUpProvider } from "../config/firebase";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ const Login = () => {
   const initialValues = {
     email: "",
     password: "",
-    rememberMe: false, 
+    rememberMe: false,
   };
 
   const loginSchema = object().shape({
@@ -79,9 +80,11 @@ const Login = () => {
     redirectionPath = `${redirectTo.pathname}${redirectTo.search}`;
   }
 
-  const handleSubmit = (values, actions) => {
-    login(values, navigate, redirectionPath);
+  const handleSubmit = async (values, actions: any) => {
+    await login(values);
     actions.setSubmitting(false);
+    toast.success("Login successful!");
+    navigate(redirectionPath ? redirectionPath : "/");
   };
 
   return (
