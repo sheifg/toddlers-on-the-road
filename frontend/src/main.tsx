@@ -7,18 +7,21 @@ import { ToastContainer } from "react-toastify";
 import { CountryProvider } from "./context/CountryContext.tsx";
 import { PackListProvider } from "./context/PackListContext.tsx";
 import { ProfileProvider } from "./context/ProfileContext.tsx";
+import { UserProvider } from "./context/UserContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <AuthProvider>
-      <ProfileProvider>
-        <CountryProvider>
-          <PackListProvider>
-            <App />
-            <ToastContainer />
-          </PackListProvider>
-        </CountryProvider>
-      </ProfileProvider>
+      <UserProvider>
+        <ProfileProvider>
+          <CountryProvider>
+            <PackListProvider>
+              <App />
+              <ToastContainer />
+            </PackListProvider>
+          </CountryProvider>
+        </ProfileProvider>
+      </UserProvider>
     </AuthProvider>
   </BrowserRouter>
 );

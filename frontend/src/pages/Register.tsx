@@ -5,9 +5,12 @@ import { FcGoogle } from "react-icons/fc";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { signUpProvider } from "../config/firebase";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { register, setUserInfo } = useAuth();
   const toastMessage = "User registered successfully!";
   const BOTTOM_LINKS: AuthFormLink[] = [
     {
@@ -22,7 +25,7 @@ const Register = () => {
         text: "Continue with Google",
         onClick: async () => {
           try {
-            await signUpProvider(navigate, toastMessage); 
+            await signUpProvider(navigate, toastMessage);
           } catch (error) {
             console.error("Google sign-up error:", error);
           }
@@ -83,13 +86,22 @@ const Register = () => {
       .required("Password is required!"),
   });
 
-  const { register } = useAuth();
-
-  const handleSubmit = async (values, actions) => {
-    await register(values, navigate);
+  const handleSubmit = async (values, actions: any) => {
+    try {
+      const userDataRegister = await register(values);
+      setUserInfo(userDataRegister);
+      sessionStorage.setItem("user", JSON.stringify(userDataRegister));
+      toast.success("Register successful!");
+      navigate("/");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
     actions.setSubmitting(false);
   };
-
   return (
     <div className="flex items-center justify-center">
       <AuthForm

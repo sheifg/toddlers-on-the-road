@@ -7,12 +7,10 @@ const UserSchema = new mongoose.Schema(
     first_name: {
       type: String,
       trim: true,
-
     },
     last_name: {
       type: String,
       trim: true,
-    
     },
     username: {
       type: String,
@@ -32,10 +30,15 @@ const UserSchema = new mongoose.Schema(
       // Make password field not selectable by default
       select: false,
     },
+    salt: {
+      type: String,
+      // required: [true, "Salt is required"],
+      select: false,
+    },
     provider: {
       type: String,
       trim: true,
-      enum: ['email', 'firebase'],
+      enum: ["email", "firebase"],
       default: "email",
     },
     reset_password_token: {
@@ -48,35 +51,30 @@ const UserSchema = new mongoose.Schema(
     },
     packLists: [
       /* This part is necessary so that Mongodb can create an id for each packlist */
-        {
+      {
         name: {
           type: String,
           trim: true,
-          
         },
-      
+
         items: [],
-        
-      },  
-      
-    ]
+      },
+    ],
   },
   { timestamps: true, collection: "users" }
 );
-
-
 
 UserSchema.pre(["save", "updateOne"], function (next) {
   // If the password is modified, encrypt it!
   // Skip validation if provider is firebase
   // Skip hashing for Firebase users
-  if (this.provider === 'firebase') {
+  if (this.provider === "firebase") {
     return next();
-}
+  }
   // It is necessary to start by getting the data that is being modified or saved.
   // Doing this way is to reference the document as THIS
   const data = this?._update || this;
-  // If an update operation is performing, this._update is the data it is being tried to store. 
+  // If an update operation is performing, this._update is the data it is being tried to store.
   // If it is being saved, it's just this.
 
   // email@domain.com
@@ -126,5 +124,3 @@ UserSchema.pre(["save", "updateOne"], function (next) {
 });
 
 module.exports = mongoose.model("User", UserSchema);
-
-

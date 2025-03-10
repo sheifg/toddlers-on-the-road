@@ -2,13 +2,32 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { getStorageItem } from "../utils/storage";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function Header() {
   // State to track hamburger menu open/close
   const [isOpen, setIsOpen] = useState(false);
-  const { userInfo, logout } = useAuth();
+  const { userInfo, setUserInfo, logout } = useAuth();
   const navigate = useNavigate();
-  const firebaseToken =getStorageItem("firebaseToken")
+  const firebaseToken = getStorageItem("firebaseToken");
+
+  const handleLogout = () => {
+    try {
+      logout();
+      setUserInfo(null);
+      sessionStorage.clear();
+      toast.success("Logged out successfully");
+      navigate("/");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
+  };
+
   return (
     <nav className="font-Mali text-marine-blue">
       <div className="container mx-auto flex flex-wrap items-center justify-between p-4">
@@ -76,22 +95,24 @@ export default function Header() {
              md:block md:w-auto`}
           >
             <ul className="flex flex-col items-center space-y-4 font-medium mt-4 md:flex-row md:space-x-9 md:space-y-0 md:mt-0">
-              {(userInfo || firebaseToken ) ? (
+              {userInfo || firebaseToken ? (
                 <>
                   <li>
-                    <Link to="/profile" className="text-lg font-semibold md:text-xl md:px-3">Profile</Link>
+                    <Link
+                      to="/profile"
+                      className="text-lg font-semibold md:text-xl md:px-3"
+                    >
+                      Profile
+                    </Link>
                   </li>
-                  <button
-                    className="btn-primary"
-                    onClick={() => logout(navigate)}
-                  >
+                  <button className="btn-primary" onClick={handleLogout}>
                     Logout
                   </button>
                 </>
               ) : (
                 <>
                   <li>
-                  <Link
+                    <Link
                       to="/login"
                       className="text-lg text-center font-semibold px-3 md:text-xl"
                     >

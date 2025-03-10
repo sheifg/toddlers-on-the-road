@@ -16,25 +16,28 @@ module.exports = {
           expiresIn: "120min",
         }),
       });
-    } catch (err) {
-      console.log("error during registration", err);
+    } catch (error) {
+      console.error("Register error:", error);
+      res.status(500).json({ message: "Error during register request" });
     }
   },
 
   login: async (req, res) => {
-    const { email, password, rememberMe } = req.body;
-    if (email && password) {
-      const user = await User.findOne({ email }).select("+password");
+    try {
+      const { email, password, rememberMe } = req.body;
+      if (email && password) {
+        const user = await User.findOne({ email }).select("+password");
 
       // If user is registered with Google, prevent password login
       if (user && user.provider === "firebase") {
-          res.errorStatusCode = 401;
-          throw new Error("Please sign in with Google !")
+        res.errorStatusCode = 401;
+        throw new Error("Please sign in with Google!");
       }
 
       if (user && user.password == pwEncrypt(password)) {
         const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_KEY, {
-          expiresIn: "120m"});
+          expiresIn: "120m",
+        });
 
         if (rememberMe) {
           const refreshToken = jwt.sign(
@@ -48,40 +51,71 @@ module.exports = {
             httpOnly: true,
             secure: process.env.NODE_ENV,
             sameSite: "strict",
-            path: "/",  // Added path
-            maxAge: 7 * 24 * 60 * 60 * 1000
+            path: "/", // Added path
+            maxAge: 7 * 24 * 60 * 60 * 1000,
           });
         }
 
-        res.send({
-          error: false,
-          user: await User.findOne({ email }),
-          token: accessToken
-        });
+        if (user && user.password == pwEncrypt(password)) {
+          const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_KEY, {
+            expiresIn: "120m",
+          });
+
+          if (rememberMe) {
+            const refreshToken = jwt.sign(
+              { _id: user._id, password: user.password },
+              process.env.REFRESH_KEY,
+              { expiresIn: "7d" }
+            );
+
+            // Fixing setting cookies
+            res.cookie("refreshToken", refreshToken, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV,
+              sameSite: "strict",
+              path: "/", // Added path
+              maxAge: 7 * 24 * 60 * 60 * 1000,
+            });
+          }
+
+          res.send({
+            error: false,
+            user: await User.findOne({ email }),
+            token: accessToken,
+          });
+        } else {
+          res.errorStatusCode = 401;
+          throw new Error("Wrong email or password!");
+        }
       } else {
         res.errorStatusCode = 401;
-        throw new Error("Wrong email or password!");
+        throw new Error("Invalid login credentials!");
       }
-    } else {
-      res.errorStatusCode = 401;
-      throw new Error("Invalid login credentials!");
+    } catch (error) {
+      console.error("Log in error:", error);
+      res.status(500).json({ message: "Error during log in request" });
     }
   },
 
   logout: async (req, res) => {
-    // Fixing clearing cookies
-    res.cookie("refreshToken", "", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV,
-      sameSite: "strict",
-      path: "/",  // Added path
-      maxAge: 0
-    });
+    try {
+      // Fixing clearing cookies
+      res.cookie("refreshToken", "", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV,
+        sameSite: "strict",
+        path: "/", // Added path
+        maxAge: 0,
+      });
 
-    res.send({
-      error: false,
-      message: "Logged out successfully!",
-    });
+      res.send({
+        error: false,
+        message: "Logged out successfully!",
+      });
+    } catch (error) {
+      console.error("Log out error:", error);
+      res.status(500).json({ message: "Error during log out request" });
+    }
   },
 
   refresh: async (req, res) => {
@@ -251,24 +285,5 @@ module.exports = {
       console.error("Reset password error:", error);
       res.status(500).json({ message: "Error resetting password" });
     }
-  },
-
-  deleteAccount: async (req, res) => {
-    // Fixing clearing cookies
-    res.cookie("refreshToken", "", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV,
-      sameSite: "strict",
-      path: "/",  // Added path
-      maxAge: 0
-    });
-
-    const data = await User.deleteOne({ _id: req.user.id });
-
-    res.status(204).send({
-      success: true,
-      message: "User account deleted successfully",
-      data,
-    });
   },
 };
