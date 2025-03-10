@@ -2,12 +2,12 @@ import { BsTrash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { UserContextProps, useUserContext } from "../context/UserContext";
 import { toast } from "react-toastify";
-import { useAuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 
 const DeleteAccount = () => {
   const navigate = useNavigate();
-  const { setUserInfo } = useAuthContext();
+  const { setUserInfo } = useAuth();
   const { deleteAccount } = useUserContext() as UserContextProps;
   const handleGoBack = () => {
     navigate("/profile");
