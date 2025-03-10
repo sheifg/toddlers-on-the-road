@@ -19,6 +19,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const { userInfo } = useAuth();
 
   const loadProfile = async () => {
+    //get  just the packLists from the user
     try {
       const { data } = await axios.get(
         `${BASE_URL}/api/profiles/${userInfo?._id}`,
@@ -26,7 +27,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
           headers: { Authorization: `Bearer ${userInfo?.token}` },
         }
       );
-      setPackLists( data.data.packLists );
+      setPackLists(data.data.packLists);
     } catch (error) {
       console.error("Get Profile Error:", error);
       toast.error("Failed to fetch profile");
@@ -34,16 +35,18 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updateProfile = async (updatedPackLists: PackList[]) => {
+    //update here to add packList to this property packLists in the user
     try {
-      await axios.put(
+      /*  const data = */
+      const { data } = await axios.put(
         `${BASE_URL}/api/profiles/${userInfo?._id}`,
-        { packLists: updatedPackLists},
+        { packLists: updatedPackLists },
         {
-          headers: { Authorization: `Bearer ${userInfo?.token}` },
+          headers: { Authorization: `Bearer ${userInfo?.token}` }, //we need this token because user data is protected in backend
         }
       );
-      setPackLists(updatedPackLists);
-      toast.success("Profile updated successfully!"); // TODO Toast here makes no sense
+
+      setPackLists(data.data.packLists);
     } catch (error) {
       console.error("Update Profile Error:", error);
       toast.error("Failed to update profile");

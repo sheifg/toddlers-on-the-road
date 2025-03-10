@@ -67,7 +67,7 @@ const signUpProvider = async (
     sessionStorage.setItem("firebaseUser", JSON.stringify(data.user));
     sessionStorage.setItem("firebaseToken", JSON.stringify(data.token));
 
-    const user= {
+    const user = {
       token: data.token,
       ...data.user,
     };
@@ -77,7 +77,7 @@ const signUpProvider = async (
   } catch (error) {
     console.error("Firebase Auth Error:", error);
     if (error instanceof Error) {
-      if (error.code === "auth/popup-closed-by-user") {
+      if (error.message === "auth/popup-closed-by-user") {
         toast.info("Sign-in cancelled");
         return;
       }
