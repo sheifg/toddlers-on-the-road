@@ -7,40 +7,15 @@ const MilestonesContainer = () => {
 
   const milestones = [
     {
-      images: ["milestone-travel.jpg"],
+      images: [
+        "milestone-travel.jpg",
+        "milestone-travel.jpg",
+        "milestone-travel.jpg",
+      ],
       title: "Title of your milestone",
       date: "Date of travel",
       place: "Place of your travel",
-    },
-    {
-      images: ["milestone-travel.jpg"],
-      title: "Title of your milestone 2",
-      date: "Date of travel 2",
-      place: "Place of your travel 2",
-    },
-    {
-      images: ["milestone-travel.jpg"],
-      title: "Title of your milestone 3",
-      date: "Date of travel 3",
-      place: "Place of your travel 3",
-    },
-    {
-      images: ["milestone-travel.jpg"],
-      title: "Title of your milestone 4",
-      date: "Date of travel 4",
-      place: "Place of your travel 4",
-    },
-    {
-      images: ["milestone-travel.jpg"],
-      title: "Title of your milestone 5",
-      date: "Date of travel 5",
-      place: "Place of your travel 5",
-    },
-    {
-      images: ["milestone-travel.jpg"],
-      title: "Title of your milestone 6",
-      date: "Date of travel 6",
-      place: "Place of your travel 6",
+      description: "Description of your travel (Optional)",
     },
   ];
 
@@ -59,7 +34,6 @@ const MilestonesContainer = () => {
   for (let i = 0; i < milestones.length; i += cardsPerSlide) {
     groupedSlides.push(milestones.slice(i, i + cardsPerSlide));
   }
-  console.log("Grouped slides:", groupedSlides);
 
   const totalSlides = groupedSlides.length;
 

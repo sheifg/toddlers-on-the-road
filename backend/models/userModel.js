@@ -30,11 +30,6 @@ const UserSchema = new mongoose.Schema(
       // Make password field not selectable by default
       select: false,
     },
-    salt: {
-      type: String,
-      // required: [true, "Salt is required"],
-      select: false,
-    },
     provider: {
       type: String,
       trim: true,
@@ -58,6 +53,29 @@ const UserSchema = new mongoose.Schema(
         },
 
         items: [],
+      },
+    ],
+    milestones: [
+      {
+        title: {
+          type: String,
+          required: [true, "Title is required"],          
+          trim: true,
+        },
+        date: {
+          type: String,
+          required: [true, "Date is required"],          
+          trim: true,
+        },
+        place: {
+          type: String,
+          required: [true, "Place is required"],          
+          trim: true,
+        },
+        description: {
+          type: String,
+          trim: true,
+        },
       },
     ],
   },
