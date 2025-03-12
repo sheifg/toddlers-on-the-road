@@ -12,9 +12,9 @@ export default function Header() {
   const navigate = useNavigate();
   const firebaseToken = getStorageItem("firebaseToken");
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     try {
-      logout();
+      await logout();
       setUserInfo(null);
       sessionStorage.clear();
       toast.success("Logged out successfully");

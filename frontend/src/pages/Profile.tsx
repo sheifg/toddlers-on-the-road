@@ -9,7 +9,6 @@ import PersonalDetails from "../components/PersonalDetails";
 
 const Profile = () => {
   const { userInfo } = useAuth();
-  console.log("User:", userInfo);
   const { loadProfile } = useProfileContext() as ProfileContextProps;
 
   useEffect(() => {

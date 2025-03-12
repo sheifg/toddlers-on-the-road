@@ -48,21 +48,15 @@ const ResetPassword = () => {
   const checkPasswordMatch = (values: {
     new_password: string;
     confirm_password: string;
-  }) => {
-    if (values.new_password && values.confirm_password) {
-      const match = values.new_password === values.confirm_password;
-      return match;
-    }
-    return true; // Return true if either password field is empty
-  };
+  }) => values.new_password === values.confirm_password;
 
-  const handleSubmit = (values: IResetPassword, actions: any) => {
+  const handleSubmit = async (values: IResetPassword, actions: any) => {
     // Check password match before submitting
     if (!checkPasswordMatch(values)) {
       return;
     }
     try {
-      resetPassword(values, resetToken);
+      await resetPassword(values, resetToken);
       toast.success("Reset password successfully!");
       navigate("/login");
     } catch (error) {

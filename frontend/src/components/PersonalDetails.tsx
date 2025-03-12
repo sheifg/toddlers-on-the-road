@@ -18,7 +18,7 @@ const PersonalDetails = () => {
 
   return (
     <>
-      <div className="container mx-auto my-3 w-[80vw] lg:w-[65vw] xl:w-[60vw] font-Mali pb-10">
+      <div className="container mx-auto my-3 w-[80vw] md:w-[30rem] lg:w-[35rem] xl:w-[38rem] font-Mali pb-10">
         <div className="max-w rounded-lg overflow-hidden shadow-lg text-center bg-light-pink bg-opacity-80">
           <div className="pt-3 pb-3 lg:pb-4 text-marine-blue">
             <h4 className="font-medium text-lg md:text-2xl lg:text-3xl drop-shadow-[3px_3px_0px_rgba(96,211,214,0.6)] ]">
@@ -31,7 +31,7 @@ const PersonalDetails = () => {
                   <GoPencil />
                 </button>
               </div>
-              <h2 className="font-extrabold text-4xl md:text-7xl lg:text-9xl px-3 py-2 md:p-2">
+              <h2 className="font-extrabold text-4xl md:text-6xl px-3 py-2 md:p-2">
                 {userInfo?.first_name} {userInfo?.last_name}
               </h2>
               <p className="font-normal text-lg md:text-xl py-1 lg:text-2xl">
