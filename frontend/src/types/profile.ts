@@ -3,3 +3,9 @@ export interface PackList {
   name: string;
   items: string[];
 }
+ export interface IMilestone {
+  images: string[];
+  title: string;
+  date: string;
+  place: string
+ }

@@ -76,7 +76,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       };
       return Promise.resolve(user);
     } catch (error) {
-      console.log(error);
       return Promise.reject(error);
     }
   };
@@ -96,7 +95,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       };
       return Promise.resolve(user);
     } catch (error) {
-      console.log(error);
       return Promise.reject(error);
     }
   };
@@ -110,7 +108,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       });
       return Promise.resolve(data.data);
     } catch (error) {
-      console.log(error);
       return Promise.reject(error);
     }
   };
@@ -124,7 +121,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       });
       return Promise.resolve(data.data);
     } catch (error) {
-      console.log(error);
       return Promise.reject(error);
     }
   };
@@ -141,7 +137,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       });
       return Promise.resolve(data.data);
     } catch (error) {
-      console.log(error);
       return Promise.reject(error);
     }
   };

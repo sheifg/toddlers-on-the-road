@@ -13,7 +13,7 @@ const CarouselCard = ({
 }: CarouselCardProps) => {
   return (
     <div
-      className={`container mx-auto md:w-[22.5rem] lg:w-[27rem] xl:w-[33rem] mustard font-Mali ${
+      className={`container mx-auto md:w-[22.5rem] lg:w-[27rem] xl:w-[33rem] font-Mali ${
         cardsPerSlide === 2 ? "md:w-1/2" : "w-11/12"
       }`}
     >

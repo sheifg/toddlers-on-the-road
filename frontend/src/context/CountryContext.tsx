@@ -26,7 +26,6 @@ export const CountryProvider = ({ children }: { children: ReactNode }) => {
       });
       setCountries(data.data);
     } catch (error) {
-      console.log(error);
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data?.message);
       } else if (error instanceof Error) {
@@ -42,7 +41,6 @@ export const CountryProvider = ({ children }: { children: ReactNode }) => {
       const userString = sessionStorage.getItem("user");
 
       if (!userString) {
-        console.log("No user data found in session storage");
         toast.error("Please login first");
         return;
       }
