@@ -7,40 +7,17 @@ const MilestonesContainer = () => {
 
   const milestones = [
     {
-      images: ["milestone-travel.jpg"],
+      images: [
+        "milestone-travel.jpg",
+        "milestone-travel.jpg",
+        "milestone-travel.jpg",
+        "milestone-travel.jpg",
+        "milestone-travel.jpg",
+      ],
       title: "Title of your milestone",
       date: "Date of travel",
       place: "Place of your travel",
-    },
-    {
-      images: ["milestone-travel.jpg"],
-      title: "Title of your milestone 2",
-      date: "Date of travel 2",
-      place: "Place of your travel 2",
-    },
-    {
-      images: ["milestone-travel.jpg"],
-      title: "Title of your milestone 3",
-      date: "Date of travel 3",
-      place: "Place of your travel 3",
-    },
-    {
-      images: ["milestone-travel.jpg"],
-      title: "Title of your milestone 4",
-      date: "Date of travel 4",
-      place: "Place of your travel 4",
-    },
-    {
-      images: ["milestone-travel.jpg"],
-      title: "Title of your milestone 5",
-      date: "Date of travel 5",
-      place: "Place of your travel 5",
-    },
-    {
-      images: ["milestone-travel.jpg"],
-      title: "Title of your milestone 6",
-      date: "Date of travel 6",
-      place: "Place of your travel 6",
+      description: "Description of your travel (Optional)",
     },
   ];
 
@@ -59,7 +36,6 @@ const MilestonesContainer = () => {
   for (let i = 0; i < milestones.length; i += cardsPerSlide) {
     groupedSlides.push(milestones.slice(i, i + cardsPerSlide));
   }
-  console.log("Grouped slides:", groupedSlides);
 
   const totalSlides = groupedSlides.length;
 
@@ -115,20 +91,22 @@ const MilestonesContainer = () => {
             ❯
           </button>
         )}
-        <div className="flex justify-center md:mt-5 mb-4 space-x-2">
-          {groupedSlides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`h-2 w-2 md:h-3 md:w-3 rounded-full ${
-                currentIndex === index ? "bg-marine-blue" : "bg-gray-200"
-              } transition-all duration-500`}
-            ></button>
-          ))}
-        </div>
+        {totalSlides > 1 && (
+          <div className="flex justify-center md:mt-3 mb-4 space-x-2">
+            {groupedSlides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`h-2 w-2 md:h-3 md:w-3 rounded-full ${
+                  currentIndex === index ? "bg-marine-blue" : "bg-gray-200"
+                } transition-all duration-500`}
+              ></button>
+            ))}
+          </div>
+         )}
         <button
           type="button"
-          className="text-mustard px-2 py-2 mb-3 mx-2 text-sm lg:text-md xl:text-lg lg:mt-4 bg-marine-blue rounded-lg font-semibold hover:bg-mustard hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
+          className="text-mustard px-2 py-2 m-3 mx-2 text-sm lg:text-md xl:text-lg lg:mt-4 bg-marine-blue rounded-lg font-semibold hover:bg-mustard hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
         >
           Create new milestone
         </button>

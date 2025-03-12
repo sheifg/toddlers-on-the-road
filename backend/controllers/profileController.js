@@ -5,7 +5,7 @@ module.exports = {
   read: async (req, res) => {
     const data = await User.findOne(
       { _id: req.params.id },
-      { packLists: 1 } //send to the frontend just the packLists from the user
+      { packLists: 1, milestones: 1 }, // Sending only the user's packlists and milestones from the database
     );
     res.status(200).send({
       error: false,

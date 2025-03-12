@@ -7,5 +7,6 @@ export interface PackList {
   images: string[];
   title: string;
   date: string;
-  place: string
+  place: string;
+  description?: string;
  }
