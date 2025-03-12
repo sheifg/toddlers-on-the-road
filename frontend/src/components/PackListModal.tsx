@@ -16,7 +16,6 @@ export default function PackListModal({
   onSubmit,
   isCreation,
 }: PackListModalProps) {
-   //console.log(selectedPackList);
 
   const [modalItems, setModalItems] = useState<string[]>([
     ...selectedPackList.items,

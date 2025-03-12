@@ -5,6 +5,7 @@ import {
   useProfileContext,
 } from "../context/ProfileContext";
 import ProfilePackListContainer from "../components/ProfilePackListContainer";
+import MilestonesContainer from "../components/MilestonesContainer";
 import PersonalDetails from "../components/PersonalDetails";
 
 const Profile = () => {
@@ -20,6 +21,7 @@ const Profile = () => {
   return (
     <>
       <PersonalDetails />
+      <MilestonesContainer />
       <ProfilePackListContainer />
     </>
   );

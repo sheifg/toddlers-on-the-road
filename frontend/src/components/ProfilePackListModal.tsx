@@ -20,7 +20,6 @@ export default function ProfilePackListModal({
   onSubmit,
   setIsCreation,
 }: ProfilePackListModalProps) {
-  console.log("selectedPackList", selectedPackList);
 
   const [modalItems, setModalItems] = useState<string[]>([
     ...selectedPackList.items,
@@ -61,7 +60,6 @@ export default function ProfilePackListModal({
     // To be sure it will removed just from the state, not from selected packlist
   };
 
-  console.log(modalItems);
   const handleSubmit = async () => {
     // Assigning the variable with the same name (title, items) as in mongoDB to match, avoiding getting an empty array
     const name = title; // Using the state title

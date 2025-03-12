@@ -20,7 +20,7 @@ const PersonalDetails = () => {
     <>
       <div className="container mx-auto my-3 w-[80vw] md:w-[30rem] lg:w-[35rem] xl:w-[38rem] font-Mali pb-10">
         <div className="max-w rounded-lg overflow-hidden shadow-lg text-center bg-light-pink bg-opacity-80">
-          <div className="pt-3 pb-3 lg:pb-4 text-marine-blue">
+          <div className="py-3 lg:pb-4 text-marine-blue">
             <h4 className="font-medium text-lg md:text-2xl lg:text-3xl drop-shadow-[3px_3px_0px_rgba(96,211,214,0.6)] ]">
               Personal details
             </h4>
