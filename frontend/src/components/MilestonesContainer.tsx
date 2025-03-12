@@ -11,6 +11,8 @@ const MilestonesContainer = () => {
         "milestone-travel.jpg",
         "milestone-travel.jpg",
         "milestone-travel.jpg",
+        "milestone-travel.jpg",
+        "milestone-travel.jpg",
       ],
       title: "Title of your milestone",
       date: "Date of travel",
@@ -89,20 +91,22 @@ const MilestonesContainer = () => {
             ❯
           </button>
         )}
-        <div className="flex justify-center md:mt-5 mb-4 space-x-2">
-          {groupedSlides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`h-2 w-2 md:h-3 md:w-3 rounded-full ${
-                currentIndex === index ? "bg-marine-blue" : "bg-gray-200"
-              } transition-all duration-500`}
-            ></button>
-          ))}
-        </div>
+        {totalSlides > 1 && (
+          <div className="flex justify-center md:mt-3 mb-4 space-x-2">
+            {groupedSlides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`h-2 w-2 md:h-3 md:w-3 rounded-full ${
+                  currentIndex === index ? "bg-marine-blue" : "bg-gray-200"
+                } transition-all duration-500`}
+              ></button>
+            ))}
+          </div>
+         )}
         <button
           type="button"
-          className="text-mustard px-2 py-2 mb-3 mx-2 text-sm lg:text-md xl:text-lg lg:mt-4 bg-marine-blue rounded-lg font-semibold hover:bg-mustard hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
+          className="text-mustard px-2 py-2 m-3 mx-2 text-sm lg:text-md xl:text-lg lg:mt-4 bg-marine-blue rounded-lg font-semibold hover:bg-mustard hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
         >
           Create new milestone
         </button>

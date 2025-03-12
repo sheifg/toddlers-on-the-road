@@ -55,7 +55,8 @@ const MilestoneImagesContainer = ({
           ❯
         </button>
       )}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2  flex justify-center space-x-2">
+      {totalImages > 1 && 
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex justify-center space-x-2">
         {milestoneImages.map((_, index) => (
           <button
             key={index}
@@ -66,6 +67,7 @@ const MilestoneImagesContainer = ({
           ></button>
         ))}
       </div>
+      }
     </div>
   );
 };
