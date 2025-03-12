@@ -52,15 +52,9 @@ const ChangePassword = () => {
   const checkPasswordMatch = (values: {
     new_password: string;
     confirm_password: string;
-  }) => {
-    if (values.new_password && values.confirm_password) {
-      const match = values.new_password === values.confirm_password;
-      return match;
-    }
-    return true; // Return true if either password field is empty
-  };
+  }) => values.new_password === values.confirm_password;
 
-  const handleSubmit = (values: IChangePassword, actions: any) => {
+  const handleSubmit = async (values: IChangePassword, actions: any) => {
     if (
       values.old_password !== userInfo?.password &&
       !checkPasswordMatch(values)
@@ -68,7 +62,7 @@ const ChangePassword = () => {
       return;
     }
     try {
-      changePassword(values);
+      await changePassword(values);
       toast.success("Change password successfully!");
       navigate("/profile");
     } catch (error) {

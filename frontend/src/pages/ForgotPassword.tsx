@@ -27,9 +27,9 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   const { forgotPassword } = useAuth();
 
-  const handleSubmit = (values: IForgotPassword, actions: any) => {
+  const handleSubmit = async (values: IForgotPassword, actions: any) => {
     try {
-      forgotPassword(values);
+      await forgotPassword(values);
       toast.success("Reset password email sent successfully!");
       navigate("/login");
     } catch (error) {

@@ -31,7 +31,7 @@ const PackListContainer = () => {
   const [isCreation, setIsCreation] = useState<boolean>(false); // This state shows if it is added a new list (update the default packList)
 
   const openModal = (packList: PackList) => {
-    //console.log(Object.getOwnPropertyDescriptors(packList));
+
     setIsModalOpen(true);
     const copiedPackList = { name: packList.name, items: [...packList.items] };
     setSelectedPackList(copiedPackList); // Copied packList (shallow copy)
@@ -49,7 +49,7 @@ const PackListContainer = () => {
       ? [selectedPackList, ...packLists]
         : [selectedPackList];
 
-      updateProfile(updatedPackLists);
+      await updateProfile(updatedPackLists);
       toast.success("packList is updated!");
     } catch (error) {
       if (axios.isAxiosError(error)) {

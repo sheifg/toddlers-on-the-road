@@ -27,10 +27,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         url: `${BASE_URL}/api/users/change-password`,
         method: "PUT",
         data: { user_id: userInfo?._id, ...changePasswordData },
+        headers: { Authorization: `Bearer ${userInfo?.token}` },
       });
       return Promise.resolve(data.data);
     } catch (error) {
-      console.log(error);
       return Promise.reject(error);
     }
   };
@@ -43,15 +43,15 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       ...updatedValues,
     };
     try {
-      const { data } = await axios({
+      await axios({
         url: `${BASE_URL}/api/users/update-personal-details`,
         method: "PUT",
         data: updatedPersonalDetails,
+        headers: { Authorization: `Bearer ${userInfo?.token}` },
       });
-      console.log("data:", data);
-      return Promise.resolve(data.data);
-    } catch (error) {
-      console.log(error);
+      return Promise.resolve(updatedPersonalDetails);
+    }
+    catch (error) {
       return Promise.reject(error);
     }
   };
@@ -65,7 +65,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       });
       return Promise.resolve(data.data);
     } catch (error) {
-      console.log(error);
       return Promise.reject(error);
     }
   };
