@@ -37,7 +37,7 @@ const PackListCard = ({
             ))}
           </ul>
         </div>
-        <div className="container flex justify-center items-center gap-4 pb-3 md:gap-8 md:pb-5 lg:pb-7 lg:gap-10">
+        <div className="container flex justify-center items-center gap-4 pb-3 md:gap-8 md:pb-5 lg:pb-7 lg:gap-10 font-Mali">
           <button
             type="button"
             onClick={() => handleAdd(packList)}

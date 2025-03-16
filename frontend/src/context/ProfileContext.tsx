@@ -38,7 +38,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     //update here to add packList to this property packLists in the user
     try {
       /*  const data = */
-      const { data } = await axios.put(
+      /* const { data } =  */await axios.put(
         `${BASE_URL}/api/profiles/${userInfo?._id}`,
         { packLists: updatedPackLists },
         {
@@ -46,7 +46,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         }
       );
 
-      setPackLists(data.data.packLists);
+      setPackLists(updatedPackLists);
     } catch (error) {
       console.error("Update Profile Error:", error);
       toast.error("Failed to update profile");

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { PackList } from "../types/profile";
 import { useAuth } from "../context/AuthContext";
 interface ProfilePackListCardProps {
-  handleDelete: (packList: PackList) => void;
+  handleDelete?: (packList: PackList) => void;
   openModal: (packList: PackList) => void;
   packList: PackList;
 }
@@ -29,7 +29,7 @@ const ProfilePackListCard = ({
           </h4>
         </div>
         <div className="container grid grid-cols-1 gap-y-8 mt-4 mb-8 ml-2.5 lg:ml-0.5">
-          <ul>
+          <ul className="grid grid-col gap-1.5">
             {packList.items.map((item, index) => (
               <li
                 className="flex justify-start items-center gap-0.5 space-x-1 space-y-3 text-sm md:ml-1 md:text-base md:flex md:space-x-1.5 lg:text-md lg:space-x-3 xl:text-2xl xl:ml-4 xl:space-x-5 2xl:gap-1.75 2xl:text-3xl"
@@ -52,16 +52,8 @@ const ProfilePackListCard = ({
             ))}
           </ul>
         </div>
-        <div className="container flex justify-center items-center gap-4 pb-3 md:gap-8 md:pb-5 lg:pb-7 lg:gap-10">
-          <button
-            type="button"
-            onClick={() => handleDelete(packList)}
-            disabled={!userInfo}
-            className="text-white px-2 py-2 mb-3 text-sm md:py-4 md:px-4 lg:text-md xl:text-lg lg:mt-4 2xl:py-5 2xl:px-5 bg-blue-water rounded-lg font-semibold hover:bg-light-pink hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
-          >
-            Delete
-          </button>
-          <button
+        <div className="container flex justify-center items-center gap-4 pb-3 md:gap-8 md:pb-5 lg:pb-7 lg:gap-10 font-Mali">
+           <button
             type="button"
             onClick={() => openModal(packList)}
             disabled={!userInfo}
@@ -69,6 +61,15 @@ const ProfilePackListCard = ({
           >
             Edit
           </button>
+         {handleDelete && <button
+            type="button"
+            onClick={() => handleDelete(packList)}
+            disabled={!userInfo}
+            className="text-white px-2 py-2 mb-3 text-sm md:py-4 md:px-4 lg:text-md xl:text-lg lg:mt-4 2xl:py-5 2xl:px-5 bg-blue-water rounded-lg font-semibold hover:bg-light-pink hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
+          >
+            Delete
+          </button>} 
+         
         </div>
       </div>
     </div>

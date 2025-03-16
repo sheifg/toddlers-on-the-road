@@ -12,6 +12,7 @@ interface ProfilePackListModalProps {
   isCreation: boolean;
   onSubmit: (selectedPackList: PackList) => Promise<void>;
   setIsCreation: (isCreation: boolean) => void;
+/*   defaultPackList?: PackList | null; */
 }
 export default function ProfilePackListModal({
   closeModal,
@@ -19,6 +20,7 @@ export default function ProfilePackListModal({
   isCreation,
   onSubmit,
   setIsCreation,
+/*   defaultPackList */
 }: ProfilePackListModalProps) {
 
   const [modalItems, setModalItems] = useState<string[]>([
@@ -65,13 +67,17 @@ export default function ProfilePackListModal({
     const name = title; // Using the state title
     const items = modalItems;
     const updatedPackListWithoutId = { name, items };
-    if (isCreation) {
-      /* addUserPackList(userId,copiedPackList,token,userData) */
+    if (isCreation) {  /*  if (isCreation || selectedPackList === defaultPackList ) */
+      console.log( "befor add:", updatedPackListWithoutId)
       await onSubmit(updatedPackListWithoutId);
+      console.log("after add:" ,selectedPackList)
+      
     } else {
       const _id = selectedPackList._id;
       const updatedPackList = { _id, name, items };
+      console.log("befor update :" ,updatedPackList)
       await onSubmit(updatedPackList);
+    
     }
 
     setIsCreation(false);
@@ -116,7 +122,7 @@ export default function ProfilePackListModal({
             <Form className="mt-2 ">
               {modalItems.map((item, index) => (
                 <div key={index} className="grid grid-cols-2 ">
-                  <div className="mb-2  flex justify-start items-center">
+                  <div className="mb-2  flex justify-start items-center pb-2.5">
                     <input
                       type="checkbox"
                       checked={checkedItems[index]}

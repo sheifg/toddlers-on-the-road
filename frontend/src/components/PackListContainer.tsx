@@ -18,7 +18,8 @@ import {
 const PackListContainer = () => {
   const { userInfo } = useAuth();
   const { predefinedPackLists } = usePackListContext() as PackListContextProps;
-  const { packLists, updateProfile } = useProfileContext() as ProfileContextProps;
+  const { packLists, updateProfile } =
+    useProfileContext() as ProfileContextProps;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(1);
@@ -31,7 +32,6 @@ const PackListContainer = () => {
   const [isCreation, setIsCreation] = useState<boolean>(false); // This state shows if it is added a new list (update the default packList)
 
   const openModal = (packList: PackList) => {
-
     setIsModalOpen(true);
     const copiedPackList = { name: packList.name, items: [...packList.items] };
     setSelectedPackList(copiedPackList); // Copied packList (shallow copy)
@@ -46,7 +46,7 @@ const PackListContainer = () => {
     try {
       // Merge new packlist with existing ones
       const updatedPackLists = packLists
-      ? [selectedPackList, ...packLists]
+        ? [selectedPackList, ...packLists]
         : [selectedPackList];
 
       await updateProfile(updatedPackLists);
@@ -65,10 +65,9 @@ const PackListContainer = () => {
   const handleAdd = (packList: PackList) => {
     const copiedPackList = { name: packList.name, items: [...packList.items] };
     // This shallow copy, some how copy also the _id from the original packList here, so it ios necessary to destructure the data and send the packList to the user without _id
-    setSelectedPackList(copiedPackList ); // This function updates the state after this function finishes
+    setSelectedPackList(copiedPackList); // This function updates the state after this function finishes
 
-    updateUserPackLists(copiedPackList );//this func will add new packList to the user wich will represent in profile page
-    
+    updateUserPackLists(copiedPackList); //this func will add new packList to the user wich will represent in profile page
   };
 
   const getDefaultPackList = async (packListId: string) => {
@@ -117,6 +116,9 @@ const PackListContainer = () => {
     return () => window.removeEventListener("resize", updateCardsPerView);
   }, []);
 
+  const totalSlides = predefinedPackLists ? predefinedPackLists.length : 0;
+  const groupedSlides = Array.from({ length: totalSlides });
+
   // Navigation for carousel
   const handleNext = () => {
     if (currentIndex + cardsPerView < predefinedPackLists.length) {
@@ -131,8 +133,8 @@ const PackListContainer = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <h2 className="font-Mali text-center mt-10 text-xl md:text-2xl lg:text-3xl 2xl:text-4xl font-bold text-marine-blue">
+    <div className="flex flex-col justify-center items-center text-marine-blue font-Mali mt-8">
+      <h2 className="font-medium text-lg mb-2 md:text-2xl lg:text-3xl drop-shadow-[3px_3px_0px_rgba(96,211,214,0.6)] ]">
         What do I need?
       </h2>
 
@@ -142,10 +144,10 @@ const PackListContainer = () => {
           {/* Left Button */}
           {currentIndex > 0 && (
             <button
-              className="w-8 h-8 md:w-10 md:h-10 text-white bg-blue-water rounded-full flex items-center justify-center transition-colors"
+              className="right-2 md:right-1 lg:right-7 xl:right-14 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full"
               onClick={handlePrev}
             >
-              &lt;
+              ❮
             </button>
           )}
 
@@ -168,17 +170,30 @@ const PackListContainer = () => {
           {/* Right Button */}
           {currentIndex + cardsPerView < predefinedPackLists.length && (
             <button
-              className="w-8 h-8 md:w-10 md:h-10 text-white bg-blue-water rounded-full flex items-center justify-center transition-colors"
+              className="right-2 md:right-1 lg:right-7 xl:right-14 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full"
               onClick={handleNext}
             >
-              &gt;
+              ❯
             </button>
           )}
         </div>
+        {totalSlides > 1 && (
+          <div className="flex justify-center  mb-4 space-x-2 mt-6 md:mt-8  lg:mt-10">
+            {groupedSlides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`h-2 w-2 md:h-3 md:w-3 rounded-full ${
+                  currentIndex === index ? "bg-marine-blue" : "bg-gray-200"
+                } transition-all duration-500`}
+              ></button>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Create list button */}
-      <div className="text-center mt-6 mb-6">
+      {/* Add New List Button */}
+      <div className="text-center mt-6 mb-6 font-Mali">
         <button
           onClick={() => handleCreateList()}
           disabled={!userInfo}
@@ -188,7 +203,7 @@ const PackListContainer = () => {
               : "text-white px-2 py-2 mb-3 text-sm md:py-4 md:px-4 lg:text-md xl:text-lg lg:mt-4 2xl:py-5 2xl:px-5 bg-blue-water rounded-lg font-semibold hover:bg-light-pink hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
           } `}
         >
-          Create list
+          Add New List
         </button>
       </div>
       {isModalOpen && selectedPackList && (
