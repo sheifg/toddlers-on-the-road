@@ -8,17 +8,20 @@ const Contact = () => {
     {
       name: "first_name",
       inputType: "text",
-      placeholder: "First Name",
+      label : "First Name",
+      placeholder: "Lara",
     },
     {
       name: "last_name",
       inputType: "text",
-      placeholder: "Last Name",
+      label : "Last Name",
+      placeholder: "Doe",
     },
     {
       name: "message",
       inputType: "text",
-      placeholder: "Your Message",
+      label : "Your Message",
+      placeholder: "Your Message ...",
     },
 
   ];

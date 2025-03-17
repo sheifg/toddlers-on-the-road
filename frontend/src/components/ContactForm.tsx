@@ -54,6 +54,7 @@ const ContactForm = <T extends object & {first_name : string, last_name:string, 
             {inputs.map((input) => (
               <Input
                 key={input.name}
+                label={input.label}
                 name={input.name as keyof T}
                 inputType={input.inputType}
                 placeholder={input.placeholder}

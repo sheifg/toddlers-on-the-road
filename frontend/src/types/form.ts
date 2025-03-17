@@ -12,7 +12,7 @@ export interface AuthFormLink {
 
 export interface InputProps {
   name: string;
-  label?: string;
+  label: string;
   inputType?: string;
   placeholder?: string;
 }

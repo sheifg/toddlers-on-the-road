@@ -51,7 +51,7 @@ const ProfilePackListContainer = () => {
         ? [selectedPackList, ...packLists]
         : [selectedPackList];
 
-      await updateProfile(updatedPackLists);
+      await updateProfile({packLists: updatedPackLists});
       toast.success("packList is added!");
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -74,7 +74,7 @@ const ProfilePackListContainer = () => {
           )
         : [];
 
-      await updateProfile(updatedPackLists);
+      await updateProfile({packLists: updatedPackLists});
       //here the console will not show the updated packLists
       toast.success("packList is updated!");
     } catch (error) {
@@ -91,11 +91,11 @@ const ProfilePackListContainer = () => {
   const handleDelete = async (packList: PackList) => {
     const packListId = packList._id;
     try {
-      const newUpdatedPackLists = packLists
+      const updatedPackLists= packLists
         ? packLists.filter((packList) => packList._id !== packListId)
         : [];
 
-      await updateProfile(newUpdatedPackLists);
+      await updateProfile({packLists: updatedPackLists});//here we have packList and Milestone ,i have to distructuring just send packList
       toast.success("packList is deleted!");
     } catch (error) {
       if (axios.isAxiosError(error)) {

@@ -49,7 +49,7 @@ const PackListContainer = () => {
         ? [selectedPackList, ...packLists]
         : [selectedPackList];
 
-      await updateProfile(updatedPackLists);
+      await updateProfile({packLists: updatedPackLists});
       toast.success("packList is updated!");
     } catch (error) {
       if (axios.isAxiosError(error)) {

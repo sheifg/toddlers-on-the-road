@@ -2,7 +2,7 @@ import { Field, FormikErrors, FormikTouched } from "formik";
 
 interface InputProps<T> {
   name: keyof T;
-  label?: string;
+  label: string;
   inputType?: string;
   placeholder?: string;
   errors: FormikErrors<T>;
@@ -20,11 +20,11 @@ const Input = <T extends object>({
   const isMessageField = name === "message"; // Check if it's the message field
   return (
     <div className="font-Roboto">
-      { label && 
-      ( <label htmlFor={name as string} className="form-label">
+      
+      <label htmlFor={name as string} className="form-label">
            {label}:
-      </label>)
-       }
+      </label>
+       
       
       <Field
         as={isMessageField ? "textarea" : "input"} 
