@@ -1,25 +1,41 @@
 import { useEffect, useState } from "react";
 import MilestoneCard from "./MilestoneCard";
+import {
+  ProfileContextProps,
+  useProfileContext,
+} from "../context/ProfileContext";
+import { IMilestone } from "../types/profile";
+import MilestoneModal from "./MilestoneModal";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const MilestonesContainer = () => {
+  const { milestones, updateProfile } =
+    useProfileContext() as ProfileContextProps;
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerSlide, setCardsPerSlide] = useState(1);
 
-  const milestones = [
-    {
-      images: [
-        "milestone-travel.jpg",
-        "milestone-travel.jpg",
-        "milestone-travel.jpg",
-        "milestone-travel.jpg",
-        "milestone-travel.jpg",
-      ],
-      title: "Title of your milestone",
-      date: "Date of travel",
-      place: "Place of your travel",
-      description: "Description of your travel (Optional)",
-    },
-  ];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreation, setIsCreation] = useState<boolean>(false); // Show if a new milestone is created or an existing one is edited
+  const [selectedMilestone, setSelectedMilestone] = useState<IMilestone | null>(
+    null
+  );
+
+  const EXAMPLE_MILESTONE = {
+    images: [
+      "milestone-travel.jpg",
+      "milestone-travel.jpg",
+      "milestone-travel.jpg",
+      "milestone-travel.jpg",
+      "milestone-travel.jpg",
+    ],
+    title: "Title of your milestone",
+    date: "Date of travel",
+    place: "Place of your travel",
+    description: "Description of your travel (Optional)",
+    isExample: true,
+  };
 
   useEffect(() => {
     const updateCardsPerSlide = () => {
@@ -31,10 +47,12 @@ const MilestonesContainer = () => {
     return () => window.removeEventListener("resize", updateCardsPerSlide);
   }, []);
 
+ const displayedMilestones = milestones && milestones.length > 0  ? milestones : [EXAMPLE_MILESTONE];
+
   // Group cards into slides
   const groupedSlides = [];
-  for (let i = 0; i < milestones.length; i += cardsPerSlide) {
-    groupedSlides.push(milestones.slice(i, i + cardsPerSlide));
+  for (let i = 0; i < displayedMilestones.length; i += cardsPerSlide) {
+    groupedSlides.push(displayedMilestones.slice(i, i + cardsPerSlide));
   }
 
   const totalSlides = groupedSlides.length;
@@ -45,6 +63,94 @@ const MilestonesContainer = () => {
 
   const nextSlide = () => {
     setCurrentIndex((slideIndex) => slideIndex + 1);
+  };
+
+  /** 
+   * Prepares the empty data structure to be displayed in the dialog to create a new milestone 
+   */
+  const openCreateMilestoneModal = () => {
+    setIsCreation(true);
+    const emptyMilestone = {
+      images: ["milestone-travel.jpg"],
+      title: "",
+      date: "",
+      place: "",
+      description: "",
+    };
+    openModal(emptyMilestone)
+  }
+
+  const openModal = (selectedMilestone: IMilestone) => {
+    setIsModalOpen(true);
+    setSelectedMilestone(selectedMilestone);
+    console.log("selectedMilestone:",selectedMilestone)
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  /**
+   * Handles the creation of a new user milestone in the backend with the data provided in the dialog
+   */
+  const handleCreateMilestone = async (selectedMilestone: IMilestone) => {
+    try {
+      const updatedMilestones = milestones
+        ? [selectedMilestone, ...milestones]
+        : [selectedMilestone];
+        console.log("Updated milestones:", updatedMilestones)
+      await updateProfile({ milestones: updatedMilestones });
+      toast.success("The milestone is created");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
+    setIsCreation(false);
+  };
+
+  /**
+   * Handles the update of an existing user milestone in the backend with the changes provided in the dialog
+   */
+  const handleUpdateMilestone = async (updatedMilestone: IMilestone) => {
+    const milestoneId = selectedMilestone._id;
+    // console.log("Updated Milestone:",updatedMilestone)
+    // console.log("Updated Milestone ID:",milestoneId)
+    try {
+      const updatedMilestones = milestones
+        ? milestones.map((milestone) =>
+            milestone._id === milestoneId ? updatedMilestone : milestone
+          )
+        : [];
+      await updateProfile({ milestones: updatedMilestones });
+      toast.success("The milestone is updated");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
+  };
+  
+  const handleDeleteMilestone = async (milestone: IMilestone) => {
+    const milestoneId = milestone._id;
+    try {
+      const newUpdatedMilestones = milestones
+        ? milestones.filter((milestone) => milestone._id !== milestoneId)
+        : [];
+
+      await updateProfile({ milestones: newUpdatedMilestones });
+      toast.success("The milestone is deleted");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
   };
 
   return (
@@ -59,13 +165,15 @@ const MilestonesContainer = () => {
             transform: `translateX(-${currentIndex * 100}%)`,
           }}
         >
-          {groupedSlides.map((slide, index) => (
+          {groupedSlides.map((slides, index) => (
             <div key={index} className="w-full flex flex-shrink-0 p-4">
-              {slide.map((milestone, idx) => (
+              {slides.map((milestone, slideIndex) => (
                 <MilestoneCard
-                  key={idx}
+                  key={slideIndex}
                   milestone={milestone}
                   cardsPerSlide={cardsPerSlide}
+                  openModal={openModal}
+                  handleDeleteMilestone={handleDeleteMilestone}
                 />
               ))}
             </div>
@@ -103,14 +211,25 @@ const MilestonesContainer = () => {
               ></button>
             ))}
           </div>
-         )}
+        )}
         <button
           type="button"
+          onClick={() => openCreateMilestoneModal()}
           className="text-mustard px-2 py-2 m-3 mx-2 text-sm lg:text-md xl:text-lg lg:mt-4 bg-marine-blue rounded-lg font-semibold hover:bg-mustard hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
         >
-          Create new milestone
+          Create milestone
         </button>
       </div>
+      {isModalOpen && selectedMilestone && (
+        <MilestoneModal
+          closeModal={closeModal}
+          isCreation={isCreation}
+          onSubmit={
+            isCreation ? handleCreateMilestone : handleUpdateMilestone
+          }
+          selectedMilestone={selectedMilestone}
+        />
+      )}
     </div>
   );
 };

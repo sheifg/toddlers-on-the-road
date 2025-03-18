@@ -57,26 +57,27 @@ const UserSchema = new mongoose.Schema(
     ],
     milestones: [
       {
+        images: [],
         title: {
           type: String,
-          required: [true, "Title is required"],          
+          required: [true, "Title is required"],
           trim: true,
         },
         date: {
           type: String,
-          required: [true, "Date is required"],          
+          required: [true, "Date is required"],
           trim: true,
         },
         place: {
           type: String,
-          required: [true, "Place is required"],          
+          required: [true, "Place is required"],
           trim: true,
         },
         description: {
           type: String,
           trim: true,
         },
-      },
+      }
     ],
   },
   { timestamps: true, collection: "users" }

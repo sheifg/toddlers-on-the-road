@@ -35,10 +35,12 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [userInfo, setUserInfo] = useState<ICurrentUser | null>(() => {
-    const storedUser = sessionStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
+  const [userInfo, setUserInfo] = useState<ICurrentUser | null>(
+  //   () => {
+  //   const storedUser = sessionStorage.getItem("user");
+  //   return storedUser ? JSON.parse(storedUser) : null;
+  // }
+);
 
   // Effect to update localStorage whenever userInfo changes
   useEffect(() => {

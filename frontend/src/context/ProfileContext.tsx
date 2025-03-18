@@ -23,7 +23,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const { userInfo } = useAuth();
 
   const loadProfile = async () => {
-   // Load the packlists and the milestones of the user
+    // Load the packlists and the milestones of the user
     try {
       const { data } = await axios.get(
         `${BASE_URL}/api/profiles/${userInfo?._id}`,
@@ -40,17 +40,16 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updateProfile = async (updatedProfile: IProfile) => {
-    //update here to add packList to this property packLists in the user
-     // Update the packlists and milestones of the user
+    // Update the packlists and milestones of the user
     try {
-       const { data } =  await axios.put(
+      const { data } = await axios.put(
         `${BASE_URL}/api/profiles/${userInfo?._id}`,
         updatedProfile,
         {
-          headers: { Authorization: `Bearer ${userInfo?.token}` }, //we need this token because user data is protected in backend
+          headers: { Authorization: `Bearer ${userInfo?.token}` }, // User data is protected
         }
       );
-
+      
       setPackLists(data.data.packLists);
       setMilestones(data.data.milestones);
     } catch (error) {
