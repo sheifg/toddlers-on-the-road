@@ -62,7 +62,7 @@ export default function ProfilePackListModal({
     const name = title; // Using the state title
     const items = modalItems;
     const updatedPackListWithoutId = { name, items };
-    if (isCreation) 
+    if (isCreation) {
       await onSubmit(updatedPackListWithoutId);      
     } else {
       const _id = selectedPackList._id;
