@@ -125,11 +125,11 @@ const HomeMilestonesContainer = () => {
       </div>
       <Link to={"/profile"}>
         <p className="flex justify-end text-base text-marine-blue text-center  pt-4 hover:underline font-semibold mr-5 md:mr-12 md:mt-8 lg:mr-14">
-         Manage your Memories→
+         Manage your memories→
         </p>
       </Link>
     </div>
   );
 };
 
-export default HomeMilestonesContainer ;
+export default HomeMilestonesContainer;
