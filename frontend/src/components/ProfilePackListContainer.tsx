@@ -32,7 +32,6 @@ const ProfilePackListContainer = () => {
     setIsModalOpen(true);
     const copiedPackList = { name: packList.name, items: [...packList.items] };
     if (isCreation) {
-      /*  if (isCreation || packList === defaultPackList ) */
       setSelectedPackList(copiedPackList); // (create)from btn addnewList it will created new packList without id
     } else {
       setSelectedPackList(packList); // (update) exist packList from  edit btn in the PackListCard in the modal
