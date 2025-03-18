@@ -43,7 +43,6 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     //update here to add packList to this property packLists in the user
      // Update the packlists and milestones of the user
     try {
-      /*  const data = */
        const { data } =  await axios.put(
         `${BASE_URL}/api/profiles/${userInfo?._id}`,
         updatedProfile,
