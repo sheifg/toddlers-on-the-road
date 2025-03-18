@@ -2,9 +2,6 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import { PackList } from "../types/profile";
 import { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
-/* import { ProfileContextProps, useProfileContext } from "../context/ProfileContext";
-import { toast } from "react-toastify";
-import axios from "axios"; */
 
 interface ProfilePackListModalProps {
   closeModal: () => void;
@@ -12,7 +9,6 @@ interface ProfilePackListModalProps {
   isCreation: boolean;
   onSubmit: (selectedPackList: PackList) => Promise<void>;
   setIsCreation: (isCreation: boolean) => void;
-/*   defaultPackList?: PackList | null; */
 }
 export default function ProfilePackListModal({
   closeModal,
@@ -20,7 +16,6 @@ export default function ProfilePackListModal({
   isCreation,
   onSubmit,
   setIsCreation,
-/*   defaultPackList */
 }: ProfilePackListModalProps) {
 
   const [modalItems, setModalItems] = useState<string[]>([
@@ -67,17 +62,12 @@ export default function ProfilePackListModal({
     const name = title; // Using the state title
     const items = modalItems;
     const updatedPackListWithoutId = { name, items };
-    if (isCreation) {  /*  if (isCreation || selectedPackList === defaultPackList ) */
-      console.log( "befor add:", updatedPackListWithoutId)
-      await onSubmit(updatedPackListWithoutId);
-      console.log("after add:" ,selectedPackList)
-      
+    if (isCreation) 
+      await onSubmit(updatedPackListWithoutId);      
     } else {
       const _id = selectedPackList._id;
       const updatedPackList = { _id, name, items };
-      console.log("befor update :" ,updatedPackList)
       await onSubmit(updatedPackList);
-    
     }
 
     setIsCreation(false);
