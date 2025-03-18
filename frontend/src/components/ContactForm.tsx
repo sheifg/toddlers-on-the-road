@@ -89,11 +89,11 @@ const ContactForm = <T extends object & {first_name : string, last_name:string, 
             We are happy to hear your thoughts and suggestions!
           </p>
           <p className="flex items-center  ">
-            <span>Your message has been successfully sent</span>
+            <span>Your message has been successfully sent.</span>
             <LuPartyPopper className="w-5 h-5" />
           </p>
           <p className="flex items-center  ">
-            <span>We will get back to you as soon as possible </span>
+            <span>We will get back to you as soon as possible.</span>
             <RiEmotionHappyLine className="w-5 h-5" />
           </p>
           <p className="flex items-center  ">
