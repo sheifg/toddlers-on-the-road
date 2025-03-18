@@ -16,7 +16,7 @@ const ProfilePackListContainer = () => {
   const { packLists, updateProfile } =
     useProfileContext() as ProfileContextProps; //here fix state and func ,updateProfile will call inside another func
 
-  const [defaultPackList, setDefaultPackList] = useState<PackList | null>(null); //without this state it cannt use direct defaultPackList from async func
+  const [defaultPackList, setDefaultPackList] = useState<PackList | null>(null); //without this state it cannot use direct defaultPackList from async function
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(1);
@@ -27,10 +27,8 @@ const ProfilePackListContainer = () => {
   );
 
   const [isCreation, setIsCreation] = useState<boolean>(false); // This state shows if it is added a new list from btn AddNewPackList,or updating  exist packList  from the modal wich include
-  console.log("packLists from context:", packLists);
 
   const openModal = (packList: PackList) => {
-    console.log("packLists:", packLists);
     setIsModalOpen(true);
     const copiedPackList = { name: packList.name, items: [...packList.items] };
     if (isCreation) {
