@@ -17,18 +17,24 @@ const Input = <T extends object>({
   errors,
   touched,
 }: InputProps<T>) => {
+  const isMessageField = name === "message"; // Check if it's the message field
   return (
     <div className="font-Roboto">
+      
       <label htmlFor={name as string} className="form-label">
-        {label}:
+           {label}:
       </label>
+       
+      
       <Field
+        as={isMessageField ? "textarea" : "input"} 
         type={inputType}
         name={name as string}
         id={name as string}
         placeholder={placeholder}
-        className="form-control"
-      />
+        className={`form-control ${isMessageField ? "h-32 resize-none" : "h-10"}`} 
+        />
+      
       {errors[name] && touched[name] && (
         <p className="mt-1 text-poppy-red text-xs">{errors[name] as string}</p>
       )}

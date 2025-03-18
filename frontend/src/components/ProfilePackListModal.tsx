@@ -2,9 +2,6 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import { PackList } from "../types/profile";
 import { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
-/* import { ProfileContextProps, useProfileContext } from "../context/ProfileContext";
-import { toast } from "react-toastify";
-import axios from "axios"; */
 
 interface ProfilePackListModalProps {
   closeModal: () => void;
@@ -65,9 +62,8 @@ export default function ProfilePackListModal({
     const name = title; // Using the state title
     const items = modalItems;
     const updatedPackListWithoutId = { name, items };
-    if (isCreation) {
-      /* addUserPackList(userId,copiedPackList,token,userData) */
-      await onSubmit(updatedPackListWithoutId);
+    if (isCreation) 
+      await onSubmit(updatedPackListWithoutId);      
     } else {
       const _id = selectedPackList._id;
       const updatedPackList = { _id, name, items };
@@ -116,7 +112,7 @@ export default function ProfilePackListModal({
             <Form className="mt-2 ">
               {modalItems.map((item, index) => (
                 <div key={index} className="grid grid-cols-2 ">
-                  <div className="mb-2  flex justify-start items-center">
+                  <div className="mb-2  flex justify-start items-center pb-2.5">
                     <input
                       type="checkbox"
                       checked={checkedItems[index]}

@@ -10,3 +10,7 @@ export interface PackList {
   place: string;
   description?: string;
  }
+ export interface IProfile {
+  packLists?: PackList[];
+  milestones?: IMilestone[];
+ }

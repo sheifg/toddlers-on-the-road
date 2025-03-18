@@ -15,6 +15,8 @@ import {
   useProfileContext,
 } from "../context/ProfileContext";
 import { useAuth } from "../context/AuthContext";
+import HomeMilestonesContainer from "../components/HomeMilestonesContainer";
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -46,6 +48,7 @@ const Home = () => {
       <HeroSection handleClick={handleClick} />
       <BlurbCtaSection handleClickCtaButton={handleClickCtaButton} />
       <Carousel countries={countries} />
+      <HomeMilestonesContainer/>
       <PackListContainer />
     </>
   );

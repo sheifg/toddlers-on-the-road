@@ -16,6 +16,8 @@ const ProfilePackListContainer = () => {
   const { packLists, updateProfile } =
     useProfileContext() as ProfileContextProps; //here fix state and func ,updateProfile will call inside another func
 
+  const [defaultPackList, setDefaultPackList] = useState<PackList | null>(null); //without this state it cannot use direct defaultPackList from async function
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(1);
 
@@ -46,7 +48,7 @@ const ProfilePackListContainer = () => {
         ? [selectedPackList, ...packLists]
         : [selectedPackList];
 
-      await updateProfile(updatedPackLists);
+      await updateProfile({packLists: updatedPackLists});
       toast.success("packList is added!");
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -59,6 +61,7 @@ const ProfilePackListContainer = () => {
     setIsCreation(false);
   };
 
+
   const updateUserPackList = async (updatedPackList: PackList) => {
     const packListId = updatedPackList._id;
     try {
@@ -68,7 +71,7 @@ const ProfilePackListContainer = () => {
           )
         : [];
 
-      await updateProfile(updatedPackLists);
+      await updateProfile({packLists: updatedPackLists});
       //here the console will not show the updated packLists
       toast.success("packList is updated!");
     } catch (error) {
@@ -80,15 +83,16 @@ const ProfilePackListContainer = () => {
     }
   };
   //here is the correct place to console the packList after updating
+ 
 
   const handleDelete = async (packList: PackList) => {
     const packListId = packList._id;
     try {
-      const newUpdatedPackLists = packLists
+      const updatedPackLists= packLists
         ? packLists.filter((packList) => packList._id !== packListId)
         : [];
 
-      await updateProfile(newUpdatedPackLists);
+      await updateProfile({packLists: updatedPackLists});//here we have packList and Milestone ,i have to distructuring just send packList
       toast.success("packList is deleted!");
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -99,13 +103,17 @@ const ProfilePackListContainer = () => {
     }
   };
   //after the func finish  the state will updated ,here console the packList
-  const getDefaultPackList = async (packListId: string) => {
+
+
+  const getDefaultPackList = async () => {
+    const packListId = "67bc61f1d52d552624756648";
     try {
       const { data } = await axios({
         url: `${BASE_URL}/api/packlist/${packListId}`,
         method: "GET",
       });
-      return data.data;
+      setDefaultPackList(data.data); // Store default pack list in state
+      return data.data; //important without this the defaultPackList cannt be test in  handleAddNewList  because getdefaultpackList is void
     } catch (error) {
       // TODO These errors should ideally be in the function caller
       if (axios.isAxiosError(error)) {
@@ -115,13 +123,18 @@ const ProfilePackListContainer = () => {
       }
     }
   };
+  //call the func
+  useEffect(() => {
+    getDefaultPackList();
+  }, []);
+  //because i cant call direct awite func in top level i have to wrap it with async func
+
+
   const handleAddNewList = async () => {
     setIsCreation(true);
 
     /* get the default packList from the backend getdefaultPackList()*/
-    const defaultPackListId = "67bc61f1d52d552624756648";
-
-    const defaultPackList = await getDefaultPackList(defaultPackListId);
+    const defaultPackList = await getDefaultPackList();
 
     if (defaultPackList) {
       openModal(defaultPackList);
@@ -144,6 +157,9 @@ const ProfilePackListContainer = () => {
     return () => window.removeEventListener("resize", updateCardsPerView);
   }, []);
 
+  const totalSlides = packLists ? packLists.length : 0;
+  const groupedSlides = Array.from({ length: totalSlides });
+
   // Navigation for carousel
   const handleNext = () => {
     if (packLists && currentIndex + cardsPerView < packLists.length) {
@@ -158,60 +174,89 @@ const ProfilePackListContainer = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <h2 className="font-Mali text-center mt-10 text-xl md:text-2xl lg:text-3xl 2xl:text-4xl font-bold text-marine-blue">
+    <div className="flex flex-col justify-center items-center text-marine-blue font-Mali mt-8">
+      <h2 className="font-medium text-lg mb-2 md:text-2xl lg:text-3xl drop-shadow-[3px_3px_0px_rgba(96,211,214,0.6)] ]">
         What do I need?
       </h2>
       {packLists && (
         <div className="relative w-11/12 mt-6">
-          {" "}
           {/* PackList Cards Container */}
           <div className="flex justify-between items-center gap-4">
             {/* Left Button */}
             {currentIndex > 0 && (
               <button
-                className="w-8 h-8 md:w-10 md:h-10 text-white bg-blue-water rounded-full flex items-center justify-center transition-colors"
+                className="right-2 md:right-1 lg:right-7 xl:right-14 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full"
                 onClick={handlePrev}
               >
-                &lt;
+                ❮
               </button>
             )}
             {/* Cards Display */}
-            <div className=" mx-auto grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  lg:text-lg 2xl:gap-10">
-              {packLists
-                .slice(currentIndex, currentIndex + cardsPerView)
-                .map((packList, index) => (
-                  <div key={index} className="  rounded-lg  lg:text-lg">
+            <div className=" mx-auto w-full items-center ">
+              {packLists.length === 0 && defaultPackList && (
+                <div className="  justify-center md:w-[22.5rem] lg:w-[27rem] xl:w-[33rem]">
+                  <div className="rounded-lg lg:text-lg  ">
                     <ProfilePackListCard
-                      packList={packList}
-                      handleDelete={() => handleDelete(packList)}
-                      openModal={() => openModal(packList)}
+                      packList={defaultPackList}
+                      openModal={() => handleAddNewList()}
                     />
                   </div>
-                ))}
+                </div>
+              )}
+
+              {/* Grid for Other PackLists */}
+              <div className="mx-auto grid grid-cols-1 items-center md:grid-cols-2 lg:grid-cols-3 gap-6 w-full lg:text-lg 2xl:gap-10">
+                {packLists.length > 0 &&
+                  packLists
+                    .slice(currentIndex, currentIndex + cardsPerView)
+                    .map((packList, index) => (
+                      <div key={index} className="rounded-lg lg:text-lg">
+                        <ProfilePackListCard
+                          packList={packList}
+                          handleDelete={() => handleDelete(packList)}
+                          openModal={() => openModal(packList)}
+                        />
+                      </div>
+                    ))}
+              </div>
             </div>
 
             {/* Right Button */}
             {currentIndex + cardsPerView < packLists.length && (
               <button
-                className="w-8 h-8 md:w-10 md:h-10 text-white bg-blue-water rounded-full flex items-center justify-center transition-colors"
+                className="right-2 md:right-1 lg:right-7 xl:right-14 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full"
                 onClick={handleNext}
               >
-                &gt;
+                ❯
               </button>
             )}
           </div>
+
+          {/* Pagination Dots */}
+          {totalSlides > 1 && (
+            <div className="flex justify-center  mb-4 space-x-2 mt-6 md:mt-8  lg:mt-10">
+              {groupedSlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`h-2 w-2 md:h-3 md:w-3 rounded-full ${
+                    currentIndex === index ? "bg-marine-blue" : "bg-gray-200"
+                  } transition-all duration-500`}
+                ></button>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
       {/* Add New List Button */}
-      <div className="text-center mt-6 mb-6">
+      <div className="text-center mt-8 mb-6 font-Mali">
         <button
           onClick={() => handleAddNewList()}
           disabled={!userInfo}
-          className="text-white px-2 py-2 mb-3 text-sm md:py-4 md:px-4 lg:text-md xl:text-lg lg:mt-4 2xl:py-5 2xl:px-5 bg-blue-water rounded-lg font-semibold hover:bg-light-pink hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
+          className="text-white px-2 py-2   m-3 text-sm md:py-4 md:px-4 lg:text-md xl:text-lg lg:mt-4 2xl:py-5 2xl:px-5 bg-blue-water rounded-lg font-semibold hover:bg-light-pink hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
         >
-          Add new List
+          Add New List
         </button>
       </div>
       {isModalOpen && selectedPackList && (
