@@ -19,7 +19,6 @@ const MilestoneModal = ({
   isCreation,
   onSubmit,
 }: MilestoneModalProps) => {
-
   // Store preview URLs for uploaded images
   const [previewImages, setPreviewImages] = useState<string[]>(
     selectedMilestone.images || []
@@ -45,9 +44,9 @@ const MilestoneModal = ({
     const file = event.target.files?.[0];
     if (file) {
       const fileReader = new FileReader();
-      
+
       fileReader.onloadend = () => {
-        const base64Image = fileReader.result as string; // The base64 image string  
+        const base64Image = fileReader.result as string; // The base64 image string
 
         // Update preview images state with base64 string
         const updatedPreviews = [...previewImages];
@@ -61,8 +60,18 @@ const MilestoneModal = ({
     }
   };
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { setFieldValue }) => {
     try {
+      // Remove any empty values
+      const filteredImages = values.images.filter((img) => img?.trim() !== "");
+
+      // Ensure at least one example image is present
+      values.images = filteredImages.length
+        ? filteredImages
+        : ["milestone-travel.jpg"];
+
+      setFieldValue("images", values.images); // Ensure Formik updates values
+
       await onSubmit(values);
       closeModal();
     } catch (error) {
@@ -152,16 +161,6 @@ const MilestoneModal = ({
                           key={index}
                           className="flex items-center space-x-2"
                         >
-                          {/*
-                          {/* Image preview}
-                          {previewImages[index] && (
-                            <img
-                              src={previewImages[index]}
-                              alt={`Preview ${index}`}
-                              className="w-24 h-24 object-cover rounded-lg border"
-                            />
-                          )}
-                           */}
                           <input
                             type="file"
                             accept="image/*"

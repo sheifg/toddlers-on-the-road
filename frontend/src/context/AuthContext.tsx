@@ -35,12 +35,10 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [userInfo, setUserInfo] = useState<ICurrentUser | null>(
-  //   () => {
-  //   const storedUser = sessionStorage.getItem("user");
-  //   return storedUser ? JSON.parse(storedUser) : null;
-  // }
-);
+  const [userInfo, setUserInfo] = useState<ICurrentUser | null>(() => {
+    const storedUser = sessionStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
   // Effect to update localStorage whenever userInfo changes
   useEffect(() => {
@@ -51,7 +49,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       // Clear localStorage when userInfo is null (user logged out)
       removeStorageItem("user");
     }
-  }, [userInfo]); // TODO Check firebase [userInfo,firebaseToken]
+  }, [userInfo]);
 
   // Check authentication only once after the initial render of the functional component(when the component mounts)
   useEffect(() => {

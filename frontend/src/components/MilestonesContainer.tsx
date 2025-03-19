@@ -47,7 +47,8 @@ const MilestonesContainer = () => {
     return () => window.removeEventListener("resize", updateCardsPerSlide);
   }, []);
 
- const displayedMilestones = milestones && milestones.length > 0  ? milestones : [EXAMPLE_MILESTONE];
+  const displayedMilestones =
+    milestones && milestones.length > 0 ? milestones : [EXAMPLE_MILESTONE];
 
   // Group cards into slides
   const groupedSlides = [];
@@ -65,9 +66,7 @@ const MilestonesContainer = () => {
     setCurrentIndex((slideIndex) => slideIndex + 1);
   };
 
-  /** 
-   * Prepares the empty data structure to be displayed in the dialog to create a new milestone 
-   */
+  // Prepares the empty data structure to be displayed in the dialog to create a new milestone
   const openCreateMilestoneModal = () => {
     setIsCreation(true);
     const emptyMilestone = {
@@ -77,28 +76,25 @@ const MilestonesContainer = () => {
       place: "",
       description: "",
     };
-    openModal(emptyMilestone)
-  }
+    openModal(emptyMilestone);
+  };
 
   const openModal = (selectedMilestone: IMilestone) => {
     setIsModalOpen(true);
     setSelectedMilestone(selectedMilestone);
-    console.log("selectedMilestone:",selectedMilestone)
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
-  /**
-   * Handles the creation of a new user milestone in the backend with the data provided in the dialog
-   */
+  // Handles the creation of a new user milestone in the backend with the data provided in the dialog
   const handleCreateMilestone = async (selectedMilestone: IMilestone) => {
     try {
       const updatedMilestones = milestones
         ? [selectedMilestone, ...milestones]
         : [selectedMilestone];
-        console.log("Updated milestones:", updatedMilestones)
+
       await updateProfile({ milestones: updatedMilestones });
       toast.success("The milestone is created");
     } catch (error) {
@@ -111,13 +107,10 @@ const MilestonesContainer = () => {
     setIsCreation(false);
   };
 
-  /**
-   * Handles the update of an existing user milestone in the backend with the changes provided in the dialog
-   */
+  // Handles the update of an existing user milestone in the backend with the changes provided in the dialog
   const handleUpdateMilestone = async (updatedMilestone: IMilestone) => {
     const milestoneId = selectedMilestone._id;
-    // console.log("Updated Milestone:",updatedMilestone)
-    // console.log("Updated Milestone ID:",milestoneId)
+
     try {
       const updatedMilestones = milestones
         ? milestones.map((milestone) =>
@@ -134,7 +127,7 @@ const MilestonesContainer = () => {
       }
     }
   };
-  
+
   const handleDeleteMilestone = async (milestone: IMilestone) => {
     const milestoneId = milestone._id;
     try {
@@ -224,9 +217,7 @@ const MilestonesContainer = () => {
         <MilestoneModal
           closeModal={closeModal}
           isCreation={isCreation}
-          onSubmit={
-            isCreation ? handleCreateMilestone : handleUpdateMilestone
-          }
+          onSubmit={isCreation ? handleCreateMilestone : handleUpdateMilestone}
           selectedMilestone={selectedMilestone}
         />
       )}

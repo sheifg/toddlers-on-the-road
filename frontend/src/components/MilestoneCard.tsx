@@ -8,11 +8,14 @@ interface MilestoneCardProps {
   handleDeleteMilestone: (milestone: IMilestone) => void;
 }
 
-const MilestoneCard = ({ milestone, cardsPerSlide, openModal, handleDeleteMilestone }: MilestoneCardProps) => {
+const MilestoneCard = ({
+  milestone,
+  cardsPerSlide,
+  openModal,
+  handleDeleteMilestone,
+}: MilestoneCardProps) => {
   const milestoneImages = milestone.images;
-  console.log("Milestone images:", milestoneImages)
   const totalImages = milestoneImages.length;
-  console.log("Milestones images length:", totalImages)
 
   return (
     <div
@@ -40,15 +43,15 @@ const MilestoneCard = ({ milestone, cardsPerSlide, openModal, handleDeleteMilest
         >
           Edit
         </button>
-        {!milestone.isExample &&
-        <button
-          type="button"
-          className="text-mustard px-2 py-2 mb-3 mx-2 text-sm lg:text-md xl:text-lg lg:mt-4 bg-marine-blue rounded-lg font-semibold hover:bg-mustard hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
-          onClick={() => handleDeleteMilestone(milestone)}
-        >
-          Delete
-        </button>
-        }
+        {!milestone.isExample && (
+          <button
+            type="button"
+            className="text-mustard px-2 py-2 mb-3 mx-2 text-sm lg:text-md xl:text-lg lg:mt-4 bg-marine-blue rounded-lg font-semibold hover:bg-mustard hover:text-marine-blue focus:ring-4 focus:ring-marine-blue transition-colors"
+            onClick={() => handleDeleteMilestone(milestone)}
+          >
+            Delete
+          </button>
+        )}
       </div>
     </div>
   );

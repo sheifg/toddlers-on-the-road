@@ -48,7 +48,7 @@ const ProfilePackListContainer = () => {
         ? [selectedPackList, ...packLists]
         : [selectedPackList];
 
-      await updateProfile({packLists: updatedPackLists});
+      await updateProfile({ packLists: updatedPackLists });
       toast.success("packList is added!");
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -61,7 +61,6 @@ const ProfilePackListContainer = () => {
     setIsCreation(false);
   };
 
-
   const updateUserPackList = async (updatedPackList: PackList) => {
     const packListId = updatedPackList._id;
     try {
@@ -71,7 +70,7 @@ const ProfilePackListContainer = () => {
           )
         : [];
 
-      await updateProfile({packLists: updatedPackLists});
+      await updateProfile({ packLists: updatedPackLists });
       //here the console will not show the updated packLists
       toast.success("packList is updated!");
     } catch (error) {
@@ -83,16 +82,15 @@ const ProfilePackListContainer = () => {
     }
   };
   //here is the correct place to console the packList after updating
- 
 
   const handleDelete = async (packList: PackList) => {
     const packListId = packList._id;
     try {
-      const updatedPackLists= packLists
+      const updatedPackLists = packLists
         ? packLists.filter((packList) => packList._id !== packListId)
         : [];
 
-      await updateProfile({packLists: updatedPackLists});//here we have packList and Milestone ,i have to distructuring just send packList
+      await updateProfile({ packLists: updatedPackLists }); //here we have packList and Milestone ,i have to distructuring just send packList
       toast.success("packList is deleted!");
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -104,7 +102,6 @@ const ProfilePackListContainer = () => {
   };
   //after the func finish  the state will updated ,here console the packList
 
-
   const getDefaultPackList = async () => {
     const packListId = "67bc61f1d52d552624756648";
     try {
@@ -115,7 +112,6 @@ const ProfilePackListContainer = () => {
       setDefaultPackList(data.data); // Store default pack list in state
       return data.data; //important without this the defaultPackList cannt be test in  handleAddNewList  because getdefaultpackList is void
     } catch (error) {
-      // TODO These errors should ideally be in the function caller
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data?.message);
       } else if (error instanceof Error) {
@@ -127,8 +123,6 @@ const ProfilePackListContainer = () => {
   useEffect(() => {
     getDefaultPackList();
   }, []);
-  //because i cant call direct awite func in top level i have to wrap it with async func
-
 
   const handleAddNewList = async () => {
     setIsCreation(true);
