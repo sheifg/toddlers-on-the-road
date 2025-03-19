@@ -13,8 +13,11 @@ const Profile = () => {
   const { loadProfile } = useProfileContext() as ProfileContextProps;
 
   useEffect(() => {
+    const fetchData = async () => {
+      await loadProfile();
+    };
     if (userInfo) {
-      loadProfile();
+      fetchData();
     }
   }, []);
 

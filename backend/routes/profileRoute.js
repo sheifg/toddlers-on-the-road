@@ -3,6 +3,8 @@ const router = require("express").Router();
 const Profile = require("../controllers/profileController");
 // Authentication middleware :
 const authMw = require("../middlewares/authMiddleware");
+// Upload middleware:
+const upload = require('../middlewares/upload')
 
 router
   .route("/:id")

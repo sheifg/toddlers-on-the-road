@@ -25,11 +25,11 @@ const HomeMilestonesContainer = () => {
     },
     {
         images: [
-          "family-traveling.png",
-          "family-traveling.png",
-         "family-traveling.png",
-          "family-traveling.png",
-          "family-traveling.png",
+          "milestone-travel.jpg",
+          "milestone-travel.jpg",
+          "milestone-travel.jpg",
+          "milestone-travel.jpg",
+          "milestone-travel.jpg",
         ],
         title: "Parent-Child Adventure",
         date: "2023-09-20",

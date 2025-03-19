@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       // Clear localStorage when userInfo is null (user logged out)
       removeStorageItem("user");
     }
-  }, [userInfo]); // TODO Check firebase [userInfo,firebaseToken]
+  }, [userInfo]);
 
   // Check authentication only once after the initial render of the functional component(when the component mounts)
   useEffect(() => {

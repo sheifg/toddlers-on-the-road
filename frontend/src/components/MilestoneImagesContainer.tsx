@@ -16,7 +16,7 @@ const MilestoneImagesContainer = ({
 
   const nextSlide = () => {
     setCurrentImageIndex((slideIndex) => slideIndex + 1);
-  };
+  };  
 
   return (
     <div className="relative overflow-hidden w-full">
@@ -30,7 +30,7 @@ const MilestoneImagesContainer = ({
           <img
             key={index}
             className="h-[12.5rem] object-containt w-full flex-shrink-0"
-            src={image}
+            src={image === "milestone-travel.jpg" ? image : `http://127.0.0.1:8000${image}`}
             alt="Travel image"
           />
         ))}
