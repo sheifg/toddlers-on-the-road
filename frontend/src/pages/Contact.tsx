@@ -1,58 +1,51 @@
 import { object, string } from "yup";
 import ContactForm from "../components/ContactForm";
 
-
 const Contact = () => {
-
   const inputs = [
     {
-      name: "first_name",
+      name: "userName",
       inputType: "text",
-      label : "First Name",
+      label: "Your Name",
       placeholder: "Lara",
     },
     {
-      name: "last_name",
-      inputType: "text",
-      label : "Last Name",
-      placeholder: "Doe",
+      name: "email",
+      inputType: "email",
+      label: "Your Email",
+      placeholder: "Last123@gmail.com",
     },
     {
       name: "message",
       inputType: "text",
-      label : "Your Message",
-      placeholder: "Your Message ...",
+      label: "Your Message",
+      placeholder: "Message ...",
     },
-
   ];
 
   const initialValues = {
-    first_name: "",
-    last_name: "",
-    message:"",
+    userName: "",
+    email: "",
+    message: "",
   };
 
   const ContactSchema = object().shape({
-    first_name: string()
-      .required("First Name is required!"),
-    last_name: string()
-      .required("Last Name is required!"),
-    message: string()
-      .required("Your Message is required!"),
-     
-  })
- 
-  return (<div>
+    userName: string().required("Your Name is required!"),
+    email: string().email("Invalid Email").required("Your Email is required!"),
+    message: string().required("Your Message is required!"),
+  });
 
-          <ContactForm
-           inputs={inputs}
-           initialValues={initialValues}
-           validationSchema={ContactSchema}
-           title="Contact"
-           buttonText="Send"
-           />
-
-  </div>);
+  return (
+    <div>
+      <ContactForm
+        inputs={inputs}
+        initialValues={initialValues}
+        validationSchema={ContactSchema}
+        title="Contact"
+        buttonText="Send"
+      />
+    </div>
+  );
 };
 
 export default Contact;

@@ -26,6 +26,7 @@ export interface AuthContextProps {
     resetPasswordData: IResetPassword,
     resetToken: string
   ) => Promise<void>;
+  updateRememberMe: (value: boolean) => void;
 }
 
 interface AuthProviderProps {
@@ -35,31 +36,38 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [userInfo, setUserInfo] = useState<ICurrentUser | null>(() => {
-    const storedUser = sessionStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
-
-  // Effect to update localStorage whenever userInfo changes
-  useEffect(() => {
-    if (userInfo) {
-      // Save user information in localStorage when available
-      setStorageItem("user", userInfo);
-    } else {
-      // Clear localStorage when userInfo is null (user logged out)
-      removeStorageItem("user");
-    }
-  }, [userInfo]);
+  const [userInfo, setUserInfo] = useState<ICurrentUser | null>(null);
+  const [rememberMe, setRememberMe] = useState(false);
 
   // Check authentication only once after the initial render of the functional component(when the component mounts)
+  // Check for stored user on initial load
   useEffect(() => {
     const storedUser = getStorageItem("user");
-
+    // If user found in localStorage, they previously used "remember me"
+    if (storedUser && window.localStorage.getItem("user")) {
+      setRememberMe(true);
+    }
     // If a user is stored locally but not yet loaded into the component's state, restore the user information from local storage
     if (storedUser && !userInfo) {
-      setUserInfo(JSON.parse(storedUser));
+      setUserInfo(storedUser);
     }
   }, []);
+
+  // Update storage when userInfo changes
+  useEffect(() => {
+    if (userInfo) {
+      // Save user information in localStorage when rememberme true ,if it is fales store it in session
+      setStorageItem("user", userInfo, rememberMe);
+    } else {
+      // Clear localStorage and session , when userInfo is null (user logged out)
+      removeStorageItem("user");
+    }
+  }, [userInfo, rememberMe]); // TODO Check firebase [userInfo,firebaseToken]
+
+  // Add this function to your context
+  const updateRememberMe = (value: boolean) => {
+    setRememberMe(value);
+  };
 
   // Register function
   const register = async (userData: IUser) => {
@@ -93,6 +101,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         token: data.token,
         ...data.user,
       };
+      // for remember me
+
       return Promise.resolve(user);
     } catch (error) {
       return Promise.reject(error);
@@ -151,6 +161,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         logout,
         resetPassword,
         forgotPassword,
+        updateRememberMe,
       }}
     >
       {children}

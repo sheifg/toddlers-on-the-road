@@ -1,8 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 module.exports = async (req, res, next) => {
- 
-  
   const auth = req.headers?.authorization || null;
   const accessToken = auth ? auth.split(" ")[1] : null; // Remove 'Bearer' from the token
 
@@ -16,7 +14,6 @@ module.exports = async (req, res, next) => {
         req.user = data; // Attach user data from the token payload
       }
     });
-
   } else if (req.cookies?.refreshToken) {
     // If no access token, check for a refresh token in cookies
     const refreshToken = req.cookies.refreshToken;

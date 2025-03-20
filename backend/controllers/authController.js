@@ -28,7 +28,6 @@ module.exports = {
       if (email && password) {
         const user = await User.findOne({ email }).select("+password");
 
-        // If user is registered with Google, prevent password login
         if (user && user.provider === "firebase") {
           res.errorStatusCode = 401;
           throw new Error("Please sign in with Google!");
@@ -46,51 +45,21 @@ module.exports = {
               { expiresIn: "7d" }
             );
 
-            // Fixing setting cookies
-            res.cookie("refreshToken", refreshToken, {
-              httpOnly: true,
+            //---------fixing cookies--------------------
+            /* res.cookie("refreshToken", refreshToken, {
+               httpOnly: true,
               secure: process.env.NODE_ENV,
               sameSite: "strict",
-              path: "/", // Added path
+              path: "/", // Add a path
               maxAge: 7 * 24 * 60 * 60 * 1000,
             });
+           */
           }
-
-          if (user && user.password == pwEncrypt(password)) {
-            const accessToken = jwt.sign(
-              user.toJSON(),
-              process.env.ACCESS_KEY,
-              {
-                expiresIn: "120m",
-              }
-            );
-
-            if (rememberMe) {
-              const refreshToken = jwt.sign(
-                { _id: user._id, password: user.password },
-                process.env.REFRESH_KEY,
-                { expiresIn: "7d" }
-              );
-
-              // Fixing setting cookies
-              res.cookie("refreshToken", refreshToken, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV,
-                sameSite: "strict",
-                path: "/", // Added path
-                maxAge: 7 * 24 * 60 * 60 * 1000,
-              });
-            }
-
-            res.send({
-              error: false,
-              user: await User.findOne({ email }),
-              token: accessToken,
-            });
-          } else {
-            res.errorStatusCode = 401;
-            throw new Error("Wrong email or password!");
-          }
+          res.send({
+            error: false,
+            user: await User.findOne({ email }),
+            token: accessToken,
+          });
         } else {
           res.errorStatusCode = 401;
           throw new Error("Invalid login credentials!");
@@ -105,13 +74,13 @@ module.exports = {
   logout: async (req, res) => {
     try {
       // Fixing clearing cookies
-      res.cookie("refreshToken", "", {
+     /*  res.cookie("refreshToken", "", {
         httpOnly: true,
         secure: process.env.NODE_ENV,
         sameSite: "strict",
-        path: "/", // Added path
+        path: "/", // Add a path
         maxAge: 0,
-      });
+      }); */
 
       res.send({
         error: false,
@@ -205,15 +174,15 @@ module.exports = {
 
       // Email content
       const message = `
-        Hi ${user.first_name},
+       Hi ${user.first_name},
 
-        You recently requested to rest your password. Please click the link below to proceed:
+       You recently requested to rest your password. Please click the link below to proceed:
 
-        <a href="${resetUrl}">${resetUrl}</a>
+       <a href="${resetUrl}">${resetUrl}</a>
 
-        This password reset link is only valid for the next 60 minutes.
+       This password reset link is only valid for the next 60 minutes.
         
-        If you did not request a password reset, please ignore this email :)
+       If you did not request a password reset, please ignore this email :)
 
         Sincerely,
         Your <i>Toddlers on the Road</i> team
