@@ -36,8 +36,9 @@ const About = () => {
             <br />
             Our mission is simple: to make traveling with toddlers less
             stressful and more fun. Whether you're planning a weekend getaway or
-            an international adventure, <span className="italic"> Toddlers on the Road</span> ensures you have
-            all the support you need in one easy-to-use app.
+            an international adventure,{" "}
+            <span className="italic"> Toddlers on the Road</span> ensures you
+            have all the support you need in one easy-to-use app.
             <br />
             Happy travels from two moms who get it!
           </div>
@@ -61,20 +62,21 @@ const About = () => {
                 <div className="text-card-about">
                   <h4 className="h4-about">Sheila</h4>
                   <p className="p-about">
-                    She is a passionate traveler and dedicated mom who turned her
-                    love for exploring the world into an adventure-filled
+                    She is a passionate traveler and dedicated mom who turned
+                    her love for exploring the world into an adventure-filled
                     journey with her family. Traveling has always been her
                     greatest passion, but when her son was born, everything
                     changed, yet in the most beautiful way. What once was about
                     spontaneous getaways and long-haul flights became a new kind
                     of adventure, filled with discovery, laughter and
                     unforgettable moments. Navigating the world with a toddler
-                    opened up a whole new perspective on travel, she realized that traveling with little
-                    ones isn’t just possible, it’s magical. With
+                    opened up a whole new perspective on travel, she realized
+                    that traveling with little ones isn’t just possible, it’s
+                    magical. With
                     <span className="italic"> Toddlers on the Road</span>, she
                     wants to help other parents experience the same joy, making
                     every journey smoother, more fun and full of wonderful
-                    memories. Let’s explore the world together! 
+                    memories. Let’s explore the world together!
                   </p>
                 </div>
               </div>
@@ -89,7 +91,32 @@ const About = () => {
                 <div className="text-card-about">
                   <h4 className="h4-about">Sara</h4>
                   <p className="p-about">
-                    Sara is a mother of two children, a 6-year-old girl and a 4-year-old boy. She loves traveling, but now even more because it is an opportunity to spend quality time with her children, to practice new and fun activities in different places and to get to know other cultures. This photo is from the island of Malta. It was one of her most beautiful memories of traveling with her children.
+                    Before having kids, Sara was the kind of traveler who could
+                    throw a few things in a bag, book a last-minute flight, and
+                    set off on an adventure without a second thought. Fast
+                    forward to today she’s a proud mom of two (a 6-year-old girl
+                    and a 4-year-old boy), and let’s just say that traveling now
+                    requires a bit more strategy. Gone are the days of breezy,
+                    stress-free packing now it’s all about remembering the
+                    favorite stuffed animal, the emergency snacks, and oh no,
+                    where did the extra wipes go? But despite the chaos,
+                    traveling with her little ones has become even more
+                    meaningful. Watching their eyes light up at new experiences,
+                    introducing them to different cultures, and turning everyday
+                    moments into lifelong memories? Totally worth the airport
+                    meltdowns. That’s why she created Toddlers on the Road a
+                    one-stop app for parents who love to travel but also love
+                    their sanity. From packing lists (so you don’t forget the
+                    teddy bear) to child-friendly guides and emergency contacts
+                    , this app is designed to make family travel smoother, less
+                    stressful, and way more fun. One of Sara’s most
+                    unforgettable trips? Exploring Malta with her kids where
+                    they ran on sun-soaked beaches, discovered ancient sites,
+                    and, of course, managed to lose at least one shoe. With
+                    Toddlers on the Road, she hopes to help other parents
+                    embrace the adventure, mishaps and all. Because let’s be
+                    honest traveling with toddlers is a wild ride, but it’s also
+                    the best one yet.❤️
                   </p>
                 </div>
               </div>
@@ -105,8 +132,8 @@ const About = () => {
         </div>
         <p className="p-about ml-9 md:ml-14 lg:ml-20">
           <div className="bg-light-pink bg-opacity-70 p-3 rounded-l-xl md:p-4 lg:p-5 xl:p-6">
-            Have questions? Need assistance with your trip? Have suggestions
-            or feedback? Our team is here to support you every step of the way.
+            Have questions? Need assistance with your trip? Have suggestions or
+            feedback? Our team is here to support you every step of the way.
             Contact us today and make your travels with toddlers smoother and
             stress-free!
             <br />

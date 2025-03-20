@@ -7,12 +7,13 @@ import { FcGoogle } from "react-icons/fc";
 import { signUpProvider } from "../config/firebase";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { ICurrentUser } from "../types/user";
 
 const Login = () => {
   const navigate = useNavigate();
   const { state: locationState } = useLocation();
   const toastMessage = "Login successful!";
-  const { login, setUserInfo } = useAuth();
+  const { login, setUserInfo, updateRememberMe } = useAuth();
   let redirectionPath: any;
 
   const BOTTOM_LINKS: AuthFormLink[] = [
@@ -85,7 +86,12 @@ const Login = () => {
     try {
       const userDataLogin = await login(values);
       setUserInfo(userDataLogin);
-      sessionStorage.setItem("user", JSON.stringify(userDataLogin));
+
+      // Update the rememberMe preference in context
+      updateRememberMe(values.rememberMe);
+
+      // Storage is now handled by the context useEffect
+
       toast.success("Login successful!");
       navigate(redirectionPath ? redirectionPath : "/");
     } catch (error) {

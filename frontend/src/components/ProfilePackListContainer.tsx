@@ -14,9 +14,9 @@ import ProfilePackListModal from "./ProfilePackListModal";
 const ProfilePackListContainer = () => {
   const { userInfo } = useAuth();
   const { packLists, updateProfile } =
-    useProfileContext() as ProfileContextProps; //here fix state and func ,updateProfile will call inside another func
+    useProfileContext() as ProfileContextProps; //updateProfile will call inside another func
 
-  const [defaultPackList, setDefaultPackList] = useState<PackList | null>(null); //without this state it cannot use direct defaultPackList from async function
+  const [defaultPackList, setDefaultPackList] = useState<PackList | null>(null); //without this state  this data (defaultPackList) can not be used directly as variable from async func
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(1);
@@ -26,7 +26,7 @@ const ProfilePackListContainer = () => {
     null
   );
 
-  const [isCreation, setIsCreation] = useState<boolean>(false); // This state shows if it is added a new list from btn AddNewPackList,or updating  exist packList  from the modal wich include
+  const [isCreation, setIsCreation] = useState<boolean>(false); // This state shows if it is added a new list from btn AddNewPackList, or updating  exist packList  from the modal wich include
 
   const openModal = (packList: PackList) => {
     setIsModalOpen(true);
@@ -90,7 +90,7 @@ const ProfilePackListContainer = () => {
         ? packLists.filter((packList) => packList._id !== packListId)
         : [];
 
-      await updateProfile({ packLists: updatedPackLists }); //here we have packList and Milestone ,i have to distructuring just send packList
+      await updateProfile({ packLists: updatedPackLists }); //here include packList and Milestone ,it has to be  distructured  just send packList or just mileston
       toast.success("packList is deleted!");
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -109,8 +109,8 @@ const ProfilePackListContainer = () => {
         url: `${BASE_URL}/api/packlist/${packListId}`,
         method: "GET",
       });
-      setDefaultPackList(data.data); // Store default pack list in state
-      return data.data; //important without this the defaultPackList cannt be test in  handleAddNewList  because getdefaultpackList is void
+      setDefaultPackList(data.data); // Store default pack list in a state
+      return data.data; //important without this the defaultPackList can not be checked in  handleAddNewList
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data?.message);
