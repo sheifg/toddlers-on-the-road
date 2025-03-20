@@ -62,11 +62,8 @@ module.exports = {
           });
         } else {
           res.errorStatusCode = 401;
-          throw new Error("Wrong email or password!");
+          throw new Error("Invalid login credentials!");
         }
-      } else {
-        res.errorStatusCode = 401;
-        throw new Error("Invalid login credentials!");
       }
     } catch (error) {
       console.error("Log in error:", error);
