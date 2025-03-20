@@ -46,16 +46,15 @@ module.exports = {
             );
 
             //---------fixing cookies--------------------
-            res.cookie("refreshToken", refreshToken, {
-              httpOnly: true,
+            /* res.cookie("refreshToken", refreshToken, {
+               httpOnly: true,
               secure: process.env.NODE_ENV,
               sameSite: "strict",
               path: "/", // Add a path
               maxAge: 7 * 24 * 60 * 60 * 1000,
             });
+           */
           }
-
-          console.log, res.cookie;
           res.send({
             error: false,
             user: await User.findOne({ email }),
@@ -78,13 +77,13 @@ module.exports = {
   logout: async (req, res) => {
     try {
       // Fixing clearing cookies
-      res.cookie("refreshToken", "", {
+     /*  res.cookie("refreshToken", "", {
         httpOnly: true,
         secure: process.env.NODE_ENV,
         sameSite: "strict",
         path: "/", // Add a path
         maxAge: 0,
-      });
+      }); */
 
       res.send({
         error: false,
@@ -178,15 +177,15 @@ module.exports = {
 
       // Email content
       const message = `
-        Hi ${user.first_name},
+       Hi ${user.first_name},
 
-        You recently requested to rest your password. Please click the link below to proceed:
+       You recently requested to rest your password. Please click the link below to proceed:
 
-        <a href="${resetUrl}">${resetUrl}</a>
+       <a href="${resetUrl}">${resetUrl}</a>
 
-        This password reset link is only valid for the next 60 minutes.
+       This password reset link is only valid for the next 60 minutes.
         
-        If you did not request a password reset, please ignore this email :)
+       If you did not request a password reset, please ignore this email :)
 
         Sincerely,
         Your <i>Toddlers on the Road</i> team

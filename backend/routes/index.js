@@ -6,5 +6,5 @@ router.use("/auth", require("./authRoute")); //  /api/auth
 router.use("/country", require("./countryRoute")); //  /api/country
 router.use("/packlist", require("./packListRoute")); //  /api/packlist
 router.use("/profiles", require("./profileRoute")); //  /api/profiles
-router.use("/contact", require("./cotactRoute")); //  /api/contact
+router.use("/contact", require("./contactRoute")); //  /api/contact
 module.exports = router;

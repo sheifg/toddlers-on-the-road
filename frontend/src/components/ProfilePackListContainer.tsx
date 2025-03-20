@@ -90,7 +90,7 @@ const ProfilePackListContainer = () => {
         ? packLists.filter((packList) => packList._id !== packListId)
         : [];
 
-      await updateProfile({ packLists: updatedPackLists }); //here include packList and Milestone ,it has to be  distructured  just send packList or just mileston
+      await updateProfile({ packLists: updatedPackLists }); //here include packList and Milestone ,it has to be  destructured  just send packList or just mileston
       toast.success("packList is deleted!");
     } catch (error) {
       if (axios.isAxiosError(error)) {

@@ -1,36 +1,39 @@
 const { sendEmail } = require("../helpers/sendEmail");
 module.exports = {
   sendConfirmEmail: async (req, res) => {
+
     const { userName, email, message } = req.body;
 
     if (!userName || !email || !message) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
+  
     try {
-      const messageConfirm = `
+        const messageConfirm = `
         
-        <p>Hi ${userName},</p>
+        Hi ${userName},
 
-        <p>Thank you for your message:</p>
+        Thank you for your message:
 
-            <P>"<bold>${message}</bold>"</P>
+        "<bold>${message}</bold>"
        
-        <p>We will get back to you soon.</p> 
+        We will get back to you soon. 
 
-        <p>Your team: <i>Toddlers on the Road</i></p> 
+        Your team:<i>Toddlers on the Road</i>
      `;
 
       await sendEmail({
         email: email,
         subject: "Thank you for contacting us!",
         message: messageConfirm,
-      });
-
-      res.status(200).json({
-        success: true,
+      }); 
+      
+      res.status(200).json({ 
+        success: true, 
         message: "Email sent successfully!",
-      });
+       });
+
     } catch (error) {
       console.error("Error sending email:", error);
       res.status(500).json({ error: "Failed to send email" });

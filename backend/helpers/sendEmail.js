@@ -19,7 +19,7 @@ const sendEmail = async ({ email, subject, message }) => {
       to: email,
       subject: subject,
       text: message,
-      html: message, //.replace(/\n/g, "<br>"), // Convert newlines to <br> for HTML
+      html: message.replace(/\n/g, "<br>"), // Convert newlines to <br> for HTML
     });
 
     console.log("Email sent: %s", info.messageId);
