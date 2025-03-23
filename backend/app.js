@@ -69,6 +69,15 @@ app.use((req, res, next) => {
 // Find/Pagination/Search/Sort:
 app.use(require("./middlewares/findSearchSortPage.js"));
 
+// HomePath route:
+app.all('/', (req, res) => {
+  res.send({
+      error: false,
+      message: 'Welcome to Toddlers on the Road API',
+      user: req.user
+  })
+})
+
 // API Routes
 app.use("/api", require("./routes"));
 
