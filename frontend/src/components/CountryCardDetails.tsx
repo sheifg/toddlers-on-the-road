@@ -1,4 +1,5 @@
 import { Country } from "../types/countries";
+import { BASE_URL } from "../constants";
 
 interface CountryCardDetailsProps {
   handleBack: () => void;
@@ -18,7 +19,7 @@ const CountryCardDetails = ({
         <div className="max-w rounded-lg overflow-hidden shadow-lg text-center bg-light-pink">
           <img
             className="h-[12.5rem] object-containt w-full"
-            src={`http://127.0.0.1:8000` + countryDetails.images[0]}
+            src={BASE_URL + countryDetails.images[0]}
             alt={countryDetails.name}
           />
           <div className="px-6 pt-3 pb-3 lg:pb-4 text-marine-blue">

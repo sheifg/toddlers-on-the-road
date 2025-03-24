@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState } from "react"; 
+import { BASE_URL } from "../constants";
 
 interface MilestoneCardImagesProps {
   milestoneImages: string[];
@@ -30,7 +31,7 @@ const MilestoneImagesContainer = ({
           <img
             key={index}
             className="h-[12.5rem] object-containt w-full flex-shrink-0"
-            src={image === "milestone-travel.jpg" ? image : `http://127.0.0.1:8000${image}`}
+            src={image === "milestone-travel.jpg" ? image : `${BASE_URL}${image}`}
             alt="Travel image"
           />
         ))}

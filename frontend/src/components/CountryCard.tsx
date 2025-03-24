@@ -1,4 +1,5 @@
-import { Country } from "../types/countries";
+import { Country } from "../types/countries"; 
+import { BASE_URL } from "../constants";
 
 interface CountryCardProps {
   handleClick: (countryId: string) => void;
@@ -11,7 +12,7 @@ const CountryCard = ({ country, handleClick }: CountryCardProps) => {
       <div className="max-w rounded-lg overflow-hidden shadow-lg text-center bg-mustard bg-opacity-60">
         <img
           className="h-[12.5rem] object-containt w-full"
-          src={`http://127.0.0.1:8000` + country.images[0]}
+          src={BASE_URL + country.images[0]}
           alt={country.name}
         />
         <div className="px-6 pt-3 pb-2 lg:pb-0 text-marine-blue">
