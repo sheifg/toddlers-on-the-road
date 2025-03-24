@@ -56,7 +56,7 @@ const MilestoneModal = ({
     }
   };
 
-  const handleSubmit = async (values: any, { setFieldValue: any }) => {
+  const handleSubmit = async (values: any, actions: any) => {
     try {
       // Remove any empty values
       const filteredImages = values.images.filter((img: string) => img?.trim() !== "");
@@ -66,7 +66,7 @@ const MilestoneModal = ({
         ? filteredImages
         : ["milestone-travel.jpg"];
 
-      setFieldValue("images", values.images); // Ensure Formik updates values
+      actions.setFieldValue("images", values.images); // Ensure Formik updates values
 
       await onSubmit(values);
       closeModal();
