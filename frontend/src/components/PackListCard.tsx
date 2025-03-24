@@ -30,7 +30,7 @@ const PackListCard = ({
               >
                 <img
                   className="w-4 md:w-6  2xl:w-9"
-                  src="../../public/checkbox.svg"
+                  src="checkbox.svg"
                 />
                 <p className="pb-3">{item}</p>
               </li>
