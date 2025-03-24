@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 
 // Explicitly set CORS headers for all responses
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "toddlers-on-the-road.vercel.app");
+  res.header("Access-Control-Allow-Origin", "https://toddlers-on-the-road.vercel.app");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header(
     "Access-Control-Allow-Headers",
@@ -52,7 +52,7 @@ app.use((req, res, next) => {
 // Enable CORS
 const cors = require("cors");
 const corsOptions = {
-  origin: ["toddlers-on-the-road.vercel.app"], // Allow link to the frontend
+  origin: ["https://toddlers-on-the-road.vercel.app"], // Allow link to the frontend
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Add OPTIONS for preflight
   credentials: true, // Allow cookies/credentials
   allowedHeaders: ["Content-Type", "Authorization"], // Explicitly allow these headers
