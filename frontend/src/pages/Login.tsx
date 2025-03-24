@@ -7,7 +7,6 @@ import { FcGoogle } from "react-icons/fc";
 import { signUpProvider } from "../config/firebase";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { ICurrentUser } from "../types/user";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -82,7 +81,7 @@ const Login = () => {
     redirectionPath = `${redirectTo.pathname}${redirectTo.search}`;
   }
 
-  const handleSubmit = async (values, actions: any) => {
+  const handleSubmit = async (values: any, actions: any) => {
     try {
       const userDataLogin = await login(values);
       setUserInfo(userDataLogin);

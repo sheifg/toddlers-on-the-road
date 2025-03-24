@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import CountryCard from "./CountryCard";
+import { Country } from "../types/countries";
 
-const CardsContainer = ({ countries }) => {
+interface CardsContainerProps {
+  countries: Country[];
+}
+const CardsContainer = ({ countries}: CardsContainerProps) => {
   const navigate = useNavigate();
 
   const handleClick = (countryId: string) => {

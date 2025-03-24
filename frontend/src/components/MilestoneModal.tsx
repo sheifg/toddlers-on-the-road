@@ -1,8 +1,4 @@
 import { array, object, string } from "yup";
-import {
-  ProfileContextProps,
-  useProfileContext,
-} from "../context/ProfileContext";
 import { IMilestone } from "../types/profile";
 import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import { useState } from "react";
@@ -40,7 +36,7 @@ const MilestoneModal = ({
     description: string(),
   });
 
-  const handleFileChange = (event, index, setFieldValue) => {
+  const handleFileChange = (event: any, index: any, setFieldValue: any) => {
     const file = event.target.files?.[0];
     if (file) {
       const fileReader = new FileReader();
@@ -60,10 +56,10 @@ const MilestoneModal = ({
     }
   };
 
-  const handleSubmit = async (values, { setFieldValue }) => {
+  const handleSubmit = async (values: any, { setFieldValue: any }) => {
     try {
       // Remove any empty values
-      const filteredImages = values.images.filter((img) => img?.trim() !== "");
+      const filteredImages = values.images.filter((img: string) => img?.trim() !== "");
 
       // Ensure at least one example image is present
       values.images = filteredImages.length

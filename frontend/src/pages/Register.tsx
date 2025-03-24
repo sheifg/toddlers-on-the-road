@@ -86,7 +86,7 @@ const Register = () => {
       .required("Password is required!"),
   });
 
-  const handleSubmit = async (values, actions: any) => {
+  const handleSubmit = async (values: any, actions: any) => {
     try {
       const userDataRegister = await register(values);
       setUserInfo(userDataRegister);

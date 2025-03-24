@@ -109,7 +109,7 @@ const MilestonesContainer = () => {
 
   // Handles the update of an existing user milestone in the backend with the changes provided in the dialog
   const handleUpdateMilestone = async (updatedMilestone: IMilestone) => {
-    const milestoneId = selectedMilestone._id;
+    const milestoneId = selectedMilestone?._id;
 
     try {
       const updatedMilestones = milestones
