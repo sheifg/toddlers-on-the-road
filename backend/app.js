@@ -20,9 +20,9 @@ dbConnection();
 
 // Middlewares
 // Parse JSON
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ limit: "50mb" }));
 // parse form data:
-app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use("/uploads", express.static("./uploads"));
 app.use("/uploads-user", express.static("./uploads-user"));
 
@@ -33,16 +33,19 @@ app.use((req, res, next) => {
 
 // Explicitly set CORS headers for all responses
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'toddlers-on-the-road.vercel.app');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  
+  res.header("Access-Control-Allow-Origin", "toddlers-on-the-road.vercel.app");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.header("Access-Control-Allow-Credentials", "true");
+
   // Handle preflight requests
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
-  
+
   next();
 });
 
@@ -52,7 +55,7 @@ const corsOptions = {
   origin: ["toddlers-on-the-road.vercel.app"], // Allow link to the frontend
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Add OPTIONS for preflight
   credentials: true, // Allow cookies/credentials
-  allowedHeaders: ['Content-Type', 'Authorization'], // Explicitly allow these headers
+  allowedHeaders: ["Content-Type", "Authorization"], // Explicitly allow these headers
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
@@ -70,13 +73,13 @@ app.use((req, res, next) => {
 app.use(require("./middlewares/findSearchSortPage.js"));
 
 // HomePath route:
-app.all('/', (req, res) => {
+app.all("/", (req, res) => {
   res.send({
-      error: false,
-      message: 'Welcome to Toddlers on the Road API',
-      user: req.user
-  })
-})
+    error: false,
+    message: "Welcome to Toddlers on the Road API",
+    user: req.user,
+  });
+});
 
 // API Routes
 app.use("/api", require("./routes"));
@@ -89,6 +92,6 @@ app.use(errorHandler);
 app.listen(
   PORT,
   console.log(
-    `Server running in ${MODE} mode on ${HOST}:${PORT}`.blue.underline
+    `Server running in https://toddlers-on-the-road-api.onrender.com`.blue.underline
   )
 );
