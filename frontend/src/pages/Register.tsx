@@ -25,7 +25,8 @@ const Register = () => {
         text: "Continue with Google",
         onClick: async () => {
           try {
-            await signUpProvider(navigate, toastMessage);
+            const user = await signUpProvider(navigate, toastMessage);
+            setUserInfo(user);
           } catch (error) {
             console.error("Google sign-up error:", error);
           }

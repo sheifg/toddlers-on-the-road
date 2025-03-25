@@ -28,7 +28,8 @@ const Login = () => {
         text: "Continue with Google",
         onClick: async () => {
           try {
-            await signUpProvider(navigate, toastMessage);
+            const user = await signUpProvider(navigate, toastMessage);
+            setUserInfo(user);
             const redirectTo = locationState?.redirectTo;
             navigate(
               redirectTo ? `${redirectTo.pathname}${redirectTo.search}` : "/"

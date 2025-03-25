@@ -11,6 +11,7 @@ const Details = () => {
   const { countryDetails, getCountryDetails, loading } =
     useCountryContext() as CountryContextProps;
   const { countryId } = useParams<{ countryId: string }>(); // Get countryId from URL params
+  const { home } = useCountryContext();
 
   useEffect(() => {
     if (countryId) {
@@ -19,7 +20,11 @@ const Details = () => {
   }, [countryId]);
 
   const handleBack = () => {
-    navigate(-1);
+    if (home) {
+      navigate("/");
+    } else {
+      navigate("/travel-destinations");
+    }
   };
 
   if (loading) {

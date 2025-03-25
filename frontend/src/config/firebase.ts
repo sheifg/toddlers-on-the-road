@@ -6,8 +6,9 @@ import {
   browserPopupRedirectResolver,
 } from "firebase/auth";
 import { toast } from "react-toastify";
-import { BASE_URL } from "../constants";
+import { API_URL } from "../constants";
 import { getStorageItem } from "../utils/storage";
+import { FirebaseUser } from "../types/user";
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_apiKey,
   authDomain: import.meta.env.VITE_authDomain,
@@ -29,7 +30,7 @@ provider.setCustomParameters({
 const signUpProvider = async (
   navigate: (path: string) => void,
   toastMessage: string
-): Promise<void> => {
+): Promise<FirebaseUser> => {
   try {
     const result = await signInWithPopup(
       auth,
@@ -40,7 +41,7 @@ const signUpProvider = async (
 
     const firebaseToken = getStorageItem("firebaseToken");
 
-    const response = await fetch(`${BASE_URL}/api/users/firebase`, {
+    const response = await fetch(`${API_URL}/api/users/firebase`, {
       // Note the /firebase endpoint
       method: "POST",
       headers: {
@@ -48,7 +49,7 @@ const signUpProvider = async (
         Authorization: `Bearer ${firebaseToken}`,
       },
       body: JSON.stringify({
-        username: displayName, //|| email.split('@')[0], // Fallback if no displayName
+        username: displayName, 
         email,
         provider: "firebase",
         password: uid,
@@ -63,10 +64,6 @@ const signUpProvider = async (
 
     const data = await response.json();
 
-    /*  const token  = userData.token */
-    sessionStorage.setItem("firebaseUser", JSON.stringify(data.user));
-    sessionStorage.setItem("firebaseToken", JSON.stringify(data.token));
-
     const user = {
       token: data.token,
       ...data.user,
@@ -74,6 +71,7 @@ const signUpProvider = async (
     sessionStorage.setItem("user", JSON.stringify(user));
     toast.success(`${toastMessage}`);
     navigate("/");
+    return user;
   } catch (error) {
     console.error("Firebase Auth Error:", error);
     if (error instanceof Error) {

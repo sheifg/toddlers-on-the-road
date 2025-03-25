@@ -1,14 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import CountryCard from "./CountryCard";
 import { Country } from "../types/countries";
+import { useCountryContext } from "../context/CountryContext";
 
 interface CardsContainerProps {
   countries: Country[];
 }
-const CardsContainer = ({ countries}: CardsContainerProps) => {
+const CardsContainer = ({ countries }: CardsContainerProps) => {
   const navigate = useNavigate();
+  const { setHome } = useCountryContext();
 
   const handleClick = (countryId: string) => {
+    setHome(false);
     navigate(`/details/${countryId}`);
   };
 

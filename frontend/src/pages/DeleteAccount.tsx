@@ -18,6 +18,7 @@ const DeleteAccount = () => {
       await deleteAccount();
       setUserInfo(null);
       toast.success("Delete user account successfully!");
+      navigate("/");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data?.message);

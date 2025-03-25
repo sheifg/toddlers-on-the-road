@@ -23,5 +23,6 @@ uploads-user
 *.njsproj
 *.sln
 *.sw?
-.env
+.env.*
+
 

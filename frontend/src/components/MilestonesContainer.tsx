@@ -107,18 +107,31 @@ const MilestonesContainer = () => {
     setIsCreation(false);
   };
 
-  // Handles the update of an existing user milestone in the backend with the changes provided in the dialog
+  // Handles the update of an existing user milestone or the creation of the first one(editing the example milestone) applying changes from the dialog in the backend
   const handleUpdateMilestone = async (updatedMilestone: IMilestone) => {
     const milestoneId = selectedMilestone?._id;
 
+    const isExample = selectedMilestone.isExample;
+
     try {
-      const updatedMilestones = milestones
-        ? milestones.map((milestone) =>
-            milestone._id === milestoneId ? updatedMilestone : milestone
-          )
-        : [];
+      let updatedMilestones;
+
+      if (isExample) {
+        // Create a copy instead of updating
+        const copiedMilestone = { ...updatedMilestone, _id: undefined }; // Generate a new ID in the backend
+        updatedMilestones = [copiedMilestone, ...milestones];
+        toast.success("Your first milestone is created!");
+      } else {
+        // Update the milestone normally
+        updatedMilestones = milestones
+          ? milestones.map((milestone) =>
+              milestone._id === milestoneId ? updatedMilestone : milestone
+            )
+          : [];
+        toast.success("The milestone is updated");
+      }
+
       await updateProfile({ milestones: updatedMilestones });
-      toast.success("The milestone is updated");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data?.message);

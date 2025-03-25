@@ -1,1 +1,1 @@
-export const BASE_URL = "https://toddlers-on-the-road-api.onrender.com";
+export const API_URL = import.meta.env.VITE_apiUrl;

@@ -24,3 +24,6 @@ export type IUpdatePersonalDetails = Pick<
   IUser,
   "first_name" | "last_name" | "email"
 >;
+
+export type FirebaseUser = ICurrentUser &
+  Omit<IUser, "first_name" | "last_name">;
