@@ -99,31 +99,19 @@ const ContactForm = <
         </Formik>
       </div>
       {showMessage && (
-        <div className="msg-container  text-balance">
-          <div className="msg-inner bg-mustard opacity-70 p-4 flex flex-col item-center justify-center gap-2">
+        <div className="msg-container flex  justify-center items-center text-balance">
+          <div className="msg-inner bg-mustard opacity-70 p-4 md:p-2 flex flex-col item-center justify-center gap-2">
             <p>We are happy to hear your thoughts and suggestions!</p>
-            <p className="flex items-center  ">
+            <p className="flex items-center space-x-3 md:gap-4  lg:gap-3 ">
               <span>Your message has been successfully sent.</span>
               <LuPartyPopper className="w-5 h-5" />
             </p>
-            <p className="flex items-center  ">
+            <p className="flex items-center space-x-3  md:gap-4 lg:gap-3  ">
               <span>We will get back to you as soon as possible.</span>
-              <RiEmotionHappyLine className="w-5 h-5" />
+              <RiEmotionHappyLine className="w-5 h-5 1" />
             </p>
             <p className="flex items-center  ">
               <span>
-                {" "}
-                In the meantime, grab a cup of coffee ☕ and relax—we’ve got
-                this!
-              </span>
-            </p>
-            <p className="flex items-center  ">
-              <span>We will get back to you as soon as possible </span>
-              <RiEmotionHappyLine className="w-5 h-5" />
-            </p>
-            <p className="flex items-center  ">
-              <span>
-                {" "}
                 In the meantime, grab a cup of coffee ☕ and relax—we’ve got
                 this!
               </span>

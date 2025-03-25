@@ -133,13 +133,13 @@ const PackListContainer = () => {
 
   return (
     <div className="flex flex-col justify-center items-center text-marine-blue font-Mali mt-8">
-      <h2 className="font-medium text-lg mb-2 md:text-2xl lg:text-3xl drop-shadow-[3px_3px_0px_rgba(96,211,214,0.6)] ]">
+      <h2 className="font-Mali text-center mt-10 text-xl md:text-2xl lg:text-3xl font-bold text-marine-blue">
         What do I need?
       </h2>
 
       {/* PackList Cards Container */}
       <div className="relative w-11/12 mt-6">
-        <div className="flex justify-between items-center gap-4">
+        <div className="flex justify-between items-center gap-1.5">
           {/* Left Button */}
           {currentIndex > 0 && (
             <button
@@ -176,19 +176,7 @@ const PackListContainer = () => {
             </button>
           )}
         </div>
-        {totalSlides > 1 && (
-          <div className="flex justify-center  mb-4 space-x-2 mt-6 md:mt-8  lg:mt-10">
-            {groupedSlides.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`h-2 w-2 md:h-3 md:w-3 rounded-full ${
-                  currentIndex === index ? "bg-marine-blue" : "bg-gray-200"
-                } transition-all duration-500`}
-              ></button>
-            ))}
-          </div>
-        )}
+      
       </div>
 
       {/* Add New List Button */}

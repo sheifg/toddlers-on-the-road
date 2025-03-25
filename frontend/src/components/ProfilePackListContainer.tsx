@@ -151,8 +151,7 @@ const ProfilePackListContainer = () => {
     return () => window.removeEventListener("resize", updateCardsPerView);
   }, []);
 
-  const totalSlides = packLists ? packLists.length : 0;
-  const groupedSlides = Array.from({ length: totalSlides });
+ 
 
   // Navigation for carousel
   const handleNext = () => {
@@ -226,20 +225,7 @@ const ProfilePackListContainer = () => {
             )}
           </div>
 
-          {/* Pagination Dots */}
-          {totalSlides > 1 && (
-            <div className="flex justify-center  mb-4 space-x-2 mt-6 md:mt-8  lg:mt-10">
-              {groupedSlides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`h-2 w-2 md:h-3 md:w-3 rounded-full ${
-                    currentIndex === index ? "bg-marine-blue" : "bg-gray-200"
-                  } transition-all duration-500`}
-                ></button>
-              ))}
-            </div>
-          )}
+          
         </div>
       )}
 

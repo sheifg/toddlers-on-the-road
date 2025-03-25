@@ -66,7 +66,7 @@ const HomeMilestonesContainer = () => {
 
   return (
     <div className="py-3 lg:pb-4 text-marine-blue font-Mali text-center">
-      <h4 className="font-medium text-lg mb-2 md:text-2xl lg:text-3xl drop-shadow-[3px_3px_0px_rgba(96,211,214,0.6)] ]">
+      <h4 className="font-Mali text-center mt-10 text-xl md:text-2xl lg:text-3xl font-bold text-marine-blue">
         Milestone family trips
       </h4>
       <div className="relative overflow-hidden w-full">
