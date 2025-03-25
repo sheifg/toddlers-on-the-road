@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import { PackList } from "../types/profile";
-import { BASE_URL } from "../constants";
+import { API_URL } from "../constants";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -14,12 +14,14 @@ const PackListContext = createContext<PackListContextProps | undefined>(
 );
 
 export const PackListProvider = ({ children }: { children: ReactNode }) => {
-  const [predefinedPackLists, setPredefinedPackLists] = useState<PackList[]>([]); // it holds just the original packList in home
+  const [predefinedPackLists, setPredefinedPackLists] = useState<PackList[]>(
+    []
+  ); // it holds just the original packList in home
 
   const loadPredefinedPackLists = async () => {
     try {
       const { data } = await axios({
-        url: `${BASE_URL}/api/packlist`,
+        url: `${API_URL}/api/packlist`,
         method: "GET",
       });
       setPredefinedPackLists(data.data);
@@ -34,7 +36,7 @@ export const PackListProvider = ({ children }: { children: ReactNode }) => {
 
   const value: PackListContextProps = {
     loadPredefinedPackLists,
-    predefinedPackLists
+    predefinedPackLists,
   };
 
   return (

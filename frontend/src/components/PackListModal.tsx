@@ -85,7 +85,7 @@ export default function PackListModal({
           &#x2715; {/* Close button */}
         </button>
         <h2 className="text-3xl font-bold text-start text-marine-blue">
-          Create your PackList
+          Create your packlist
         </h2>
         {isCreation ? (
           <input

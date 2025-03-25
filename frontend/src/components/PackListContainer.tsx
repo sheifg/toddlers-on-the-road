@@ -3,7 +3,7 @@ import PackListCard from "./PackListCard";
 import PackListModal from "./PackListModal";
 import { PackList } from "../types/profile";
 import axios from "axios";
-import { BASE_URL } from "../constants";
+import { API_URL } from "../constants";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
 import {
@@ -49,8 +49,8 @@ const PackListContainer = () => {
         ? [selectedPackList, ...packLists]
         : [selectedPackList];
 
-      await updateProfile({packLists: updatedPackLists});
-      toast.success("packList is updated!");
+      await updateProfile({ packLists: updatedPackLists });
+      toast.success("Packlist is updated!");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data?.message);
@@ -73,12 +73,11 @@ const PackListContainer = () => {
   const getDefaultPackList = async (packListId: string) => {
     try {
       const { data } = await axios({
-        url: `${BASE_URL}/api/packlist/${packListId}`,
+        url: `${API_URL}/api/packlist/${packListId}`,
         method: "GET",
       });
       return data.data;
     } catch (error) {
-      // TODO These errors should ideally be in the function caller
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data?.message);
       } else if (error instanceof Error) {

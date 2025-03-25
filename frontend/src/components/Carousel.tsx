@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Country } from "../types/countries";
 import CarouselCard from "./CarouselCard";
+import { useCountryContext } from "../context/CountryContext";
 
 interface CarouselProps {
   countries: Country[];
@@ -11,6 +12,7 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerSlide, setCardsPerSlide] = useState(1);
   const navigate = useNavigate();
+  const { setHome } = useCountryContext();
 
   useEffect(() => {
     const updateCardsPerSlide = () => {
@@ -45,6 +47,7 @@ const Carousel: React.FC<CarouselProps> = ({ countries }) => {
   };
 
   const handleClick = (countryId: string) => {
+    setHome(true);
     navigate(`/details/${countryId}`);
   };
 

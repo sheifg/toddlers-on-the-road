@@ -1,5 +1,5 @@
 import { Country } from "../types/countries";
-import { BASE_URL } from "../constants";
+import { API_URL } from "../constants";
 
 interface CarouselCardProps {
   handleClick: (countryId: string) => void;
@@ -21,7 +21,7 @@ const CarouselCard = ({
       <div className="max-w w-11/12 rounded-lg overflow-hidden shadow-lg text-center bg-mustard bg-opacity-60 mx-auto">
         <img
           className="h-[12.5rem] object-containt w-full"
-          src={BASE_URL + country.images[0]}
+          src={API_URL + country.images[0]}
           alt={country.name}
         />
         <div className="px-2 pt-3 pb-2 lg:pb-0 text-marine-blue">

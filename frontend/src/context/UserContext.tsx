@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext } from "react";
 import { useAuth } from "./AuthContext";
-import { BASE_URL } from "../constants";
+import { API_URL } from "../constants";
 import axios from "axios";
 import {
   IChangePassword,
@@ -24,7 +24,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const changePassword = async (changePasswordData: IChangePassword) => {
     try {
       const { data } = await axios({
-        url: `${BASE_URL}/api/users/change-password`,
+        url: `${API_URL}/api/users/change-password`,
         method: "PUT",
         data: { user_id: userInfo?._id, ...changePasswordData },
         headers: { Authorization: `Bearer ${userInfo?.token}` },
@@ -44,14 +44,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     };
     try {
       await axios({
-        url: `${BASE_URL}/api/users/update-personal-details`,
+        url: `${API_URL}/api/users/update-personal-details`,
         method: "PUT",
         data: updatedPersonalDetails,
         headers: { Authorization: `Bearer ${userInfo?.token}` },
       });
       return Promise.resolve(updatedPersonalDetails);
-    }
-    catch (error) {
+    } catch (error) {
       return Promise.reject(error);
     }
   };
@@ -59,7 +58,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const deleteAccount = async () => {
     try {
       const { data } = await axios({
-        url: `${BASE_URL}/api/users/delete-account/${userInfo?._id}`,
+        url: `${API_URL}/api/users/delete-account/${userInfo?._id}`,
         method: "DELETE",
         headers: { Authorization: `Bearer ${userInfo?.token}` },
       });

@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import { Country } from "../types/countries";
-import { BASE_URL } from "../constants";
+import { API_URL } from "../constants";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -10,6 +10,8 @@ export interface CountryContextProps {
   getCountryDetails: (countryId: string) => Promise<void>;
   countryDetails: Country | null;
   loading: boolean;
+  home: boolean;
+  setHome: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const CountryContext = createContext<CountryContextProps | null>(null);
 
@@ -17,11 +19,12 @@ export const CountryProvider = ({ children }: { children: ReactNode }) => {
   const [countries, setCountries] = useState<Country[]>([]);
   const [countryDetails, setCountryDetails] = useState<Country | null>(null);
   const [loading, setLoading] = useState(false);
+  const [home, setHome] = useState(true);
 
   const getCountries = async () => {
     try {
       const { data } = await axios({
-        url: `${BASE_URL}/api/country/`,
+        url: `${API_URL}/api/country/`,
         method: "GET",
       });
       setCountries(data.data);
@@ -51,7 +54,7 @@ export const CountryProvider = ({ children }: { children: ReactNode }) => {
       const token = user.token;
 
       const { data } = await axios({
-        url: `${BASE_URL}/api/country/${countryId}`,
+        url: `${API_URL}/api/country/${countryId}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -77,6 +80,8 @@ export const CountryProvider = ({ children }: { children: ReactNode }) => {
     getCountryDetails,
     countryDetails,
     loading,
+    home,
+    setHome,
   };
 
   return (
@@ -91,4 +96,3 @@ export const useCountryContext = () => {
   }
   return context;
 };
-

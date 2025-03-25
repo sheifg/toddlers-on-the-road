@@ -7,7 +7,7 @@ import {
 } from "react";
 import { IForgotPassword, IResetPassword } from "../types/context";
 import axios from "axios";
-import { BASE_URL } from "../constants";
+import { API_URL } from "../constants";
 import {
   getStorageItem,
   removeStorageItem,
@@ -43,6 +43,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   // Check for stored user on initial load
   useEffect(() => {
     const storedUser = getStorageItem("user");
+
     // If user found in localStorage, they previously used "remember me"
     if (storedUser && window.localStorage.getItem("user")) {
       setRememberMe(true);
@@ -56,13 +57,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   // Update storage when userInfo changes
   useEffect(() => {
     if (userInfo) {
-      // Save user information in localStorage when rememberme true ,if it is fales store it in session
+      // Save user information in localStorage when rememberme true, if it is false store it in session
       setStorageItem("user", userInfo, rememberMe);
     } else {
-      // Clear localStorage and session , when userInfo is null (user logged out)
+      // Clear the local and session storage, when userInfo is null (user logged out)
       removeStorageItem("user");
     }
-  }, [userInfo, rememberMe]); // TODO Check firebase [userInfo,firebaseToken]
+  }, [userInfo, rememberMe]);
 
   // Add this function to your context
   const updateRememberMe = (value: boolean) => {
@@ -73,7 +74,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const register = async (userData: IUser) => {
     try {
       const { data } = await axios({
-        url: `${BASE_URL}/api/auth/register/`,
+        url: `${API_URL}/api/auth/register/`,
         method: "POST",
         data: userData,
         withCredentials: true,
@@ -92,7 +93,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const login = async (userData: IUser) => {
     try {
       const { data } = await axios({
-        url: `${BASE_URL}/api/auth/login/`,
+        url: `${API_URL}/api/auth/login/`,
         method: "POST",
         data: userData,
         withCredentials: true, // Make sure credentials (cookies) are included
@@ -112,7 +113,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = async () => {
     try {
       const { data } = await axios({
-        url: `${BASE_URL}/api/auth/logout/`,
+        url: `${API_URL}/api/auth/logout/`,
         method: "GET",
         withCredentials: true,
       });
@@ -125,7 +126,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const forgotPassword = async (forgotPasswordData: IForgotPassword) => {
     try {
       const { data } = await axios({
-        url: `${BASE_URL}/api/auth/forgot-password`,
+        url: `${API_URL}/api/auth/forgot-password`,
         method: "POST",
         data: forgotPasswordData,
       });
@@ -141,7 +142,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   ) => {
     try {
       const { data } = await axios({
-        url: `${BASE_URL}/api/auth/reset-password/${resetToken}`,
+        url: `${API_URL}/api/auth/reset-password/${resetToken}`,
         method: "POST",
         data: resetPasswordData,
       });

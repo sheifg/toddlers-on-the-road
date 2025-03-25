@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { RiEmotionHappyLine } from "react-icons/ri";
 import { LuPartyPopper } from "react-icons/lu";
-import { BASE_URL } from "../constants";
+import { API_URL } from "../constants";
 import axios from "axios";
 
 interface ContactFormProps<T> {
@@ -33,12 +33,11 @@ const ContactForm = <
 
   const handleSubmit = async (values: T, actions: FormikHelpers<T>) => {
     try {
-      const response = await axios.post(`${BASE_URL}/api/contact/`, values, {
+      const response = await axios.post(`${API_URL}/api/contact/`, values, {
         headers: { "Content-Type": "application/json" },
       });
 
       if (response.data.success) {
-        console.log("Success:", response.data);
         setShowMessage(true);
         actions.resetForm(); // Clear form after successful submission
       } else {
@@ -101,20 +100,22 @@ const ContactForm = <
       </div>
       {showMessage && (
         <div className="msg-container  text-balance">
-        <div className="msg-inner bg-mustard opacity-70 p-4 flex flex-col item-center justify-center gap-2">
-          <p>
-            We are happy to hear your thoughts and suggestions!
-          </p>
-          <p className="flex items-center  ">
-            <span>Your message has been successfully sent.</span>
-            <LuPartyPopper className="w-5 h-5" />
-          </p>
-          <p className="flex items-center  ">
-            <span>We will get back to you as soon as possible.</span>
-            <RiEmotionHappyLine className="w-5 h-5" />
-          </p>
-          <p className="flex items-center  ">
-            <span> In the meantime, grab a cup of coffee ☕ and relax—we’ve got this!</span>
+          <div className="msg-inner bg-mustard opacity-70 p-4 flex flex-col item-center justify-center gap-2">
+            <p>We are happy to hear your thoughts and suggestions!</p>
+            <p className="flex items-center  ">
+              <span>Your message has been successfully sent.</span>
+              <LuPartyPopper className="w-5 h-5" />
+            </p>
+            <p className="flex items-center  ">
+              <span>We will get back to you as soon as possible.</span>
+              <RiEmotionHappyLine className="w-5 h-5" />
+            </p>
+            <p className="flex items-center  ">
+              <span>
+                {" "}
+                In the meantime, grab a cup of coffee ☕ and relax—we’ve got
+                this!
+              </span>
             </p>
             <p className="flex items-center  ">
               <span>We will get back to you as soon as possible </span>

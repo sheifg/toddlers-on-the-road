@@ -32,7 +32,9 @@ const PersonalDetails = () => {
                 </button>
               </div>
               <h2 className="font-extrabold text-4xl md:text-6xl px-3 py-2 md:p-2">
-                {userInfo?.first_name} {userInfo?.last_name}
+                {userInfo && userInfo?.first_name && userInfo?.last_name
+                  ? `${userInfo?.first_name} ${userInfo?.last_name}`
+                  : userInfo?.username}
               </h2>
               <p className="font-normal text-lg md:text-xl py-1 lg:text-2xl">
                 {userInfo?.email}

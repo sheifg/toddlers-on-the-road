@@ -1,17 +1,16 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import { IMilestone, IProfile, PackList } from "../types/profile";
-import { BASE_URL } from "../constants";
+import { API_URL } from "../constants";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "./AuthContext";
+import { getStorageItem } from "../utils/storage";
 
 export interface ProfileContextProps {
   packLists: PackList[] | null;
   milestones: IMilestone[] | null;
   loadProfile: () => Promise<void>;
-  updateProfile: (
-    updatedProfile: IProfile,
-  ) => Promise<void>;
+  updateProfile: (updatedProfile: IProfile) => Promise<void>;
 }
 
 const ProfileContext = createContext<ProfileContextProps | null>(null);
@@ -25,10 +24,16 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const loadProfile = async () => {
     // Load the packlists and the milestones of the user
     try {
+      // Use firebaseToken if userInfo.token is not available
+      const token = userInfo?.token || getStorageItem("firebaseToken");
+      if (!token) {
+        throw new Error("No authentication token available");
+      }
+
       const { data } = await axios.get(
-        `${BASE_URL}/api/profiles/${userInfo?._id}`,
+        `${API_URL}/api/profiles/${userInfo?._id}`,
         {
-          headers: { Authorization: `Bearer ${userInfo?.token}` },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
       setPackLists(data.data.packLists);
@@ -43,13 +48,13 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     // Update the packlists and milestones of the user
     try {
       const { data } = await axios.put(
-        `${BASE_URL}/api/profiles/${userInfo?._id}`,
+        `${API_URL}/api/profiles/${userInfo?._id}`,
         updatedProfile,
         {
           headers: { Authorization: `Bearer ${userInfo?.token}` }, // User data is protected
         }
       );
-      
+
       setPackLists(data.data.packLists);
       setMilestones(data.data.milestones);
     } catch (error) {

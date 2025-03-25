@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { PackList } from "../types/profile";
 import axios from "axios";
-import { BASE_URL } from "../constants";
+import { API_URL } from "../constants";
 import { toast } from "react-toastify";
 import ProfilePackListCard from "./ProfilePackListCard";
 import { useAuth } from "../context/AuthContext";
@@ -49,7 +49,7 @@ const ProfilePackListContainer = () => {
         : [selectedPackList];
 
       await updateProfile({ packLists: updatedPackLists });
-      toast.success("packList is added!");
+      toast.success("Packlist is added!");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data?.message);
@@ -72,7 +72,7 @@ const ProfilePackListContainer = () => {
 
       await updateProfile({ packLists: updatedPackLists });
       //here the console will not show the updated packLists
-      toast.success("packList is updated!");
+      toast.success("Packlist is updated!");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data?.message);
@@ -91,7 +91,7 @@ const ProfilePackListContainer = () => {
         : [];
 
       await updateProfile({ packLists: updatedPackLists }); //here include packList and Milestone ,it has to be  destructured  just send packList or just mileston
-      toast.success("packList is deleted!");
+      toast.success("Packlist is deleted!");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data?.message);
@@ -106,7 +106,7 @@ const ProfilePackListContainer = () => {
     const packListId = "67bc61f1d52d552624756648";
     try {
       const { data } = await axios({
-        url: `${BASE_URL}/api/packlist/${packListId}`,
+        url: `${API_URL}/api/packlist/${packListId}`,
         method: "GET",
       });
       setDefaultPackList(data.data); // Store default pack list in a state

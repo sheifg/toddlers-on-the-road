@@ -7,12 +7,8 @@ const app = express();
 // Import packages
 require("colors");
 require("express-async-errors");
-require("dotenv").config();
-
-// Environment variables
-const PORT = process.env.PORT || 8080;
-const HOST = process.env.HOST || "127.0.0.1";
-const MODE = process.env.MODE || "development";
+require("dotenv").config({ path: `.env.${process.env.MODE}` });
+console.log("process.env.MODE", process.env.MODE)
 
 // Connect to DB
 const { dbConnection } = require("./config/dbConnection.js");
@@ -33,7 +29,10 @@ app.use((req, res, next) => {
 
 // Explicitly set CORS headers for all responses
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://toddlers-on-the-road.vercel.app");
+  res.header(
+    "Access-Control-Allow-Origin",
+    process.env.FRONTEND_URL
+  );
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header(
     "Access-Control-Allow-Headers",
@@ -52,7 +51,7 @@ app.use((req, res, next) => {
 // Enable CORS
 const cors = require("cors");
 const corsOptions = {
-  origin: ["https://toddlers-on-the-road.vercel.app"], // Allow link to the frontend
+  origin: [process.env.FRONTEND_URL], // Allow link to the frontend
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Add OPTIONS for preflight
   credentials: true, // Allow cookies/credentials
   allowedHeaders: ["Content-Type", "Authorization"], // Explicitly allow these headers
@@ -90,8 +89,8 @@ app.use(errorHandler);
 
 // Run the server
 app.listen(
-  PORT,
+  process.env.PORT,
   console.log(
-    `Server running in https://toddlers-on-the-road-api.onrender.com`.blue.underline
+    `Server running in ${process.env.MODE} mode on ${process.env.HOST}${process.env.PORT ? `:${process.env.PORT}` : ""}`.blue.underline
   )
 );

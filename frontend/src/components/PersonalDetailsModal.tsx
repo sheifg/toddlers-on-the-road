@@ -13,17 +13,29 @@ const PersonalDetailsModal = ({ closeModal }: PersonalDetailsModalProps) => {
   const { userInfo, setUserInfo } = useAuth();
   const { updatePersonalDetails } = useUserContext() as UserContextProps;
 
-  const initialValues = {
-    first_name: userInfo?.first_name || "",
-    last_name: userInfo?.last_name || "",
-    email: userInfo?.email || "",
-  };
+  const initialValues =
+    userInfo?.first_name && userInfo?.last_name
+      ? {
+          first_name: userInfo.first_name || "",
+          last_name: userInfo.last_name || "",
+          email: userInfo.email || "",
+        }
+      : {
+          username: userInfo?.username || "",
+          email: userInfo?.email || "",
+        };
 
-  const validationSchema = object({
-    first_name: string().required("First name is required"),
-    last_name: string().required("Last name is required"),
-    email: string().email("Invalid Email").required("Email is required!"),
-  });
+  const validationSchema =
+    userInfo?.first_name && userInfo?.last_name
+      ? object({
+          first_name: string().required("First name is required"),
+          last_name: string().required("Last name is required"),
+          email: string().email("Invalid Email").required("Email is required!"),
+        })
+      : object({
+          username: string().required("Username is required"),
+          email: string().email("Invalid Email").required("Email is required!"),
+        });
 
   const handleSubmit = async (values: IUpdatePersonalDetails, actions: any) => {
     try {
@@ -58,32 +70,58 @@ const PersonalDetailsModal = ({ closeModal }: PersonalDetailsModalProps) => {
           >
             {() => (
               <Form className="flex flex-col space-y-4">
-                <div>
-                  <label className="block text-marine-blue">First Name</label>
-                  <Field
-                    type="text"
-                    name="first_name"
-                    className="w-full p-2 border rounded-lg"
-                  />
-                  <ErrorMessage
-                    name="first_name"
-                    component="div"
-                    className="text-poppy-red text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block text-marine-blue">Last Name</label>
-                  <Field
-                    type="text"
-                    name="last_name"
-                    className="w-full p-2 border rounded-lg"
-                  />
-                  <ErrorMessage
-                    name="last_name"
-                    component="div"
-                    className="text-poppy-red text-sm"
-                  />
-                </div>
+                {userInfo?.first_name && userInfo?.last_name && (
+                  <>
+                    <div>
+                      <label className="block text-marine-blue">
+                        First Name
+                      </label>
+                      <Field
+                        type="text"
+                        name="first_name"
+                        className="w-full p-2 border rounded-lg"
+                      />
+                      <ErrorMessage
+                        name="first_name"
+                        component="div"
+                        className="text-poppy-red text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-marine-blue">
+                        Last Name
+                      </label>
+                      <Field
+                        type="text"
+                        name="last_name"
+                        className="w-full p-2 border rounded-lg"
+                      />
+                      <ErrorMessage
+                        name="last_name"
+                        component="div"
+                        className="text-poppy-red text-sm"
+                      />
+                    </div>
+                  </>
+                )}
+                {!userInfo?.first_name && !userInfo?.last_name && (
+                  <>
+                    <div>
+                      <label className="block text-marine-blue">Username</label>
+                      <Field
+                        type="text"
+                        name="username"
+                        className="w-full p-2 border rounded-lg"
+                      />
+                      <ErrorMessage
+                        name="username"
+                        component="div"
+                        className="text-poppy-red text-sm"
+                      />
+                    </div>
+                  </>
+                )}
+
                 <div>
                   <label className="block text-marine-blue">Email</label>
                   <Field

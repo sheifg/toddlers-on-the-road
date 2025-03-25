@@ -1,5 +1,5 @@
-import { useState } from "react"; 
-import { BASE_URL } from "../constants";
+import { useState } from "react";
+import { API_URL } from "../constants";
 
 interface MilestoneCardImagesProps {
   milestoneImages: string[];
@@ -17,7 +17,7 @@ const MilestoneImagesContainer = ({
 
   const nextSlide = () => {
     setCurrentImageIndex((slideIndex) => slideIndex + 1);
-  };  
+  };
 
   return (
     <div className="relative overflow-hidden w-full">
@@ -31,7 +31,9 @@ const MilestoneImagesContainer = ({
           <img
             key={index}
             className="h-[12.5rem] object-containt w-full flex-shrink-0"
-            src={image === "milestone-travel.jpg" ? image : `${BASE_URL}${image}`}
+            src={
+              image === "milestone-travel.jpg" ? image : `${API_URL}${image}`
+            }
             alt="Travel image"
           />
         ))}
@@ -56,19 +58,19 @@ const MilestoneImagesContainer = ({
           ❯
         </button>
       )}
-      {totalImages > 1 && 
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex justify-center space-x-2">
-        {milestoneImages.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentImageIndex(index)}
-            className={`h-1 w-1 md:h-2 md:w-2 rounded-full ${
-              currentImageIndex === index ? "bg-marine-blue" : "bg-gray-200"
-            } transition-all duration-500`}
-          ></button>
-        ))}
-      </div>
-      }
+      {totalImages > 1 && (
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex justify-center space-x-2">
+          {milestoneImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentImageIndex(index)}
+              className={`h-1 w-1 md:h-2 md:w-2 rounded-full ${
+                currentImageIndex === index ? "bg-marine-blue" : "bg-gray-200"
+              } transition-all duration-500`}
+            ></button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
