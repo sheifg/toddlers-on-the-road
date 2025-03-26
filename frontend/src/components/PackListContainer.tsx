@@ -115,9 +115,7 @@ const PackListContainer = () => {
     return () => window.removeEventListener("resize", updateCardsPerView);
   }, []);
 
-  const totalSlides = predefinedPackLists ? predefinedPackLists.length : 0;
-  const groupedSlides = Array.from({ length: totalSlides });
-
+  
   // Navigation for carousel
   const handleNext = () => {
     if (currentIndex + cardsPerView < predefinedPackLists.length) {

@@ -42,8 +42,15 @@ const ChangePassword = () => {
   const ChangePasswordSchema = object().shape({
     old_password: string().required("Old password is required"),
     new_password: string()
-      .min(8, "Min 8 characters")
-      .required("Password is required!"),
+    .min(8, "Password must be at least 8 characters long")
+    .matches(/[a-z]/, "Password must include at least one lowercase letter (a-z)")
+    .matches(/[A-Z]/, "Password must include at least one uppercase letter (A-Z)")
+    .matches(/\d/, "Password must include at least one number (0-9)")
+    .matches(
+      /[@$!%*?&]/,
+      "Password must include at least one special character (@, $, !, %, *, ?, &)"
+    )
+    .required("Password is required!"),
     confirm_password: string()
       .required("Password is required!")
       .oneOf([ref("new_password")], "Password does not match"),
