@@ -7,7 +7,7 @@ interface PackListModalProps {
   closeModal: () => void;
   selectedPackList: PackList;
   isCreation: boolean;
-  onSubmit : (packList: PackList) => Promise<void>;
+  onSubmit: (packList: PackList) => Promise<void>;
 }
 
 export default function PackListModal({
@@ -16,7 +16,6 @@ export default function PackListModal({
   onSubmit,
   isCreation,
 }: PackListModalProps) {
-
   const [modalItems, setModalItems] = useState<string[]>([
     ...selectedPackList.items,
   ]); // to collect all the updated items, at first there is no change, just the same data of the copiedpacklist
@@ -62,7 +61,7 @@ export default function PackListModal({
     const items = modalItems;
     const copiedPackList = { name, items };
 
-   onSubmit(copiedPackList);  //onSubmit={updateUserPackLists} is a prop from the container take this func
+    onSubmit(copiedPackList); //onSubmit={updateUserPackLists} is a prop from the container take this func
     // It can only be seen the previous version, noit the latest version of userData
     closeModal();
   };
@@ -76,16 +75,16 @@ export default function PackListModal({
     // To be sure it will removed just from the state, not from selected packlist
   };
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 font-Mali ">
-      <div className=" rounded-lg bg-mustard shadow-lg p-6 max-w-md w-full relative">
+    <div className="fixed inset-0 flex items-center justify-center max-w bg-black bg-opacity-50 font-Mali ">
+      <div className=" rounded-lg bg-mustard shadow-lg p-6  max-w-[19rem]  md:max-w-sm lg:max-w-lg  relative">
         <button
-          className="absolute top-4 right-5 text-white bg-blue-water w-10 h-10 rounded-lg mb-2"
+          className=" absolute top-4 right-5 text-white bg-blue-water w-6 h-6 md:w-10 md:h-10 rounded-lg mb-2"
           onClick={closeModal}
         >
           &#x2715; {/* Close button */}
         </button>
-        <h2 className="text-3xl font-bold text-start text-marine-blue">
-          Create your packlist
+        <h2 className=" text-xl md:text-2xl font-bold text-start text-marine-blue">
+          Create your Packlist
         </h2>
         {isCreation ? (
           <input
@@ -95,7 +94,7 @@ export default function PackListModal({
             className="w-full p-2 mt-4 bg-white border border-gray-300 rounded-lg"
           />
         ) : (
-          <h3 className="text-2xl font-bold text-marine-blue text-center mt-4">
+          <h3 className="text-md md:text-2xl font-bold text-marine-blue text-center mt-4">
             {title}
           </h3>
         )}
@@ -137,10 +136,10 @@ export default function PackListModal({
                     )}
                   </div>
 
-                  <div className=" flex justify-end items-center space-x-4">
+                  <div className=" flex justify-end items-center space-x-4 ">
                     <button
                       type="button"
-                      className="ml-2 text-marine-blue"
+                      className=" ml-2  text-marine-blue"
                       onClick={() => setEditingIndex(index)}
                     >
                       <MdEdit />
@@ -156,7 +155,7 @@ export default function PackListModal({
                 </div>
               ))}
 
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center ">
                 <button
                   type="submit"
                   className="mt-4 mx-4 bg-blue-water rounded-lg text-white px-5 py-2 "

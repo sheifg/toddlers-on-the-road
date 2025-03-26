@@ -83,8 +83,15 @@ const Register = () => {
     username: string().required("Username is required!"),
     email: string().email("Invalid Email").required("Email is required!"),
     password: string()
-      .min(8, "Min 8 characters")
-      .required("Password is required!"),
+    .min(8, "Password must be at least 8 characters long")
+    .matches(/[a-z]/, "Password must include at least one lowercase letter (a-z)")
+    .matches(/[A-Z]/, "Password must include at least one uppercase letter (A-Z)")
+    .matches(/\d/, "Password must include at least one number (0-9)")
+    .matches(
+      /[@$!%*?&]/,
+      "Password must include at least one special character (@, $, !, %, *, ?, &)"
+    )
+    .required("Password is required!"),
   });
 
   const handleSubmit = async (values: any, actions: any) => {

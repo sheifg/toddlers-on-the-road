@@ -6,7 +6,6 @@ const PrivateRoute = () => {
   const firebaseToken = getStorageItem("firebaseToken");
   const { userInfo } = useAuth();
   const location = useLocation();
-
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 

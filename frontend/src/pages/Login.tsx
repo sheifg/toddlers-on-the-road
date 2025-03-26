@@ -7,7 +7,6 @@ import { FcGoogle } from "react-icons/fc";
 import { signUpProvider } from "../config/firebase";
 import { toast } from "react-toastify";
 import axios from "axios";
-
 const Login = () => {
   const navigate = useNavigate();
   const { state: locationState } = useLocation();

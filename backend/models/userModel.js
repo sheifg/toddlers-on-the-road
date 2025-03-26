@@ -77,7 +77,7 @@ const UserSchema = new mongoose.Schema(
           type: String,
           trim: true,
         },
-      }
+      },
     ],
   },
   { timestamps: true, collection: "users" }
@@ -98,9 +98,20 @@ UserSchema.pre(["save", "updateOne"], function (next) {
 
   // email@domain.com
   const isEmailValidated = data.email
-    ? /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email)
+    ? /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.email)
     : true;
   // If it is actually wanted to validate email, it would put false as the OR value!
+
+  /* 
+      /^[a-zA-Z0-9._%+-]+/,
+      "Email must start with letters, numbers, or valid special characters (._%+-)"
+       /@/,
+      "Email must contain '@' symbol"
+       /@[a-zA-Z0-9.-]+/,
+      "Email must have a valid domain name, which can contain: letters, digits, dots or hyphens"
+       /\.[a-zA-Z]{2,}$/,
+      "Email domain must have at least two letters (e.g., .com, .co...)"
+       */
 
   if (isEmailValidated) {
     if (data?.password) {

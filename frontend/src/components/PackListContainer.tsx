@@ -115,9 +115,7 @@ const PackListContainer = () => {
     return () => window.removeEventListener("resize", updateCardsPerView);
   }, []);
 
-  const totalSlides = predefinedPackLists ? predefinedPackLists.length : 0;
-  const groupedSlides = Array.from({ length: totalSlides });
-
+  
   // Navigation for carousel
   const handleNext = () => {
     if (currentIndex + cardsPerView < predefinedPackLists.length) {
@@ -133,13 +131,13 @@ const PackListContainer = () => {
 
   return (
     <div className="flex flex-col justify-center items-center text-marine-blue font-Mali mt-8">
-      <h2 className="font-medium text-lg mb-2 md:text-2xl lg:text-3xl drop-shadow-[3px_3px_0px_rgba(96,211,214,0.6)] ]">
+      <h2 className="font-Mali text-center mt-10 text-xl md:text-2xl lg:text-3xl font-bold text-marine-blue">
         What do I need?
       </h2>
 
       {/* PackList Cards Container */}
       <div className="relative w-11/12 mt-6">
-        <div className="flex justify-between items-center gap-4">
+        <div className="flex justify-between items-center gap-1.5">
           {/* Left Button */}
           {currentIndex > 0 && (
             <button
@@ -153,7 +151,7 @@ const PackListContainer = () => {
           {/* Cards Display */}
           <div className=" mx-auto grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  lg:text-lg 2xl:gap-10">
             {predefinedPackLists
-              .slice(0, predefinedPackLists.length - 1) //it is  used length just in case to add new packList in the future
+              ?.slice(0, predefinedPackLists.length - 1) //it is  used length just in case to add new packList in the future
               .slice(currentIndex, currentIndex + cardsPerView)
               .map((packList: PackList, index: number) => (
                 <div key={index} className="  rounded-lg  lg:text-lg">
@@ -167,7 +165,7 @@ const PackListContainer = () => {
           </div>
 
           {/* Right Button */}
-          {currentIndex + cardsPerView < predefinedPackLists.length && (
+          {currentIndex + cardsPerView < predefinedPackLists?.length && (
             <button
               className="right-2 md:right-1 lg:right-7 xl:right-14 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full"
               onClick={handleNext}
@@ -176,19 +174,7 @@ const PackListContainer = () => {
             </button>
           )}
         </div>
-        {totalSlides > 1 && (
-          <div className="flex justify-center  mb-4 space-x-2 mt-6 md:mt-8  lg:mt-10">
-            {groupedSlides.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`h-2 w-2 md:h-3 md:w-3 rounded-full ${
-                  currentIndex === index ? "bg-marine-blue" : "bg-gray-200"
-                } transition-all duration-500`}
-              ></button>
-            ))}
-          </div>
-        )}
+      
       </div>
 
       {/* Add New List Button */}
