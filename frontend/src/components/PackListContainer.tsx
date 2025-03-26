@@ -153,7 +153,7 @@ const PackListContainer = () => {
           {/* Cards Display */}
           <div className=" mx-auto grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  lg:text-lg 2xl:gap-10">
             {predefinedPackLists
-              .slice(0, predefinedPackLists.length - 1) //it is  used length just in case to add new packList in the future
+              ?.slice(0, predefinedPackLists.length - 1) //it is  used length just in case to add new packList in the future
               .slice(currentIndex, currentIndex + cardsPerView)
               .map((packList: PackList, index: number) => (
                 <div key={index} className="  rounded-lg  lg:text-lg">
@@ -167,7 +167,7 @@ const PackListContainer = () => {
           </div>
 
           {/* Right Button */}
-          {currentIndex + cardsPerView < predefinedPackLists.length && (
+          {currentIndex + cardsPerView < predefinedPackLists?.length && (
             <button
               className="right-2 md:right-1 lg:right-7 xl:right-14 top-1/2 transform-translate-y-1/2 bg-blue-water bg-opacity-70 text-white p-2 rounded-full"
               onClick={handleNext}

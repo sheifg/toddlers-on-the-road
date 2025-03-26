@@ -11,8 +11,9 @@ const Details = () => {
   const { countryDetails, getCountryDetails, loading } =
     useCountryContext() as CountryContextProps;
   const { countryId } = useParams<{ countryId: string }>(); // Get countryId from URL params
+  const { home } = useCountryContext();
   const [error, setError] = useState("");
-
+ 
   //we need that to still have access on details if the  remembered user open a new tab
   useEffect(() => {
     const fetchCountryDetails = async () => {
